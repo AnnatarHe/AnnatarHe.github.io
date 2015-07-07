@@ -1,15 +1,18 @@
 ---
-layout: default
+title: helloworld
 ---
 
 #Hello world
-
-```javascript
-console.log('Hello World');
-```
-```php
-echo 'Hello World';
-```
-{% highlight javascript %}
-    console.log('Hello World');
+{% highlight c %}
+	/* hello world demo */
+	#include <stdio.h>
+	int main(int argc, char **argv)
+	{
+	    printf("Hello, World!\n");
+	    return 0;
+	}
 {% endhighlight %}
+
+{% for post in site.posts %}
+[{{post.title}}]({{post.url}})
+{% endfor %}

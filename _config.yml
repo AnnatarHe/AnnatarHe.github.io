@@ -1,4 +1,5 @@
+markdown: kramdown
 defaults:
   -
     values:
-      layouts: "default"
+      layout: "default"
