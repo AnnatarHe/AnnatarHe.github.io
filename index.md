@@ -9,6 +9,6 @@ console.log('Hello World');
 ```php
 echo 'Hello World';
 ```
-{% hightlight javascript %}
+{% highlight javascript %}
     console.log('Hello World');
-{% hightlight %}
+{% highlight %}
