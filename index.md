@@ -11,4 +11,4 @@ echo 'Hello World';
 ```
 {% highlight javascript %}
     console.log('Hello World');
-{% highlight %}
+{% endhighlight %}
