@@ -2,6 +2,6 @@
 ---
 #Hello world
 
-```javasript
+```javascript
 console.log('Hello World');
 ```
