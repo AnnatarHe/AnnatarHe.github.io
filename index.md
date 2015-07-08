@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Hi,I'am hele
+title: List of Blogs
 ---
 
 {% for post in site.posts %}
