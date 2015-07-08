@@ -1,10 +1,9 @@
 ---
 ---
-
 @charset "utf-8";
 body{
 	background-color:#dda;
-	font-family: "Courier";
+	font-family: "Courier","Ubuntu Mono";
 }
 .main{
 	border-radius:1em;
@@ -37,7 +36,7 @@ body{
 		border-bottom-right-radius:1em;
 		code{
 			font-size: 0.9em;
-			background-color:rgba(0,0,0,0.04);
+			background-color:rgba(0,0,0,0.05);
 			padding: 0.5em;
 			border-radius:5px;
 			color:#f34b7d;
@@ -97,6 +96,7 @@ a{
 	padding:20px;
 	font-family:"Monaco","Ubuntu Mono","Courier";
 	code{
+		background-color:#232323 !important;
 		font-size: 1em !important;
 		padding: 0 !important;
 	}
@@ -107,4 +107,7 @@ blockquote {
   margin: 0 0 20px;
   font-size: 17.5px;
   border-left: 5px solid #eee;
+}
+p{
+	line-height:2em;
 }
