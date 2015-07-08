@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>title</title>
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/pygments.css">
-</head>
+{% include head.html %}
 <body>
-{% include header.html %}
-<div class="container">
-	{{ content }}
+<div class="main">
+	<div class="header">
+		<h1>List of Blog</h1>
+	</div>
+	<nav>
+		<h3>Contact me : hele@iamhele.com</h3>
+	</nav>
+	<div class="content">
+		<table>
+			<tbody>
+				{{ content }}
+			</tbody>
+		</table>
+	</div>
 </div>
-	
-
-footer
-</body>
-</html>
+{% include footer.html %}

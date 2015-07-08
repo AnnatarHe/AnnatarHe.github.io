@@ -1,0 +1,55 @@
+---
+---
+body{
+	font-family: "Courier";
+}
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 800px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 900px;
+  }
+}
+.navbar{
+	background-color:#e3e3e3;
+	border-radius:20px;
+	margin:0 5px;
+	.back-icon{
+		padding:10px 30px;
+		a{
+			color:#666;
+		}
+	}
+}
+.atricle{
+	padding:20px 20px;
+	border-radius:20px;
+	background-color:#f5f5f5;
+}
+.footer{
+	background-color:#444;
+	border-radius:20px;
+	margin:0 5px;
+	height:100px;
+	.copyright{
+		padding:30px 20px;
+	}
+}
+a,a:visited{
+	color:black;
+	text-underline:none;
+}

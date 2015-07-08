@@ -1,18 +1,11 @@
 ---
-title: helloworld
+title: Hi,I'am hele
 ---
 
-#Hello world
-{% highlight c %}
-	/* hello world demo */
-	#include <stdio.h>
-	int main(int argc, char **argv)
-	{
-	    printf("Hello, World!\n");
-	    return 0;
-	}
-{% endhighlight %}
-
 {% for post in site.posts %}
-[{{post.title}}]({{post.url}})
+<tr>
+<td><a href="{{post.url}}">{{post.title}}</a></td>
+<td>{{post.date|date_to_string}}</td>
+</a>
+</tr>
 {% endfor %}
