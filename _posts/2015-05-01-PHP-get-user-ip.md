@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2015-05-01-PHP-get-user-ip
+title: PHP-get-user-ip
 ---
 
 现在网络时代，几乎任何事情都可以在网络上做到。

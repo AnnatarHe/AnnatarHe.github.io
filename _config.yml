@@ -1,4 +1,4 @@
 defaults:
   -
     values:
-      layout: "default"
+      layout: "post"
