@@ -8,8 +8,14 @@ body{
 }
 .main{
 	border-radius:1em;
-	width:800px;
-	margin:30px auto;
+	@media (min-width:800px){
+		width:800px;
+		margin:30px auto;
+	}
+	@media (max-width:800px){
+		width:100%;
+		margin:1px auto;
+	}
 	.header{
 		background-color:#222;
 		color:white;
