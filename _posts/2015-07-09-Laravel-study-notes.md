@@ -29,7 +29,7 @@ elixir(function(mix){
 好了，那么都是什么意思呢？`mix`是mixin的意思哦，第二行首先是把[Sass](http://sass-lang.com)编译成`css`，[CoffeeScript](http://coffee-script.org)编译成`Javascript`，是吧^_^   
 然后是混合选定的css文件，怎么选呢？**min.style**的三个参数分别是**被混合的文件名**，**混合后的生成地址**，**被混合文件的所在目录**   
 那么同理，`mix.scripts`也是混合喽~   
-> Ok,here we go!
+> Ok,here we go!   
 这是**jeffery way**老师很开心的一句话~   
 
 那么，如何运行这个命令？好办：
@@ -41,5 +41,8 @@ $ glup
 {% highlight console %}
 $ glup --production
 {% endhighlight %}
-
-哈哈，是不是写起来很舒服。我已经要爱上`Laravel`了
+需要版本更迭的时候，因为浏览器会缓存，所以有时候并不能正确的推送给用户，那么这个时候就需要给这些以相应的版本号，幸好，`glup`都帮我们干了，我们只有写这么一句：
+{% highlight javascript %}
+mix.version('final.css');
+{% endhighlight %}
+那么，如何在
