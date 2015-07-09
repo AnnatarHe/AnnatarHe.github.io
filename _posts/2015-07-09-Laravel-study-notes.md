@@ -43,6 +43,11 @@ $ glup --production
 {% endhighlight %}
 需要版本更迭的时候，因为浏览器会缓存，所以有时候并不能正确的推送给用户，那么这个时候就需要给这些以相应的版本号，幸好，`glup`都帮我们干了，我们只有写这么一句：
 {% highlight javascript %}
-mix.version('final.css');
+mix.version('public/css/final.css');
 {% endhighlight %}
-那么，如何在
+那么，如何在使用？   
+只需要在`layout`文件里把link改成：
+{% highlight html %}
+<link rel="stylesheet" href="{{ clixir('css/final.css') }}">
+{% endhighlight %}
+它就会自动转换成带有版本号的样子
