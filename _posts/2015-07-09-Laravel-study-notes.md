@@ -56,6 +56,7 @@ mix.version('public/css/final.css');
 #Session
 ##设置：
 {% highlight php %}
+<?php 
 \Session::flash('key','value');
 //或者：
 \Session::put('key','value');
@@ -65,12 +66,14 @@ session()->flash('key','value')
 {% endhighlight %}
 ##使用(视图模板)
 {% highlight php %}
+<?php 
 @if (Session::has('key'))
 	\{\{ Session::get('key') \}\}
 @endif
 {% endhighlight %}
 加入了`Flash`的package之后更是可以这样使用：
 {% highlight php %}
+<?php 
 flash('Hello World');
 flash()->success('success infomation');
 flash()->overlay('infomation','title');
@@ -86,17 +89,19 @@ flash()->overlay('infomation','title');
 * Illuminate/Html
 在`config/app.php`下注册：
 {% highlight php %}
-\/\/'providers'=>里面加入
-'Illuminate\\Html\\HtmlServiceProvider'
-\/\/'Alias'加入：
+<?php 
+//'providers'=>里面加入
+'Illuminate\Html\HtmlServiceProvider'
+//'Alias'加入：
 'Form' => 'Illuminate\Html\FormFacade',
 'Html' => 'Illuminate\Html\HtmlFacade'
 {% endhighlight %}
 
 * laracasts/flash
 {% highlight php %}
-\/\/'providers'=>里面加入
+<?php 
+//'providers'=>里面加入
 'Laracasts\/Flash\/FlashServiceProvider'
-\/\/'Alias'加入：
-'Flash' =>'Laracasts\\Flash\\Falsh'
+//'Alias'加入：
+'Flash' =>'Laracasts\Flash\Falsh'
 {% endhighlight %}
