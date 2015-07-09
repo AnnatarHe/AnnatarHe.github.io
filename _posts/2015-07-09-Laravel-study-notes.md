@@ -14,6 +14,7 @@ $ npm install
 {% endhighlight %}
 然后在`glupfile.js`中写这样的东西：
 {% highlight javascript %}
+var elixir = require('laravel-elixir');
 elixir(function(mix){
 	mix.sass('app.scss').coffee;
 	mix.styles([
@@ -48,6 +49,54 @@ mix.version('public/css/final.css');
 那么，如何在使用？   
 只需要在`layout`文件里把link改成：
 {% highlight html %}
-<link rel="stylesheet" href="{{ clixir('css/final.css') }}">
+<link rel="stylesheet" href="\{\{ clixir('css/final.css') \}\}">
 {% endhighlight %}
 它就会自动转换成带有版本号的样子
+
+#Session
+##设置：
+{% highlight php %}
+\Session::flash('key','value');
+//或者：
+\Session::put('key','value');
+
+//前面使用use Session;了也可以这样
+session()->flash('key','value')
+{% endhighlight %}
+##使用(视图模板)
+{% highlight php %}
+@if (Session::has('key'))
+	\{\{ Session::get('key') \}\}
+@endif
+{% endhighlight %}
+加入了`Flash`的package之后更是可以这样使用：
+{% highlight php %}
+flash('Hello World');
+flash()->success('success infomation');
+flash()->overlay('infomation','title');
+//使用overlay需要在模板加入：
+//<script>$('#flash-overlay-modal').modal()</script>
+{% endhighlight %}
+当然啦，得在模板里加入：
+{% highlight html %}
+@include ('flash::message')
+{% endhighlight %}
+
+#Package
+* Illuminate/Html
+在`config/app.php`下注册：
+{% highlight php %}
+\/\/'providers'=>里面加入
+'Illuminate\\Html\\HtmlServiceProvider'
+\/\/'Alias'加入：
+'Form' => 'Illuminate\Html\FormFacade',
+'Html' => 'Illuminate\Html\HtmlFacade'
+{% endhighlight %}
+
+* laracasts/flash
+{% highlight php %}
+\/\/'providers'=>里面加入
+'Laracasts\/Flash\/FlashServiceProvider'
+\/\/'Alias'加入：
+'Flash' =>'Laracasts\\Flash\\Falsh'
+{% endhighlight %}
