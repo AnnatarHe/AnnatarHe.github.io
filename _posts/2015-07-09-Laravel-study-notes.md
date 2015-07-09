@@ -10,10 +10,11 @@ title: Laravel study notes
 ##使一个页面局部总是接受数据
 这个翻译不知道合不合适，原话是*When You Want a View Partial to Always Recive Data*   
 好吧，不纠结翻译了。如果是你你怎么做？
-之前我在用`ThinkPHP`的时候技术太差呗，就是一个页面一个页面的写，写重复的内容   
-> 发出申请   
-> 接收数据   
-> 渲染页面   
+之前我在用`ThinkPHP`的时候技术太差呗，就是一个页面一个页面的写，写重复的内容 
+
+> 发出申请
+> 接收数据
+> 渲染页面
 > repeat \* n   
 这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来。   
 不扯了，接着说。这样的重复自己是不是非常的无聊，低效率，而且维护比较麻烦。   
@@ -22,6 +23,7 @@ title: Laravel study notes
 在导航条里面写一个最后的一篇文章，每个页面都需要。所以建立一个文件`nav.blade.php`,放在`partials`里面。因为是一个视图文件，所以要放在`Views`目录下。
 里面写上：
 {% highlight php %}
+<?php
 <ul>
 	<li>{!! link_to_action('ArticlesController@show',$latest->title,[$latest->id]) !!}</li>
 </ul>
@@ -29,6 +31,7 @@ title: Laravel study notes
 那么，`@include`我就不写了。   
 然后去`App`目录下的`Providers`里面的`AppServiceProvider.php`找到boot函数：
 {% highlight php %}
+<?php
 public function boot(){
 	view()->composer('partials.nav',function($view){
 			$view->with('latest',Article::latest()->first());
@@ -62,6 +65,7 @@ elixir(function(mix){
 好了，那么都是什么意思呢？`mix`是mixin的意思哦，第二行首先是把[Sass](http://sass-lang.com)编译成`css`，[CoffeeScript](http://coffee-script.org)编译成`Javascript`，是吧^_^   
 然后是混合选定的css文件，怎么选呢？**min.style**的三个参数分别是**被混合的文件名**，**混合后的生成地址**，**被混合文件的所在目录**   
 那么同理，`mix.scripts`也是混合喽~   
+
 > Ok,here we go!   
 这是**jeffery way**老师很开心的一句话~   
 
@@ -86,7 +90,7 @@ mix.version('public/css/final.css');
 它就会自动转换成带有版本号的样子
 
 #Session
-##设置：
+设置：
 {% highlight php %}
 <?php 
 \Session::flash('key','value');
