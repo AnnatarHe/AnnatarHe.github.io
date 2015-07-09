@@ -6,6 +6,38 @@ title: Laravel study notes
 今天看了[Laracasts](http://laracasts)的`Laravel`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
 今天开始做一些小的笔记。顺便也把英文文档的笔记写在这里。供有兴趣的同学参考吧。话说我为毛要把文档也翻译了？因为他们并没有翻译完整，我自个人来呗。[Laravel中文文档](http://golaravel.com)
 
+#View
+##使一个页面局部总是接受数据
+这个翻译不知道合不合适，原话是*When You Want a View Partial to Always Recive Data*   
+好吧，不纠结翻译了。如果是你你怎么做？
+之前我在用`ThinkPHP`的时候技术太差呗，就是一个页面一个页面的写，写重复的内容   
+> 发出申请   
+> 接收数据   
+> 渲染页面   
+> repeat \* n   
+这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来。   
+不扯了，接着说。这样的重复自己是不是非常的无聊，低效率，而且维护比较麻烦。   
+噔噔噔噔～`Laravel`出来拯救你啦~
+这里做个例子吧：
+在导航条里面写一个最后的一篇文章，每个页面都需要。所以建立一个文件`nav.blade.php`,放在`partials`里面。因为是一个视图文件，所以要放在`Views`目录下。
+里面写上：
+{% highlight php %}
+<ul>
+	<li>{!! link_to_action('ArticlesController@show',$latest->title,[$latest->id]) !!}</li>
+</ul>
+{% endhighlight %}
+那么，`@include`我就不写了。   
+然后去`App`目录下的`Providers`里面的`AppServiceProvider.php`找到boot函数：
+{% highlight php %}
+public function boot(){
+	view()->composer('partials.nav',function($view){
+			$view->with('latest',Article::latest()->first());
+		});
+}
+{% endhighlight %}
+这样，所有的有这个视图的文件进行渲染的时候都会经过这一步。而这一步里获取到了数据并填充到文件里，是不是很优雅，很舒适？
+
+
 #Assets
 刚好看到Assets，先稍微写一下：
 `Laravel`使用[gulp](http://gulpjs.com)来对整理前端依赖的。首先要先把gulp依赖下载下来。
@@ -42,14 +74,14 @@ $ glup
 {% highlight console %}
 $ glup --production
 {% endhighlight %}
-需要版本更迭的时候，因为浏览器会缓存，所以有时候并不能正确的推送给用户，那么这个时候就需要给这些以相应的版本号，幸好，`glup`都帮我们干了，我们只有写这么一句：
+需要版本更迭的时候，因为浏览器会缓存，所以有时候并不能正确的**推送**给用户，那么这个时候就需要给这些以相应的版本号，幸好，`glup`都帮我们干了，我们只要写这么一句：
 {% highlight javascript %}
 mix.version('public/css/final.css');
 {% endhighlight %}
 那么，如何在使用？   
 只需要在`layout`文件里把link改成：
 {% highlight html %}
-<link rel="stylesheet" href="\{\{ clixir('css/final.css') \}\}">
+<link rel="stylesheet" href="{{ clixir('css/final.css') }}">
 {% endhighlight %}
 它就会自动转换成带有版本号的样子
 
@@ -68,7 +100,7 @@ session()->flash('key','value')
 {% highlight php %}
 <?php 
 @if (Session::has('key'))
-	\{\{ Session::get('key') \}\}
+	{{ Session::get('key') }}
 @endif
 {% endhighlight %}
 加入了`Flash`的package之后更是可以这样使用：
@@ -82,8 +114,33 @@ flash()->overlay('infomation','title');
 {% endhighlight %}
 当然啦，得在模板里加入：
 {% highlight html %}
+<?php
 @include ('flash::message')
 {% endhighlight %}
+#Form
+首先要安装下面的`Form`的package。然后来创作表单吧！
+{% highlight php %}
+<?php 
+{!! Form  !!}
+	<div class="form-group">
+		{!! Form::label('title','Title':) !!}
+		{!! Form::text('title',null,['class'=>'form-control','placeholder'=>'The Title']) !!}
+	</div>
+	<div class="form-group">
+		{!! Form::label('title','Title':) !!}
+		{!! Form::input('date','published_at',date('Y-m-d'),['class'=>'form-control']) !!}
+	</div>
+	<div class="form-group">
+		{!! Form::label('title','Title':) !!}
+		{!! Form::select('tags[]',['1'=>'personal'],null,['class'=>'form-control','multiple']) !!}
+	</div>
+	<div class="form-group">
+		{!! Form::submit('save it',['class'=>'btn btn-default form-control']) !!}
+	</div>
+{!! Form !!}
+{% endhighlight %}
+`tags`那一段的`null`表示的是被选中的情况，如果是1，就表示`value`为1的被选中
+
 
 #Package
 * Illuminate/Html
