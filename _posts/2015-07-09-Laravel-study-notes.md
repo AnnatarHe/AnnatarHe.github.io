@@ -98,7 +98,7 @@ mix.version('public/css/final.css');
 \Session::put('key','value');
 
 //前面使用use Session;了也可以这样
-session()->flash('key','value')
+session()->flash('key','value');
 {% endhighlight %}
 ##使用(视图模板)
 {% highlight php %}
@@ -125,7 +125,7 @@ flash()->overlay('infomation','title');
 首先要安装下面的`Form`的package。然后来创作表单吧！
 {% highlight php %}
 <?php 
-{!! Form  !!}
+{!! Form::open()  !!}
 	<div class="form-group">
 		{!! Form::label('title','Title':) !!}
 		{!! Form::text('title',null,['class'=>'form-control','placeholder'=>'The Title']) !!}
@@ -141,13 +141,13 @@ flash()->overlay('infomation','title');
 	<div class="form-group">
 		{!! Form::submit('save it',['class'=>'btn btn-default form-control']) !!}
 	</div>
-{!! Form !!}
+{!! Form::close() !!}
 {% endhighlight %}
 `tags`那一段的`null`表示的是被选中的情况，如果是1，就表示`value`为1的被选中
 
 
 #Package
-* Illuminate/Html
+* Illuminate/Html   
 在`config/app.php`下注册：
 {% highlight php %}
 <?php 
@@ -158,7 +158,7 @@ flash()->overlay('infomation','title');
 'Html' => 'Illuminate\Html\HtmlFacade'
 {% endhighlight %}
 
-* laracasts/flash
+* laracasts/flash   
 {% highlight php %}
 <?php 
 //'providers'=>里面加入
