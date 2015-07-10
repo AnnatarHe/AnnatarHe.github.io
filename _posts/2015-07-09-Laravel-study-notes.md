@@ -6,8 +6,47 @@ title: Laravel study notes
 今天看了[Laracasts](http://laracasts)的`Laravel`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
 今天开始做一些小的笔记。顺便也把英文文档的笔记写在这里。供有兴趣的同学参考吧。话说我为毛要把文档也翻译了？因为他们并没有翻译完整，我自个人来呗。[Laravel中文文档](http://golaravel.com)
 
+#model
+数据库里面需要一些测试数据怎么办呢？
+5.1版本带来了很有用的新方法：
+`database/factories/ModelFactory.php`写入：
+{% highlight php %}
+<?php 
+$factory->define(App\User::class,function ($faker){
+	return [
+		'name'           => $faker->name,
+		'email'          => $faker->email,
+		'password'       => str_random(10),
+		'remember_token' => str_random(10)
+	];
+});
+//文章可以这样用
+$factory->define(App\Post::class,function ($faker){
+	return [
+		'title' => $faker->sentance,
+		'body'  => $faker->paragraph
+	];
+});
+{% endhighlight %}
+在`database/seeds/DatabsesSeeder.php`写入：
+{% highlight php %}
+<?php
+use App\User;
+public function run (){
+	Model::unguard();
+	User::truncate();
+	factory(User::class,50)->create()
+	Model::reguard();
+}
+{% endhighlight %}
+现在运行：
+{% highlight console %}
+$ php artisan db:seed
+{% endhighlight %}
+好了，去数据库查看数据吧！
 #View
-##使一个页面局部总是接受数据
+使一个页面局部总是接受数据
+
 这个翻译不知道合不合适，原话是*When You Want a View Partial to Always Recive Data*   
 好吧，不纠结翻译了。如果是你你怎么做？
 之前我在用`ThinkPHP`的时候技术太差呗，就是一个页面一个页面的写，写重复的内容 
@@ -16,6 +55,7 @@ title: Laravel study notes
 > 接收数据
 > 渲染页面
 > repeat \* n   
+
 这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来。   
 不扯了，接着说。这样的重复自己是不是非常的无聊，低效率，而且维护比较麻烦。   
 噔噔噔噔～`Laravel`出来拯救你啦~
@@ -66,7 +106,8 @@ elixir(function(mix){
 然后是混合选定的css文件，怎么选呢？**min.style**的三个参数分别是**被混合的文件名**，**混合后的生成地址**，**被混合文件的所在目录**   
 那么同理，`mix.scripts`也是混合喽~   
 
-> Ok,here we go!   
+> Ok,there we go!   
+
 这是**jeffery way**老师很开心的一句话~   
 
 那么，如何运行这个命令？好办：
@@ -85,7 +126,7 @@ mix.version('public/css/final.css');
 那么，如何在使用？   
 只需要在`layout`文件里把link改成：
 {% highlight html %}
-<link rel="stylesheet" href="{{ clixir('css/final.css') }}">
+<link rel="stylesheet" href="\{{ clixir('css/final.css') \}}">
 {% endhighlight %}
 它就会自动转换成带有版本号的样子
 
@@ -104,7 +145,7 @@ session()->flash('key','value');
 {% highlight php %}
 <?php 
 @if (Session::has('key'))
-	{{ Session::get('key') }}
+	\{{ Session::get('key') \}}
 @endif
 {% endhighlight %}
 加入了`Flash`的package之后更是可以这样使用：
@@ -117,7 +158,7 @@ flash()->overlay('infomation','title');
 //<script>$('#flash-overlay-modal').modal()</script>
 {% endhighlight %}
 当然啦，得在模板里加入：
-{% highlight html %}
+{% highlight php %}
 <?php
 @include ('flash::message')
 {% endhighlight %}
@@ -147,7 +188,7 @@ flash()->overlay('infomation','title');
 
 
 #Package
-* Illuminate/Html   
+* **Illuminate/Html***   
 在`config/app.php`下注册：
 {% highlight php %}
 <?php 
@@ -158,7 +199,7 @@ flash()->overlay('infomation','title');
 'Html' => 'Illuminate\Html\HtmlFacade'
 {% endhighlight %}
 
-* laracasts/flash   
+* **laracasts/flash**   
 {% highlight php %}
 <?php 
 //'providers'=>里面加入
