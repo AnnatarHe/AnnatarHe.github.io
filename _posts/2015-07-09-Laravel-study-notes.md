@@ -6,7 +6,21 @@ title: Laravel study notes
 今天看了[Laracasts](http://laracasts)的`Laravel`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
 今天开始做一些小的笔记。顺便也把英文文档的笔记写在这里。供有兴趣的同学参考吧。话说我为毛要把文档也翻译了？因为他们并没有翻译完整，我自个人来呗。[Laravel中文文档](http://golaravel.com)
 
-#model
+#Model
+
+创建数据库：
+首先要运行：
+{% highlight console %}
+$ php artisan make:migration create_articles_table --create="articles"
+{% endhighlight %}
+添加数据库的表
+{% highlight console %}
+$ php artisan make:migration add_excerpt_to_articles_table --table="articles"
+{% endhighlight %}
+如果想要干掉某行（字段），那么需要添加一个`composer`包才能运行：
+{% highlight console %}
+composer require doctrine/dbal
+{% endhighlight %}
 数据库里面需要一些测试数据怎么办呢？
 5.1版本带来了很有用的新方法：
 `database/factories/ModelFactory.php`写入：
@@ -23,10 +37,11 @@ $factory->define(App\User::class,function ($faker){
 //文章可以这样用
 $factory->define(App\Post::class,function ($faker){
 	return [
-		'title' => $faker->sentance,
+		'title' => $faker->sentence,
 		'body'  => $faker->paragraph
 	];
 });
+?>
 {% endhighlight %}
 在`database/seeds/DatabsesSeeder.php`写入：
 {% highlight php %}
@@ -38,23 +53,44 @@ public function run (){
 	factory(User::class,50)->create()
 	Model::reguard();
 }
+?>
 {% endhighlight %}
 现在运行：
 {% highlight console %}
 $ php artisan db:seed
 {% endhighlight %}
 好了，去数据库查看数据吧！
+
+> 当然还有简便的方法，这样的假数据我们只会在测试的时候使用，所以没必要非得在文件里面写入，那么这个简单的方法比较合适   
+>> $ php artisan tinker   
+>> factory('App\User')->create();
+
+现在需要传入数据到数据库中，那么怎么做呢？直接传入数组数据是不行的，因为比较危险，但是我们比较了解，可以这么用，那么就可以在这里
+`App/Article.php`
+{% highlight php %}
+<?php
+class Article extends Model{
+    protected $fillable = [
+        'title',
+        'body',
+        'published_at'
+    ];
+}
+?>
+{% endhighlight %}
+
 #View
+
 使一个页面局部总是接受数据
 
 这个翻译不知道合不合适，原话是*When You Want a View Partial to Always Recive Data*   
 好吧，不纠结翻译了。如果是你你怎么做？
 之前我在用`ThinkPHP`的时候技术太差呗，就是一个页面一个页面的写，写重复的内容 
 
-> 发出申请
-> 接收数据
-> 渲染页面
-> repeat \* n   
+> 发出申请   
+> 接收数据   
+> 渲染页面   
+> repeat \* n      
 
 这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来。   
 不扯了，接着说。这样的重复自己是不是非常的无聊，低效率，而且维护比较麻烦。   
@@ -62,8 +98,7 @@ $ php artisan db:seed
 这里做个例子吧：
 在导航条里面写一个最后的一篇文章，每个页面都需要。所以建立一个文件`nav.blade.php`,放在`partials`里面。因为是一个视图文件，所以要放在`Views`目录下。
 里面写上：
-{% highlight php %}
-<?php
+{% highlight html %}
 <ul>
 	<li>{!! link_to_action('ArticlesController@show',$latest->title,[$latest->id]) !!}</li>
 </ul>
@@ -79,6 +114,19 @@ public function boot(){
 }
 {% endhighlight %}
 这样，所有的有这个视图的文件进行渲染的时候都会经过这一步。而这一步里获取到了数据并填充到文件里，是不是很优雅，很舒适？
+
+#Workflow
+首先定义路由：
+`App/Http/Routes.php`下，写入：
+{% highlight php %}
+<?php
+Route::resource('/article','ArticlesController');
+{% endhighlight %}
+那么，创建控制器：
+{% highlight console %}
+$ php artisan make:controller ArticlesController
+{% endhighlight %}
+之后是去`Controller`里面写点儿东西：
 
 
 #Assets
@@ -126,7 +174,7 @@ mix.version('public/css/final.css');
 那么，如何在使用？   
 只需要在`layout`文件里把link改成：
 {% highlight html %}
-<link rel="stylesheet" href="\{{ clixir('css/final.css') \}}">
+<link rel="stylesheet" href="{ { clixir('css/final.css') } }">
 {% endhighlight %}
 它就会自动转换成带有版本号的样子
 
@@ -145,7 +193,7 @@ session()->flash('key','value');
 {% highlight php %}
 <?php 
 @if (Session::has('key'))
-	\{{ Session::get('key') \}}
+	{ { Session::get('key') } }
 @endif
 {% endhighlight %}
 加入了`Flash`的package之后更是可以这样使用：
@@ -188,7 +236,7 @@ flash()->overlay('infomation','title');
 
 
 #Package
-* **Illuminate/Html***   
+* **Illuminate/Html**   
 在`config/app.php`下注册：
 {% highlight php %}
 <?php 
