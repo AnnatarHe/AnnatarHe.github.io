@@ -236,7 +236,7 @@ flash()->overlay('infomation','title');
 
 
 #Package
-* **Illuminate/Html**   
+* **illuminate/html**   
 在`config/app.php`下注册：
 {% highlight php %}
 <?php 
