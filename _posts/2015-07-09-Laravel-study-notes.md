@@ -255,3 +255,15 @@ flash()->overlay('infomation','title');
 //'Alias'加入：
 'Flash' =>'Laracasts\Flash\Falsh'
 {% endhighlight %}
+
+# Production
+
+生产环境还是得做一些操作的，比如关掉调试模式
+,以下这些就是需要注意的地方。
+{% highlight console %}
+$ composer install --optimize-autoloader
+$ composer dump-autoload --optimize
+
+$ php artisan clear-compiled
+$ php artisan optimize
+{% endhighlight %}
