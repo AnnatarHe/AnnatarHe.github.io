@@ -34,7 +34,7 @@ title: Code Editor--Vim and SublimeText3
 
 关于`Vim`配置没什么好说的，在我的**github**仓库里就有。注意一定要是`Linux` branch。
 
-[VimConfigure](https:github.com/AnnatarHe/vimConfigure)
+[VimConfigure](https://github.com/AnnatarHe/vimConfigure/tree/Linux)
 
 那么这一节说什么呢，说说一些插件和快捷键吧。
 
@@ -89,7 +89,7 @@ set guioptions-=T
 
 `:wq`保存并退出
 
-`:BundleInstall`vundle的安装插件命令
+`:BundleInstall` vundle的安装插件命令
 
 暂时就这些吧，想到了再说
 
@@ -138,7 +138,53 @@ set guioptions-=T
 
 snippets也写了一些，主要就是*jekyll*的高亮，头信息什么的。
 
-具体的配置文件过两天发吧。
+具体的配置参数
+{% highlight json %}
+{
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"font_face": "Monaco",
+	"font_size": 14,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"line_padding_top": 7,
+	"tab_size": 2,
+	"word_wrap": true
+}
+{% endhighlight %}
+
+还有一些*snippets*
+{% highlight xml %}
+<snippet>
+	<content><![CDATA[
+{% highlight ${1:console} %}
+${2}
+{% endhighlight %}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>hhh</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.html.markdown</scope>
+</snippet>
+{% endhighlight %}
+{% highlight xml %}
+<snippet>
+	<content><![CDATA[
+---
+layout: post
+title: ${1}
+---
+
+${2}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>layout</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.html.markdown</scope>
+</snippet>
+
+{% endhighlight %}
 
 ## Conclusion
 
