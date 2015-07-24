@@ -3,12 +3,29 @@ layout: post
 title: Laravel study notes
 ---
 
-今天看了[Laracasts](http://laracasts)的`Laravel`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
-今天开始做一些小的笔记。顺便也把英文文档的笔记写在这里。供有兴趣的同学参考吧。话说我为毛要把文档也翻译了？因为他们并没有翻译完整，我自个人来呗。[Laravel中文文档](http://golaravel.com)
+今天看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
+
+今天开始做一些小的笔记。顺便也把自己理解的英文文档的笔记写在这里。供有兴趣的同学参考吧。话说我为毛要把文档也翻译了？因为他们并没有翻译完整，我自个儿来呗。[Laravel中文文档](http://golaravel.com)
+
+# 安装
+
+我并没有写安装的介绍。上面的中文文档对**安装**这一块写的特别的详细，而且是纯中文。
 
 #Model
 
 创建数据库：
+## Notice
+这里有个小坑，好吧，不能算是坑。
+
+我们不能通过migrate创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
+
+{% highlight sql %}
+CREATE DATABASE `demo` DEFAULT CHARSET utf8;
+{% endhighlight %}
+
+Anyway, here we go.
+
+
 首先要运行：
 {% highlight console %}
 $ php artisan make:migration create_articles_table --create="articles"
@@ -132,8 +149,10 @@ $ php artisan make:controller ArticlesController
 #Assets
 刚好看到Assets，先稍微写一下：
 `Laravel`使用[gulp](http://gulpjs.com)来对整理前端依赖的。首先要先把gulp依赖下载下来。
-{% highlight console %}
+{% highlight bash %}
 $ npm install
+# 国内的网络环境你懂的，当然也可以用
+$ cnpm install
 {% endhighlight %}
 然后在`glupfile.js`中写这样的东西：
 {% highlight javascript %}
@@ -154,17 +173,17 @@ elixir(function(mix){
 然后是混合选定的css文件，怎么选呢？**min.style**的三个参数分别是**被混合的文件名**，**混合后的生成地址**，**被混合文件的所在目录**   
 那么同理，`mix.scripts`也是混合喽~   
 
-> Ok,there we go!   
+> Ok,here we go!   
 
 这是**jeffery way**老师很开心的一句话~   
 
 那么，如何运行这个命令？好办：
-{% highlight console %}
+{% highlight bash %}
 $ glup
 {% endhighlight %}
 这样就可以了。   
 **生产环境**怎么办呢？
-{% highlight console %}
+{% highlight bash %}
 $ glup --production
 {% endhighlight %}
 需要版本更迭的时候，因为浏览器会缓存，所以有时候并不能正确的**推送**给用户，那么这个时候就需要给这些以相应的版本号，幸好，`glup`都帮我们干了，我们只要写这么一句：
@@ -260,10 +279,26 @@ flash()->overlay('infomation','title');
 
 生产环境还是得做一些操作的，比如关掉调试模式
 ,以下这些就是需要注意的地方。
-{% highlight console %}
+{% highlight bash %}
 $ composer install --optimize-autoloader
 $ composer dump-autoload --optimize
 
+$ gulp --production
 $ php artisan clear-compiled
 $ php artisan optimize
 {% endhighlight %}
+
+# Resources
+* [laravel官方文档](http://laravel.com/docs/5.1)  <span style="color:red">英文</span>  **最权威**
+
+* [Laravel5学习笔记](https://www.gitbook.com/book/kejyuntw/laravel-5-learning-notes/details)  <span style="color:red">繁体中文</span>
+
+* [Laracasts](https://laracasts.com/series/laravel-5-fundamentals)  <span style="color:red">英文视频</span>
+
+* [Laravel5入门系列](http://lvwenhan.com/laravel/432.html)  <span style="color:red">简体中文</span>
+
+* [Laravel中文文档](http://www.golaravel.com/laravel/docs/5.1/)  <span style="color:red">少量简体中文</span>
+
+* [Laravel中文文档](http://laragirl.com/docs/5.1)  <span style="color:red">简体中文</span>大部分翻译完成
+
+
