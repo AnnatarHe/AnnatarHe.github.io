@@ -2,6 +2,7 @@
 layout: post
 title: Code Editor--Vim and SublimeText3
 ---
+
 ## Meet up
 每个人心目中都有自己喜欢的编辑器，有人喜欢`Emacs`，有人喜欢`Atom`，我个人比较喜欢用`Vim`和`Sublime Text 3`，还有一个`PhpStorm`也会用一用呗
 
@@ -11,13 +12,14 @@ title: Code Editor--Vim and SublimeText3
 ### Emacs
 关于`Emacs`了解不多，也没怎么用过，不过一句话就可以解释这个家伙有多**牛逼**
 
-> Emacs是伪装成编辑器的操作系统
+> A great operating system, lacking only a decent editor
 > 
-> --- 404 找不到出处
+> --- wikipedia 
 
 我确实是听说过有人拿`Emacs`煮咖啡。。。
 
 ### Vim
+
 `Vim`是干嘛的呢,就是老老实实写代码的，不能煮咖啡，也不能当操作系统用。
 但是，效率是一流的。要不然怎么能有这么大的名号。
 
@@ -26,10 +28,11 @@ title: Code Editor--Vim and SublimeText3
 后来有时候写代码就会想念，哎，这要按上下左右键好烦啊。然后再拿起`Vim`就亲切多了。
 
 ### Sublime Text 3
+
 这货是我到目前为止用的事件最长的编辑器了。用起来非常简单，而且好看。像长得像我这么帅的自然要用帅帅的编辑器啦（自恋一下，别打我 TUT）
 怎么说呢，颜值高，速度快，插件好。基本没什么缺点。
 
-## Vim Way
+## The Vim Way
 我用`Vim`时间不长，也就半年左右的样子。从最初看到`vim`那简陋的如同石器时代的界面，到现在几乎打造成了`IDE`。
 
 关于`Vim`配置没什么好说的，在我的**github**仓库里就有。注意一定要是`Linux` branch。
@@ -53,6 +56,7 @@ title: Code Editor--Vim and SublimeText3
 只是用了几个插件，不多，也没有配*YouCompleteMe*这种重量级插件，也就是
 
 * *PowerLine*
+* *Ctrlp*
 * *Solarized*
 * *NERDTree*
 * *NERDCommenter*
@@ -88,6 +92,8 @@ set guioptions-=T
 `:last`回到上一个buffer
 
 `:wq`保存并退出
+
+`ctrl-p` go to anything,搜索并打开文件
 
 `:BundleInstall` vundle的安装插件命令
 
@@ -169,6 +175,8 @@ ${2}
 </snippet>
 {% endhighlight %}
 还有*highlight*的*snippet*因为和*jekyll*语法有些冲突，所以就不放了。^_^
+
+
 ## Conclusion
 
 `Vim`在`Unix`世界是当之无愧的霸主。你永远不能逃脱`Vim`给你带来的巨大便利。
@@ -188,6 +196,10 @@ int main(){
   }
 {% endhighlight %}
 而且使用`Vim`写:)
+
+我现在更多的使用`Vim`来写东西，真的太舒服了。各种按键只要记得住，敲起来简直起飞。
+
+当然还有各种专用软件，比如写*Java*的用`Eclipse`，*phper*用`PhpStorm`什么的。这种重量级的东西我个人一直不太喜欢。仁者见仁智者见智。喜欢什么用什么～
 
 ## By the way
 
