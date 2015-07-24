@@ -158,34 +158,17 @@ snippets也写了一些，主要就是*jekyll*的高亮，头信息什么的。
 {% highlight xml %}
 <snippet>
 	<content><![CDATA[
-{% highlight ${1:console} %}
-${2}
-{% endhighlight %}
-]]></content>
-	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-	<tabTrigger>hhh</tabTrigger>
-	<!-- Optional: Set a scope to limit where the snippet will trigger -->
-	<scope>text.html.markdown</scope>
-</snippet>
-{% endhighlight %}
-{% highlight xml %}
-<snippet>
-	<content><![CDATA[
 ---
 layout: post
 title: ${1}
 ---
-
 ${2}
 ]]></content>
-	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
 	<tabTrigger>layout</tabTrigger>
-	<!-- Optional: Set a scope to limit where the snippet will trigger -->
 	<scope>text.html.markdown</scope>
 </snippet>
-
 {% endhighlight %}
-
+还有*highlight*的*snippet*因为和*jekyll*语法有些冲突，所以就不放了。^_^
 ## Conclusion
 
 `Vim`在`Unix`世界是当之无愧的霸主。你永远不能逃脱`Vim`给你带来的巨大便利。
