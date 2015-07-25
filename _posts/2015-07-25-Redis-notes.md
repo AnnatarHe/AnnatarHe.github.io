@@ -142,3 +142,5 @@ LLEN key
 LTRIM key start stop
 # 选妃子啦,start到stop之间的留下,其他的拖出去斩了(trim n.修剪,削齐)
 {% endhighlight %}
+
+## Set
