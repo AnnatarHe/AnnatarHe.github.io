@@ -203,4 +203,30 @@ ZINCRBY key increment member
 # 给key的member的score加increment的值。(加薪，加分)
 {% endhighlight %}
 
-# Keys
+## Keys
+
+{% highlight bash %}
+KEYS pattern
+# pattern 里面写一些通配符吧*?[]什么的
+EXISTS key
+# 这个key到底存不存在啊
+MOVE key db
+# 把key移动到另一个database
+RENAME key newkey
+# 改名
+SORT key [BY pattern] [LIMIT offset count] [GET pattern [GET pattern ...]] [ASC | DESC] [ALPHA] [STORE destination]
+# 排序
+DUMP key
+# 序列化。。。什么鬼。。。
+EXPIRE key seconds
+# 多少秒以后，这个key自杀给你看。非常有用
+TTL key
+# 这货还有多久才能去领便当
+{% endhighlight %}
+
+## Resources
+
+这里有几个资源很不错的：
+
+* [hubwiz.com](http://www.hubwiz.com/course/55473be8ebfde9b5591bb813/)
+* [maiziedu](http://www.maiziedu.com/course/others/337-5920/)
