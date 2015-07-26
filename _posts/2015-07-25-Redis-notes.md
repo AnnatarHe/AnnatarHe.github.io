@@ -144,3 +144,63 @@ LTRIM key start stop
 {% endhighlight %}
 
 ## Set
+
+感觉这种数据类型也挺像上面那种的，不过可以从中间拿出来，就跟链表没什么关系了。
+{% highlight php %}
+<?php 
+	//没有index可以随意从中间拿数据
+	$key1 = ['member1','member2'];
+	$key2 = ['member1','member2'];
+ ?>
+{% endhighlight %}
+
+{% highlight bash %}
+SADD key member [member]
+# 添加集合
+SPOP key
+# 随机取出一个(待确认)
+SMEMBERS key
+# 取出集合中的所有元素
+SCARD key
+# 查看集合中的元素数量
+SDIFF key [key ...]
+# 以前一个key为基准，比较并取出差集
+SINTER key [key ...]
+# 交集
+SUNION key [key ...]
+# 并集
+SISMEMBER key member
+# 这个member是不是这个key里面的？
+SMOVE source destination member
+# 把member从source移动到destination集合
+# source 和 destination 都是key
+SREM key member [member ...]
+# 删除 key 下的 member(set remove)
+{% endhighlight %}
+
+## Zset
+
+这个真的不好做。php里没有这种哎。
+
+{% highlight bash %}
+ZADD key score member [[score member] [score member] ...]
+# 添加成员和评分
+ZREM key member [member ...]
+# 删除啦
+ZSCORE key member
+# 获取评分
+ZRANGE key start stop [WITHSCORES]
+# 拿到指定区域的member
+ZCARD key
+# 总共有几个？
+ZCOUNT key min max
+# score在min和max之间的key的members的数量(比如：这个月给几个人发200-3000块的工资？)
+ZRANK key member
+ZREVRANK key member
+# 按score 从小到大排序，然后取得当前score
+# 按score 从大到小排序，同上。
+ZINCRBY key increment member
+# 给key的member的score加increment的值。(加薪，加分)
+{% endhighlight %}
+
+# Keys
