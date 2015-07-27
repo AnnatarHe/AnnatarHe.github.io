@@ -11,20 +11,19 @@ title: Laravel study notes
 
 我并没有写安装的介绍。上面的中文文档对**安装**这一块写的特别的详细，而且是纯中文。
 
-#Model
+# Model
 
 创建数据库：
 ## Notice
 这里有个小坑，好吧，不能算是坑。
 
-我们不能通过migrate创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
+我们不能通过*migrate*创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
 
 {% highlight sql %}
 CREATE DATABASE `demo` DEFAULT CHARSET utf8;
 {% endhighlight %}
 
 Anyway, here we go.
-
 
 首先要运行：
 {% highlight console %}
@@ -96,7 +95,7 @@ class Article extends Model{
 ?>
 {% endhighlight %}
 
-#View
+# View
 
 使一个页面局部总是接受数据
 
@@ -173,7 +172,7 @@ elixir(function(mix){
 然后是混合选定的css文件，怎么选呢？**min.style**的三个参数分别是**被混合的文件名**，**混合后的生成地址**，**被混合文件的所在目录**   
 那么同理，`mix.scripts`也是混合喽~   
 
-> Ok,here we go!   
+> Ok,there we go!   
 
 这是**jeffery way**老师很开心的一句话~   
 
@@ -197,7 +196,10 @@ mix.version('public/css/final.css');
 {% endhighlight %}
 它就会自动转换成带有版本号的样子
 
-#Session
+## Session
+
+可以用`Redis`来替代。
+
 设置：
 {% highlight php %}
 <?php 
@@ -208,7 +210,7 @@ mix.version('public/css/final.css');
 //前面使用use Session;了也可以这样
 session()->flash('key','value');
 {% endhighlight %}
-##使用(视图模板)
+## 使用(视图模板)
 {% highlight php %}
 <?php 
 @if (Session::has('key'))
@@ -254,7 +256,8 @@ flash()->overlay('infomation','title');
 `tags`那一段的`null`表示的是被选中的情况，如果是1，就表示`value`为1的被选中
 
 
-#Package
+
+# Packages
 * **illuminate/html**   
 在`config/app.php`下注册：
 {% highlight php %}
@@ -300,5 +303,3 @@ $ php artisan optimize
 * [Laravel中文文档](http://www.golaravel.com/laravel/docs/5.1/)  <span style="color:red">少量简体中文</span>
 
 * [Laravel中文文档](http://laragirl.com/docs/5.1)  <span style="color:red">简体中文</span>大部分翻译完成
-
-

@@ -205,6 +205,8 @@ ZINCRBY key increment member
 
 ## Keys
 
+这里就是总览所有的key的一些操作了。
+
 {% highlight bash %}
 KEYS pattern
 # pattern 里面写一些通配符吧*?[]什么的
@@ -228,5 +230,6 @@ TTL key
 
 这里有几个资源很不错的：
 
+* [Redis.io](http://redis.io/documentation)
 * [hubwiz.com](http://www.hubwiz.com/course/55473be8ebfde9b5591bb813/)
 * [maiziedu](http://www.maiziedu.com/course/others/337-5920/)
