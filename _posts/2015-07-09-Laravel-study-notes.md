@@ -198,7 +198,7 @@ mix.version('public/css/final.css');
 
 ## Session
 
-可以用`Redis`来替代。可以参考我的另一篇[Redis笔记]({% post_url 2015-0725-Redis-notes %})
+可以用`Redis`来替代。可以参考我的另一篇[Redis笔记]({% post_url 2015-07-25-Redis-notes %})
 
 设置：
 {% highlight php %}
