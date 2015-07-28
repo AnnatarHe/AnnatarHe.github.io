@@ -4,7 +4,7 @@ title: Symfony2 study note-1
 ---
 
 
-##Install
+## Install
 首先是安装
 
 安装方法去官网自己倒腾。有中文有英文，需要哪个倒腾哪个。   
@@ -12,7 +12,7 @@ title: Symfony2 study note-1
 最好不要使用国内的composer源，就是王赛大神做的那个.   
 是挺不错的，只是容易出现502的错误。国外的慢了就慢一点儿吧，其实还好。
 
-##Module
+## Module
 然后一定要开启mcrpty的拓展。
 Ubuntu下应该是用命令：
 {% highlight console %}

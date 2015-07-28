@@ -198,7 +198,7 @@ mix.version('public/css/final.css');
 
 ## Session
 
-可以用`Redis`来替代。
+可以用`Redis`来替代。可以参考我的另一篇[Redis笔记]({% post_url 2015-0725-Redis-notes %})
 
 设置：
 {% highlight php %}
@@ -209,6 +209,7 @@ mix.version('public/css/final.css');
 
 //前面使用use Session;了也可以这样
 session()->flash('key','value');
+?>
 {% endhighlight %}
 ## 使用(视图模板)
 {% highlight php %}
@@ -216,6 +217,7 @@ session()->flash('key','value');
 @if (Session::has('key'))
 	{ { Session::get('key') } }
 @endif
+?>
 {% endhighlight %}
 加入了`Flash`的package之后更是可以这样使用：
 {% highlight php %}
@@ -225,11 +227,13 @@ flash()->success('success infomation');
 flash()->overlay('infomation','title');
 //使用overlay需要在模板加入：
 //<script>$('#flash-overlay-modal').modal()</script>
+?>
 {% endhighlight %}
 当然啦，得在模板里加入：
 {% highlight php %}
 <?php
 @include ('flash::message')
+?>
 {% endhighlight %}
 #Form
 首先要安装下面的`Form`的package。然后来创作表单吧！
@@ -252,6 +256,7 @@ flash()->overlay('infomation','title');
 		{!! Form::submit('save it',['class'=>'btn btn-default form-control']) !!}
 	</div>
 {!! Form::close() !!}
+?>
 {% endhighlight %}
 `tags`那一段的`null`表示的是被选中的情况，如果是1，就表示`value`为1的被选中
 
