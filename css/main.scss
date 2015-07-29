@@ -48,6 +48,9 @@ body{
 		background-color:white;
 		border-bottom-left-radius:1em;
 		border-bottom-right-radius:1em;
+		img{
+			max-width: 90%;
+		}
 		code{
 			font-family: "Monaco","Ubuntu Mono","Source Code Pro";
 			font-size: 0.9em;

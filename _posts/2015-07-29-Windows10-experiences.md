@@ -119,7 +119,7 @@ Web笔记也是不错，就是那种随便在网页上画，最后保存下来�
 
 ### Others
 
-作为一个`Linux`用户理应向`Linus`和`Richard Stallman`先生一样狂喷`Windows`。但是，作为一个普通使用者来说，`Windows`做的确实是不错。
+作为一个`Linux`用户理应向*Linus*和*Richard Stallman*先生一样狂喷`Windows`。但是，作为一个普通使用者来说，`Windows`做的确实是不错。
 
 近年来`Mac`又在一步步走入人们的视野，这是个好事，有竞争才会有进步。
 
