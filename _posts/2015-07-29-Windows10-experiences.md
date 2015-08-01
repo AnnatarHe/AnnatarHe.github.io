@@ -123,7 +123,7 @@ Web笔记也是不错，就是那种随便在网页上画，最后保存下来�
 
 是的，非常nice的一个功能，按下`Win + G`即可调出，录制的效果还行，详细的设置可以自己调整。相信我，你会喜欢的。
 
-![Xbox](images/Xbox.png)
+![Xbox](/images/Xbox.png)
 
 ## Bugs
 

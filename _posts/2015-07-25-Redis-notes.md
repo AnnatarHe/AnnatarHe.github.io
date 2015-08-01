@@ -226,6 +226,19 @@ TTL key
 # 这货还有多久才能去领便当
 {% endhighlight %}
 
+## Transaction
+
+有时候得用到`事务`，就是把一系列的命令一起执行。
+{% highlight bash %}
+MULTI # begin
+SET key value
+ZADD Zkey 1 member
+GET key
+ZSCORE Zkey member
+EXEC # execute
+DISCARD # 取消事务
+{% endhighlight %}
+
 ## Resources
 
 这里有几个资源很不错的：
