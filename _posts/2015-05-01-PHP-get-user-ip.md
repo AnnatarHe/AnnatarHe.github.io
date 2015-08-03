@@ -24,6 +24,7 @@ function getIP()
     }
     return $ip;
 }
+?>
 {% endhighlight %}
 
 这样一段代码就是PHP中获取客户端IP地址的方法。十分的简单。只要运行这个函数，就可以返回客户端的IP地址。得到了IP地址就大概得知了位置坐标。

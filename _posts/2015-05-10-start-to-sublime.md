@@ -3,7 +3,7 @@ layout: post
 title: Started-sublime
 ---
 
-#Install
+# Install
 此篇针对新手(like me T_T)：   
 首先登录`sublime text`的官网进行下载：
 [Sublime Text 3](http://www.sublimetext.com/3)
@@ -19,7 +19,7 @@ title: Started-sublime
 > 那么，Windows用户现在就可以打开了。只是Sublime貌似没有自动桌面图标，所以需要自己去找。
 
 默认是在
-{% highlight html %}
+{% highlight console %}
 C:/Program Files/sublime text3/sublime_text.exe
 {% endhighlight %}
 
