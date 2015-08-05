@@ -1,6 +1,6 @@
 ---
 layout: default
-title: List of Blogs
+title: AnnatarHe
 ---
 
 {% for post in site.posts %}
