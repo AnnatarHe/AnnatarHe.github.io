@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Windows 10 experiences
+tags: windows
 ---
 
 ## Upgrade
