@@ -1,4 +1,6 @@
-url: AnnatarHe.github.io
+url: 'http://AnnatarHe.github.io'
+paginate: 2
+paginate_path: "/page:num/"
 defaults:
   -
     values:
