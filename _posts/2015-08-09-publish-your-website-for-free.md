@@ -53,3 +53,11 @@ title: Publish your website/webapp for free
 
 其实你也可以参考我的博客，就是你现在看到的这个博客。源码：[AnnatarHe.github.io](https://github.com/AnnatarHe/AnnatarHe.github.io)
 
+### Markdown
+
+这里有一点非常的重要，就是`Markdown`的语法问题。
+
+这一点`Jekyll`非常有意思，用的引擎是`Kramdown`，和正常的`Markdown`语法略有不同，具体有什么不同，你需要自己去官网看。整个文档量比较少。如果这些东西都看不下去，那我感觉可能程序员的路子不太适合你了。
+
+[kramdown Syntax](http://kramdown.gettalong.org/syntax.html)
+
