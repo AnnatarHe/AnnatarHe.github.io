@@ -75,3 +75,13 @@ title: Publish your website/webapp for free
 这个网站我没有使用过，不过看起来蛮不错的。
 
 这里同样有一个视频教程[gitcafe 上托管网页的另一种形式](http://haoduoshipin.com/v/159)
+
+## SAE
+
+SAE 全称是`Sina Application Engine`
+
+它是用`PaaS`(Platform as a service)提供服务。有流量才会有费用。
+
+对于创业来说，我觉得挺不错的。毕竟前期流量不会太大。
+
+因为我是写PHP的，所以你可以看到我的测试站点[hele](http://hele.sinaapp.com/)
