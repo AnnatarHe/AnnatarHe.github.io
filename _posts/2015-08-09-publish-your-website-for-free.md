@@ -61,3 +61,17 @@ title: Publish your website/webapp for free
 
 [kramdown Syntax](http://kramdown.gettalong.org/syntax.html)
 
+好吧，我承认是因为我现在写的和解析的代码会有冲突，如果介绍这些语法，一会儿只能接`Github`的报错邮件了。
+
+## Gitcafe
+
+我知道你肯定不会满意`Github pages`的速度，毕竟在国外，速度是没办法跟国内比。
+
+这个时候`Gitcafe`就来救场了
+
+[Gitcafe](https://gitcafe.com/)是一个和`Github`很像的国内代码托管网站。
+
+
+这个网站我没有使用过，不过看起来蛮不错的。
+
+这里同样有一个视频教程[gitcafe 上托管网页的另一种形式](http://haoduoshipin.com/v/159)
