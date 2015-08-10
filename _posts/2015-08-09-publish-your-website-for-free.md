@@ -84,4 +84,38 @@ SAE 全称是`Sina Application Engine`
 
 对于创业来说，我觉得挺不错的。毕竟前期流量不会太大。
 
-因为我是写PHP的，所以你可以看到我的测试站点[hele](http://hele.sinaapp.com/)
+如果流量低根本不担心花钱，比如我的这个测试站点。。。。到现在没花一毛钱。我好想哭
+
+因为我是写PHP的，所以你可以看到我的测试站点[hele](http://hele.sinaapp.com/)，当然，我什么都没写：
+{% highlight php %}
+<?php 
+echo phpinfo();
+ ?>
+{% endhighlight %}
+
+就酱。
+
+## Conclusion
+
+`Github pages`更适合前端程序员一些，就是主要写*Html/Css*的同学
+
+而`SAE`更适合后端程序员，比如写一些`Java`,`PHP`的同学。也可以是创业的同学。
+
+`Github pages`更加的简单方便一些，写写`Markdown`再运行三板斧一切就搞定了：
+{% highlight bash %}
+$ git add .
+$ git commit -m "lorm"
+$ git push
+{% endhighlight %}
+
+而`SAE`就是适合那些特别能折腾的同学，又要写这个，又要写那个的。
+
+## Experience
+
+我当年是买的新网的虚拟主机，50块一年，然后开始建站，边学边写，当初也是蛮苦的，版本迭代非常的快，差不多一两个月就重写一次。
+
+后来感觉水平差不多了就懒得这么折腾了。干脆就切换到了`Github pages`上面了，现在写起来真的是非常的轻松。
+
+只要做一些HTML/CSS，甚至连`JavaScript`不想写的时候都可以不写。简直舒爽。
+
+好了，全是个人意见，这一篇只是简要介绍一下而已啦。

@@ -43,7 +43,7 @@ body{
       li {
         display:inline-block;
         text-align:center;
-        padding: 10px;
+        padding-left: 10px;
       }
     }
 	}
@@ -52,6 +52,11 @@ body{
 		background-color:white;
 		border-bottom-left-radius:1em;
 		border-bottom-right-radius:1em;
+		ul{
+			li {
+				padding-bottom: .8em;
+			}
+		}
 		img{
 			max-width: 90%;
 		}
