@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Code Editor--Vim and SublimeText3
+Tags: sublime vim editor
 ---
 
 ## Meet up
