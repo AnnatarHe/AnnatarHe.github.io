@@ -119,7 +119,8 @@ class Article extends Model{
 	<li>{!! link_to_action('ArticlesController@show',$latest->title,[$latest->id]) !!}</li>
 </ul>
 {% endhighlight %}
-那么，`@include`我就不写了。   
+那么，`@include`我就不写了。
+
 然后去`App`目录下的`Providers`里面的`AppServiceProvider.php`找到boot函数：
 {% highlight php %}
 <?php
@@ -128,8 +129,11 @@ public function boot(){
 			$view->with('latest',Article::latest()->first());
 		});
 }
+?>
 {% endhighlight %}
 这样，所有的有这个视图的文件进行渲染的时候都会经过这一步。而这一步里获取到了数据并填充到文件里，是不是很优雅，很舒适？
+
+其实`5.1`版本加入一种`inject`的方法可以更优雅的解决这个问题，先占个坑，想好了再写。
 
 # Workflow
 首先定义路由：
@@ -137,6 +141,7 @@ public function boot(){
 {% highlight php %}
 <?php
 Route::resource('/article','ArticlesController');
+?>
 {% endhighlight %}
 那么，创建控制器：
 {% highlight console %}
@@ -263,6 +268,12 @@ flash()->overlay('infomation','title');
 
 
 # Packages
+
+需要引入的包要用`composer`的方式引入，例如：
+{% highlight console %}
+$ composer require illuminate/html
+{% endhighlight %}
+
 * **illuminate/html**   
 在`config/app.php`下注册：
 {% highlight php %}
@@ -272,6 +283,7 @@ flash()->overlay('infomation','title');
 //'Alias'加入：
 'Form' => 'Illuminate\Html\FormFacade',
 'Html' => 'Illuminate\Html\HtmlFacade'
+?>
 {% endhighlight %}
 
 * **laracasts/flash**   
@@ -281,6 +293,7 @@ flash()->overlay('infomation','title');
 'Laracasts\/Flash\/FlashServiceProvider'
 //'Alias'加入：
 'Flash' =>'Laracasts\Flash\Falsh'
+?>
 {% endhighlight %}
 
 # Production
