@@ -131,7 +131,7 @@ public function boot(){
 {% endhighlight %}
 这样，所有的有这个视图的文件进行渲染的时候都会经过这一步。而这一步里获取到了数据并填充到文件里，是不是很优雅，很舒适？
 
-#Workflow
+# Workflow
 首先定义路由：
 `App/Http/Routes.php`下，写入：
 {% highlight php %}
@@ -145,7 +145,7 @@ $ php artisan make:controller ArticlesController
 之后是去`Controller`里面写点儿东西：
 
 
-#Assets
+# Assets
 刚好看到Assets，先稍微写一下：
 `Laravel`使用[gulp](http://gulpjs.com)来对整理前端依赖的。首先要先把gulp依赖下载下来。
 {% highlight bash %}
@@ -192,7 +192,7 @@ mix.version('public/css/final.css');
 那么，如何在使用？   
 只需要在`layout`文件里把link改成：
 {% highlight html %}
-<link rel="stylesheet" href="{ { clixir('css/final.css') } }">
+<link rel="stylesheet" href="{ { elixir('css/final.css') } }">
 {% endhighlight %}
 它就会自动转换成带有版本号的样子
 
