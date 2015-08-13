@@ -15,11 +15,13 @@ title: Laravel study notes
 
 创建数据库：
 
-## Notice
+## <span style="color:red">Notice：</span>
 
-这里有个小坑，好吧，不能算是坑。
+> 这里有个小坑，好吧，不能算是坑。
 
-我们不能通过*migrate*创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
+> 创建数据库**必须**，**必须**，**必须**用复数形式！！！
+
+> 我们不能通过*migrate*创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
 
 {% highlight sql %}
 CREATE DATABASE `demo` DEFAULT CHARSET utf8;
@@ -35,10 +37,6 @@ $ php artisan make:migration create_articles_table --create="articles"
 {% highlight console %}
 $ php artisan make:migration add_excerpt_to_articles_table --table="articles"
 {% endhighlight %}
-
-
-## <span style="color:red">注意：</span>
-创建数据库**必须**，**必须**，**必须**用复数形式！！！
 
 如果想要干掉某行（字段），那么需要添加一个`composer`包才能运行：
 {% highlight console %}
