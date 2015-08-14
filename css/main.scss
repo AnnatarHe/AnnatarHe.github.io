@@ -153,3 +153,15 @@ p{
     }
   }
 }
+
+
+.list-unstyled {
+  list-style: none;
+  padding-left: 0;
+}
+code {
+  font-size: 0.9em;
+  padding: 0.5em;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #f34b7d;
+}

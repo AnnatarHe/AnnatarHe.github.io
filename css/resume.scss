@@ -7,7 +7,7 @@
 
 $globeWidth: 600px;
 $faceSize: 82px;
-
+$tableLine: #ddd;
 
 .resume{
   position: relative;
@@ -50,8 +50,56 @@ $faceSize: 82px;
     }
   }
 
+  .table {
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid $tableLine;
+    tr {
+      border-bottom: 1px solid $tableLine;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover {
+        color: #fff;
+        background-color: #7eb6ad;
+      }
+    }
+    td {
+      padding: 20px 10px;
+    }
+    border-collapse: collapse;
+    vertical-align: middle;
+  }
+  .list {
+    padding: 10px;
+    li {
+      padding: 10px;
+    }
+  }
+}
+.skills-table {
+  @extend .table;
+  .progress {
+    height: 20px;
+    width: ($globeWidth / 2);
+    border-radius: 1em;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    .size {
+      height: 100%;
+      background: linear-gradient(135deg, #888, #222);
+      text-align: center;
+      line-height: 20px;
+      color: #fff;
+    }
+  }
 }
 
-footer {
-  margin-top: 1em;
+.label {
+  display: inline-block;
+  padding: 5px;
+  color: #fff;
+  background-color: #777;
+  margin-bottom: 5px;
+  border-radius: .25em;
 }
