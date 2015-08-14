@@ -1,0 +1,57 @@
+---
+---
+
+/**
+ * Resume StyleSheet file
+ */
+
+$globeWidth: 600px;
+$faceSize: 82px;
+
+
+.resume{
+  position: relative;
+  top: 10px;
+
+  .header {
+    display: block;
+    width: $globeWidth;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+    background-color: #222;
+    padding: 2em;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    h1 {
+      font-size: 36px;
+    }
+  }
+  .face {
+    width: $faceSize;
+    height: $faceSize;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    margin-left: -($faceSize / 2);
+    margin-top: -($faceSize / 2);
+    box-shadow: 5px 5px 5px #888;
+  }
+
+  .content {
+    background-color: #fff;
+    width: $globeWidth;
+    margin: 0 auto;
+    padding: 2em;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    p {
+      line-height: 1.5em;
+    }
+  }
+
+}
+
+footer {
+  margin-top: 1em;
+}
