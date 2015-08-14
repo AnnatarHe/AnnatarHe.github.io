@@ -30,12 +30,13 @@
 	<div class="sorry">
 		Sorry, The page Not Found
 		<hr>
-		<p>AnnatarHe.github.io</p>
+		<p data-link="/index.html">AnnatarHe.github.io</p>
 	</div>
 	<script>
 	(window.onload = function (){
+    console.log('Thanks for u visited my site');
 			document.getElementsByTagName('p')[0].addEventListener('click',function(){
-					window.location.href='/index.html';
+					window.location.href=this.getAttribute('data-link');
 				});
 		}());
 	</script>
