@@ -7,15 +7,15 @@ title: Laravel study notes
 
 今天开始做一些小的笔记。顺便也把自己理解的英文文档的笔记写在这里。供有兴趣的同学参考吧。话说我为毛要把文档也翻译了？因为他们并没有翻译完整，我自个儿来呗。[Laravel中文文档](http://golaravel.com)
 
-# 安装
+## 安装
 
 我并没有写安装的介绍。上面的中文文档对**安装**这一块写的特别的详细，而且是纯中文。
 
-# Database
+## Database
 
 创建数据库：
 
-## <span style="color:red">Notice：</span>
+### <span style="color:red">Notice：</span>
 
 > 这里有个小坑，好吧，不能算是坑。
 
@@ -101,7 +101,7 @@ class Article extends Model{
 ?>
 {% endhighlight %}
 
-# View
+## View
 
 使一个页面局部总是接受数据
 
@@ -141,7 +141,7 @@ public function boot(){
 
 其实`5.1`版本加入一种`inject`的方法可以更优雅的解决这个问题，先占个坑，想好了再写。
 
-# Workflow
+## Workflow
 首先定义路由：
 `App/Http/Routes.php`下，写入：
 {% highlight php %}
@@ -156,12 +156,12 @@ $ php artisan make:controller ArticlesController
 之后是去`Controller`里面写点儿东西：
 
 
-# Assets
+## Assets
 刚好看到Assets，先稍微写一下：
 `Laravel`使用[gulp](http://gulpjs.com)来对整理前端依赖的。首先要先把gulp依赖下载下来。
 {% highlight bash %}
 $ npm install
-# 国内的网络环境你懂的，当然也可以用
+## 国内的网络环境你懂的，当然也可以用
 $ cnpm install
 {% endhighlight %}
 然后在`glupfile.js`中写这样的东西：
@@ -273,7 +273,7 @@ flash()->overlay('infomation','title');
 
 
 
-# Packages
+## Packages
 
 需要引入的包要用`composer`的方式引入，例如：
 {% highlight console %}
@@ -302,7 +302,7 @@ $ composer require illuminate/html
 ?>
 {% endhighlight %}
 
-# Production
+## Production
 
 生产环境还是得做一些操作的，比如关掉调试模式
 ,以下这些就是需要注意的地方。
@@ -315,7 +315,7 @@ $ php artisan clear-compiled
 $ php artisan optimize
 {% endhighlight %}
 
-# Resources
+## Resources
 * [laravel官方文档](http://laravel.com/docs/5.1)  <span style="color:red">英文</span>  **最权威**
 
 * [Laravel5学习笔记](https://www.gitbook.com/book/kejyuntw/laravel-5-learning-notes/details)  <span style="color:red">繁体中文</span>
