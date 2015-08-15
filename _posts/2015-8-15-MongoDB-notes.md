@@ -81,7 +81,7 @@ db.collection.insert(
 )
 {% endhighlight %}
 
-![crud-insert-stages](images/mongodbNotes/crud-insert-stages.png)
+![crud-insert-stages](/images/mongodbNotes/crud-insert-stages.png)
 
 这里的执行环境是`JavaScript`哦，所以呢，可以使用`For`循环，那么，做点儿什么吧！
 
@@ -118,7 +118,7 @@ db.users.find(
 .limit(5)
 {% endhighlight %}
 
-![crud-query-stages](images/mongodbNotes/crud-query-stages.png)
+![crud-query-stages](/images/mongodbNotes/crud-query-stages.png)
 
 ## update
 
@@ -183,7 +183,7 @@ db.users.remove(
 )
 {% endhighlight %}
 
-![crud-annotated-mongodb-remove](images/mongodbNotes/crud-annotated-mongodb-remove.png)
+![crud-annotated-mongodb-remove](/images/mongodbNotes/crud-annotated-mongodb-remove.png)
 
 ## Drop
 
@@ -214,7 +214,11 @@ db.collection.find()
 
 索引可以加快搜索速度，在几百万条数据的时候就更突出性能优势了
 
-查看索引
+### 查看索引
+
+{% highlight js %}
+db.collection.getIndex()
+{% endhighlight %}
 
 ## Reference
 
