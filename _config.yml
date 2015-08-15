@@ -1,6 +1,8 @@
 url: http://AnnatarHe.github.io
 paginate: 8
 paginate_path: "/page:num/"
+gems:
+  - jekyll-sitemap
 defaults:
   -
     values:
