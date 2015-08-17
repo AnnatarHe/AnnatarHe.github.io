@@ -220,6 +220,16 @@ db.collection.find()
 db.collection.getIndex()
 {% endhighlight %}
 
+### 创建索引
+
+按照`x`正向排序
+
+{% highlight js %}
+db.collection.ensureIndex({
+	x:1
+})
+{% endhighlight %}
+
 ## Reference
 
 * [Manual](https://docs.mongodb.org/manual)
