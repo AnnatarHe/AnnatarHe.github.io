@@ -1,6 +1,7 @@
 ---
 layout: post
-title: MongoDB notes
+title: MongoDB 笔记
+tags: MongoDB database
 ---
 
 ## The Hard Way

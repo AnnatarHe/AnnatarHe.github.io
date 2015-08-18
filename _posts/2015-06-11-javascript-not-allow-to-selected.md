@@ -1,6 +1,7 @@
 ---
 layout: post
-title: Javascript not allow to selected
+title: Javascript 不允许选中
+tags: javascript selected
 ---
 
 ##Finder

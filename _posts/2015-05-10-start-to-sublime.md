@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Started-sublime
+title: 开启 sublime
 ---
 
 # Install

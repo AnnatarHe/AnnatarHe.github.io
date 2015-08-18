@@ -1,6 +1,7 @@
 ---
 layout: post
-title: PHP-get-user-ip
+title: PHP 获取用户ip地址
+tags: php ip
 ---
 
 现在网络时代，几乎任何事情都可以在网络上做到。

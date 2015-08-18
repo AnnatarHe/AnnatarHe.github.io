@@ -1,6 +1,7 @@
 ---
 layout: post
-title: Laravel study notes
+title: Laravel 学习笔记
+tags: laravel php framework
 ---
 
 今天看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   

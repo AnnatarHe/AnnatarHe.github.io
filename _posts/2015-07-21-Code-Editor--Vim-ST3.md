@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Code Editor--Vim and SublimeText3
+title: 编辑器 - Vim 和 Sublime
 Tags: sublime vim editor
 ---
 

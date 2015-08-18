@@ -1,6 +1,7 @@
 ---
 layout: post
-title: Redis notes
+title: Redis 笔记
+tags: Redis database cache
 ---
 
 ## Install

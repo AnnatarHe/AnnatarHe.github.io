@@ -18,7 +18,7 @@ tags: domain life
 
 ![godaddy.com](/images/buyADomainName/webbuild01.png)
 
-##搜索域名
+## 搜索域名
 
 搜索域名是不是被买了
 
@@ -50,13 +50,13 @@ Yeah,这个可以买，点击`continue to cart`
 
 不得不说这个业务比较装逼，比如我的邮箱就是：`hele@iamhele.com`
 
-##倒数第三步
+## 倒数第三步
 
 ![checkout](/images/buyADomainName/webbuild07.png)
 
 确认要买多长时间什么的杂七杂八的东西。等觉得不错了，就点右边的橙色按钮`Proceed to checkout`
 
-##忘记登录了，这一步要补一下
+## 忘记登录了，这一步要补一下
 
 ![login](/images/buyADomainName/webbuild08.png)
 
@@ -66,6 +66,6 @@ Yeah,这个可以买，点击`continue to cart`
 
 然后就是写入比较多的个人信息
 
-##支付宝
+## 支付宝
 
 之后就是支付宝支付了。非常简单，大家都会。
