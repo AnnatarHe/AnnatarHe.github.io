@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Why I like to play games
+title: 为什么我爱玩游戏
 ---
 
 我不是爱玩游戏，我只是认真。

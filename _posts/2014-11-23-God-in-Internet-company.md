@@ -1,6 +1,6 @@
 ---
 layout: post
-title: God in Internet company
+title: 互联网公司里的“神”
 ---
 
 今天是周日，上帝都泡天使没工夫搭理凡人了，我却跑来给各位老爷干活。要是感动的话赏我两包辣条可好？
