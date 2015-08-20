@@ -54,7 +54,7 @@ console.log('Server running at http://127.0.0.1:1337/');
 ## Symbols
 
 这里是一些符号的转义
-
+|--------|------|
 |--------|------|
 |大于    | $gt  |
 |--------|------|
@@ -120,6 +120,39 @@ db.users.find(
 {% endhighlight %}
 
 ![crud-query-stages](/images/mongodbNotes/crud-query-stages.png)
+
+### 全文查询
+
+{% highlight js %}
+db.collection.find({
+	$text: {
+		$search: "coffee"
+	}
+})
+{% endhighlight %}
+
+> `-` 表示没有，例如 'aa bb -cc' 有aa,有bb，但是没有cc
+> 
+> "" 表示`和`，但是需要转义。
+
+### 相似度查询
+
+{% highlight js %}
+db.collection.find(
+{
+	$text: {$search: "aa bb"}
+},
+{
+	$score: {$meta: "text Score"}
+}
+)
+	.sort(
+	{
+		score: {$meta: "text Score"}
+	}
+	)
+{% endhighlight %}
+
 
 ## update
 
@@ -231,10 +264,28 @@ db.collection.ensureIndex({
 })
 {% endhighlight %}
 
+### 全文索引：
+
+{% highlight js %}
+//key 是变量，而text是不变的
+db.collection.ensureIndex({ key: "text" })
+// 多关键字查询
+db.collection.ensureIndex({
+	key_1: "text",
+	key_2: "text"
+})
+// 所有词均为关键字的索引
+db.collection.ensureIndex({ "$**": "text" })
+{% endhighlight %}
+
+### 命名索引
+
+{% highlight js %}
+db.collection.ensureIndex({ x:1, y:1 }, {name: "foo" }, {unique: true})
+{% endhighlight %}
+
 ## Reference
 
 * [Manual](https://docs.mongodb.org/manual)
-
 * [MongoDB入门篇](http://www.imooc.com/learn/295)
-
 * [HubWiz.com](http://www.hubwiz.com/course/54bdfcb188dba012b4b95c9c/)
