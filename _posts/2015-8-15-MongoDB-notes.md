@@ -15,7 +15,7 @@ tags: MongoDB database
 原来这货长这样：
 
 {% highlight html %}
-<div onclick="function()">foo</div>
+<div onclick="function()"> foo </div>
 {% endhighlight %}
 
 现在这货长这样：
@@ -54,7 +54,7 @@ console.log('Server running at http://127.0.0.1:1337/');
 ## Symbols
 
 这里是一些符号的转义
-|--------|------|
+
 |--------|------|
 |大于    | $gt  |
 |--------|------|
@@ -138,19 +138,15 @@ db.collection.find({
 ### 相似度查询
 
 {% highlight js %}
-db.collection.find(
-{
+db.collection.find({
 	$text: {$search: "aa bb"}
-},
-{
-	$score: {$meta: "text Score"}
-}
-)
-	.sort(
+	},
 	{
+	$score: {$meta: "text Score"}
+	})
+	.sort({
 		score: {$meta: "text Score"}
-	}
-	)
+	})
 {% endhighlight %}
 
 
@@ -235,9 +231,9 @@ db.collection.drop()
 
 {% highlight js %}
 db.collection.find()
-										.skip(20)
-										.limit(2)
-										.sort({ x:1 })
+	.skip(20)
+	.limit(2)
+	.sort({ x:1 })
 {% endhighlight %}
 
 ### <span style="color:red">Notice</span>
