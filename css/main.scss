@@ -82,7 +82,10 @@ body{
 					background-color: #7eb6ad;
 					text-shadow: $shadow;
 					transition: all .5s ease-in;
-					color: #fff;
+					a{
+						color: #fff;
+						transition: all .5s ease-in;
+					}
 				}
 			}
 			td{
