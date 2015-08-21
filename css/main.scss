@@ -4,6 +4,10 @@
 
 $font1: Lato, "Microsoft Jhenghei", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 $font2: lato-regular,"Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Microsoft YaHei",sans-serif,"Courier","Ubuntu Mono";
+
+$shadow: 5px 5px 5px #888
+
+
 body{
 	background-color:#dda;
 	font-family: $font1;
@@ -75,10 +79,10 @@ body{
 			tr{
 				border-spacing:2px;
 				&:hover{
-					background-color:#7eb6ad;
-					a{
-						color:white;
-					}
+					background-color: #7eb6ad;
+					text-shadow: $shadow;
+					transition: all .5s ease-in;
+					color: #fff;
 				}
 			}
 			td{
