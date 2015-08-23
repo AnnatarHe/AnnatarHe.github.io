@@ -247,7 +247,7 @@ flash()->overlay('infomation','title');
 @include ('flash::message')
 ?>
 {% endhighlight %}
-#Form
+## Form
 首先要安装下面的`Form`的package。然后来创作表单吧！
 {% highlight php %}
 <?php 
@@ -272,6 +272,15 @@ flash()->overlay('infomation','title');
 {% endhighlight %}
 `tags`那一段的`null`表示的是被选中的情况，如果是1，就表示`value`为1的被选中
 
+## Cache
+
+无奈嘛，总想让自己的网站快一点儿。
+
+我是因为使用的美帝的`VPS`。所以我感觉速度可能出在加载图片文件上。
+
+第一步，我申请了一个[七牛云存储](http://qiniu.com),然后把比较大的视频和图片文件放在了七牛的空间里，免费用户有`10G`的空间呢，对我来说还是挺够用个。
+
+第二步，开启`Redis`缓存，将所有的`Cache`转用到`Redis`，这样可以尽量避免一些`session`的负面影响。
 
 
 ## Packages
