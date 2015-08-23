@@ -1,4 +1,6 @@
 url: http://AnnatarHe.github.io
+sass:
+    sass_dir: _scss
 paginate: 12
 paginate_path: "/page:num/"
 gems:
