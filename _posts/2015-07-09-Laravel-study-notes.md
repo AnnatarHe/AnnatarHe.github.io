@@ -22,7 +22,7 @@ tags: laravel php framework
 
 > 创建数据库**必须**，**必须**，**必须**用复数形式！！！
 
-> 我们不能通过*migrate*创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
+我们不能通过*migrate*创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
 
 {% highlight sql %}
 CREATE DATABASE `demo` DEFAULT CHARSET utf8;
@@ -115,9 +115,12 @@ class Article extends Model{
 > 渲染页面   
 > repeat \* n      
 
-这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来。   
-不扯了，接着说。这样的重复自己是不是非常的无聊，低效率，而且维护比较麻烦。   
+这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来.
+
+不扯了，接着说。这样的重复自己是不是非常的无聊，低效率，而且维护比较麻烦.
+
 噔噔噔噔～`Laravel`出来拯救你啦~
+
 这里做个例子吧：
 在导航条里面写一个最后的一篇文章，每个页面都需要。所以建立一个文件`nav.blade.php`,放在`partials`里面。因为是一个视图文件，所以要放在`Views`目录下。
 里面写上：
@@ -311,6 +314,14 @@ $ composer require illuminate/html
 'Flash' =>'Laracasts\Flash\Falsh'
 ?>
 {% endhighlight %}
+
+* **predis/predis**
+
+这个不需要再boot里面再加入了。
+
+所要修改的只有`config/database.php`
+
+把`cache`换成`redis`就可以啦~
 
 ## Production
 

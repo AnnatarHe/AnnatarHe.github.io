@@ -5,8 +5,8 @@ title: English sentences
 
 > Do not go gentle into that good night
 > 
-> Dylan Thomas
+> -- Dylan Thomas
 
 > Anything that can go wrong will go wrong
 > 
-> Murphy's law
+> -- Murphy's law
