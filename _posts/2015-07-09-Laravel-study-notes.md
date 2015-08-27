@@ -4,9 +4,9 @@ title: Laravel 学习笔记
 tags: laravel php framework
 ---
 
-今天看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
+最近看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
 
-今天开始做一些小的笔记。顺便也把自己理解的英文文档的笔记写在这里。供有兴趣的同学参考吧。话说我为毛要把文档也翻译了？因为他们并没有翻译完整，我自个儿来呗。[Laravel中文文档](http://golaravel.com)
+今天开始做一些小的笔记。
 
 ## 安装
 
@@ -338,13 +338,8 @@ $ php artisan optimize
 
 ## Resources
 * [laravel官方文档](http://laravel.com/docs/5.1)  <span style="color:red">英文</span>  **最权威**
-
 * [Laravel5学习笔记](https://www.gitbook.com/book/kejyuntw/laravel-5-learning-notes/details)  <span style="color:red">繁体中文</span>
-
 * [Laracasts](https://laracasts.com/series/laravel-5-fundamentals)  <span style="color:red">英文视频</span>
-
 * [Laravel5入门系列](http://lvwenhan.com/laravel/432.html)  <span style="color:red">简体中文</span>
-
 * [Laravel中文文档](http://www.golaravel.com/laravel/docs/5.1/)  <span style="color:red">少量简体中文</span>
-
 * [Laravel中文文档](http://laragirl.com/docs/5.1)  <span style="color:red">简体中文</span>大部分翻译完成
