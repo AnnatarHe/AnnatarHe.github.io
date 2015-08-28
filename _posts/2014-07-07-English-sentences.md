@@ -10,3 +10,7 @@ title: English sentences
 > Anything that can go wrong will go wrong
 > 
 > -- Murphy's law
+
+> Simplicity is the ultimate sophistication. 
+> 
+> -- Leonardo da Vinci
