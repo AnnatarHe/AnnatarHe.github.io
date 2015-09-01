@@ -86,6 +86,8 @@ set guioptions-=T
 
 `dd`删除整行
 
+`ciw` Change Inner Word
+
 `;p`自己设置的leader键，粘贴出来自剪切板的内容
 
 `:e path/file` 打开或创建文件
