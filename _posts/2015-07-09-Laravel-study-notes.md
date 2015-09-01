@@ -4,9 +4,9 @@ title: Laravel 学习笔记
 tags: laravel php framework
 ---
 
-今天看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
+最近看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
 
-今天开始做一些小的笔记。顺便也把自己理解的英文文档的笔记写在这里。供有兴趣的同学参考吧。话说我为毛要把文档也翻译了？因为他们并没有翻译完整，我自个儿来呗。[Laravel中文文档](http://golaravel.com)
+今天开始做一些小的笔记。
 
 ## 安装
 
@@ -22,7 +22,7 @@ tags: laravel php framework
 
 > 创建数据库**必须**，**必须**，**必须**用复数形式！！！
 
-> 我们不能通过*migrate*创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
+我们不能通过*migrate*创建数据库，而是要手动创建,好在我还知道那么些`SQL`语法，这也难不倒:)
 
 {% highlight sql %}
 CREATE DATABASE `demo` DEFAULT CHARSET utf8;
@@ -115,9 +115,12 @@ class Article extends Model{
 > 渲染页面   
 > repeat \* n      
 
-这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来。   
-不扯了，接着说。这样的重复自己是不是非常的无聊，低效率，而且维护比较麻烦。   
+这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来.
+
+不扯了，接着说。这样的重复自己是不是非常的无聊，低效率，而且维护比较麻烦.
+
 噔噔噔噔～`Laravel`出来拯救你啦~
+
 这里做个例子吧：
 在导航条里面写一个最后的一篇文章，每个页面都需要。所以建立一个文件`nav.blade.php`,放在`partials`里面。因为是一个视图文件，所以要放在`Views`目录下。
 里面写上：
@@ -312,6 +315,14 @@ $ composer require illuminate/html
 ?>
 {% endhighlight %}
 
+* **predis/predis**
+
+这个不需要再boot里面再加入了。
+
+所要修改的只有`config/database.php`
+
+把`cache`换成`redis`就可以啦~
+
 ## Production
 
 生产环境还是得做一些操作的，比如关掉调试模式
@@ -327,13 +338,8 @@ $ php artisan optimize
 
 ## Resources
 * [laravel官方文档](http://laravel.com/docs/5.1)  <span style="color:red">英文</span>  **最权威**
-
 * [Laravel5学习笔记](https://www.gitbook.com/book/kejyuntw/laravel-5-learning-notes/details)  <span style="color:red">繁体中文</span>
-
 * [Laracasts](https://laracasts.com/series/laravel-5-fundamentals)  <span style="color:red">英文视频</span>
-
 * [Laravel5入门系列](http://lvwenhan.com/laravel/432.html)  <span style="color:red">简体中文</span>
-
 * [Laravel中文文档](http://www.golaravel.com/laravel/docs/5.1/)  <span style="color:red">少量简体中文</span>
-
 * [Laravel中文文档](http://laragirl.com/docs/5.1)  <span style="color:red">简体中文</span>大部分翻译完成
