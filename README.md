@@ -1,10 +1,10 @@
-# Blog
+## Blog
 
-this is my personal blog
+This is my personal blog site
 
-# License
+## License
 
-All articles are wrote by `贺乐同学`, Alias: `AnnatarHe`
+All articles are wrote by `贺乐同学` 
 
-All articles under [license](http://creativecommons.org/licenses/by-nc-sa/2.5/)
+All articles under [2.5](http://creativecommons.org/licenses/by-nc-sa/2.5/)
 
