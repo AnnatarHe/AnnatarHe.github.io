@@ -80,13 +80,19 @@ set guioptions-=T
 
 `Esc`这个键是最常用的，各个模式的切换都是靠这个。
 
+`c` change
+
+`d` delete
+
+`y` yank
+
 `yy`复制整行，没什么可说的吧。
 
 `p`粘贴
 
 `dd`删除整行
 
-`ciw` Change Inner Word
+`ciw` Change Inner Word, `w`可以变成`'`，这样就是修改整句话！
 
 `;p`自己设置的leader键，粘贴出来自剪切板的内容
 
