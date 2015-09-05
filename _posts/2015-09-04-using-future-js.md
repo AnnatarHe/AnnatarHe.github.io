@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用更新的JS
+title: 使用下一代的JS
 ---
 
 ## JS
@@ -24,7 +24,7 @@ title: 使用更新的JS
 
 这篇文章简要写一下最近用原声 `js` 写出来小东西的心得吧
 
-## 兼容性
+## Compatibility
 
 我个人一直非常摒弃 `IE` 系列，性能差到爆，写法奇怪，但是偏偏市场占有率有那么高!
 
@@ -57,7 +57,7 @@ IE的非主流语法我是不想写。
 
 当新式浏览器的市场越大，那么兼容性就会成为需要考虑的事情了，而不是必须的事情。
 
-## 新API
+## The new API
 
 我知道肯定有很多人在用着
 {% highlight js %}
@@ -135,4 +135,42 @@ class Foo {
 
 当然，我喜欢`ES6` 是因为写法上的优雅，简洁，有力以及 `拥抱改变` 
 
-好啦，暂时就这里，想到了再更新
+`ES6`的匿名函数表达式使用了箭头(`=>`)
+
+例如：
+{% highlight js %}
+const sum = (arg1, arg2) => arg1 + arg2;
+{% endhighlight %}
+这样的写法使得匿名函数更具有表现力，看起来更加的优雅，舒适。
+
+当然，还有另一个功能，原来写`Ajax`请求的时候需要调用当前对象的其他方法处理`result`，这个时候`this`指针指向的是`Ajax`的处理。就像这样：
+{% highlight js %}
+// 这里的函数定义就不写了
+Foo.prototype.ajax = function() {
+	$.get('http://google.com', function(res) {
+		// 这里的this指向的其实不是当前对象
+		this.otherMethods();
+		//由于上面的原因，所以需要调用bind来绑定当前对象
+	}.bind(this));
+}
+{% endhighlight %}
+这样的写法让我来说就是。。。非常的不好看，牵扯了太多的坑。
+
+然后`ES6`的写法是这样的：
+{% highlight js %}
+class Foo {
+	ajax() {
+		$.get('http://google.com', (res) => {
+			// 这里的this对象指的是当前对象，而不是ajax对象
+			this.otherMethods();
+		})
+	}
+}
+{% endhighlight %}
+
+是不是更加的简单优雅？
+
+
+## ChangeLog
+2015-09-04 开始写
+2015-09-05 添加`bind(this)`部分
