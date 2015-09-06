@@ -1,14 +1,8 @@
----
----
-
-
 /**
  * Main page and post page Style sheets
  */
 
-@charset "utf-8";
 
-@import '_variables.scss';
 
 body{
 	background-color:#dda;
@@ -95,7 +89,10 @@ body{
 				padding:20px;
 				vertical-align: middle;
 				text-align: center;
-				border:1px solid #ddd;
+				border-top:1px solid #ddd;
+				border-left:1px solid #ddd;
+				border-right:1px solid #ddd;
+				border-bottom: 1px solid #ddd;
 				a{
 					display: block;
 					color: #c0865e;
