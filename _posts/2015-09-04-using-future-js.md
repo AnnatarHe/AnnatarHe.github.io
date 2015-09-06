@@ -32,11 +32,11 @@ title: 使用下一代的JS
 
 第一，写法操蛋。
 {% highlight css %}
-// 正常浏览器
+/* 正常浏览器 */
 .foo {
 	opacity: .5;
 }
-// 非正常浏览器
+/* 非正常浏览器 */
 .foo {
   filter: alpha(opacity=50);
 }
