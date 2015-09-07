@@ -309,7 +309,7 @@ $ composer require illuminate/html
 {% highlight php %}
 <?php 
 //'providers'=>里面加入
-'Laracasts\/Flash\/FlashServiceProvider'
+'Laracasts\Flash\FlashServiceProvider'
 //'Alias'加入：
 'Flash' =>'Laracasts\Flash\Falsh'
 ?>
