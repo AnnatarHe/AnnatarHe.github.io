@@ -2,8 +2,6 @@
  * Main page and post page Style sheets
  */
 
-
-
 body{
 	background-color:#dda;
 	font-family: $font1;
@@ -61,7 +59,7 @@ body{
 			max-width: 90%;
 		}
 		code{
-			font-family: "Monaco","Ubuntu Mono","Source Code Pro";
+			font-family: $codeFont;
 			font-size: 0.9em;
 			background-color:rgba(0,0,0,0.05);
 			padding: 0.5em;
@@ -130,7 +128,7 @@ a{
 	background-color:#232323;
 	color:white;
 	padding:20px;
-	font-family:"Monaco","Ubuntu Mono","Courier";
+	font-family:$codeFont;
 	code{
 		background-color:#232323 !important;
 		font-size: 1em !important;
