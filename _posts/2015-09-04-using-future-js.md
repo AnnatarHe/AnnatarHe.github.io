@@ -86,7 +86,7 @@ foo.addEventListener('click', (e) => {
 	console.log(e);
 });
 {% endhighlight %}
-既然提供了新的接口，那么必定是有提升的，好吧，其实不新了。
+既然提供了新的接口，那么必定是有提升的，好吧，其实不新了，都快十年了
 
 ## ES6
 
@@ -163,7 +163,7 @@ class Foo {
 		$.get('http://google.com', (res) => {
 			// 这里的this对象指的是当前对象，而不是ajax对象
 			this.otherMethods();
-		})
+		});
 	}
 }
 {% endhighlight %}
@@ -174,3 +174,4 @@ class Foo {
 ## ChangeLog
 2015-09-04 开始写
 2015-09-05 添加`bind(this)`部分
+2015-09-07 添加分号，简单修改
