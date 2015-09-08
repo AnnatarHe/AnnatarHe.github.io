@@ -163,11 +163,19 @@ $ php artisan make:controller ArticlesController
 ## Assets
 刚好看到Assets，先稍微写一下：
 `Laravel`使用[gulp](http://gulpjs.com)来对整理前端依赖的。首先要先把gulp依赖下载下来。
-{% highlight bash %}
+{% highlight shell %}
 $ npm install
 ## 国内的网络环境你懂的，当然也可以用
 $ cnpm install
 {% endhighlight %}
+
+默认自动带有`bootstrap-sass`
+
+在`resources/assets/sass/app.scss`里面解除注释
+{% highlight sass %}
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+{% endhighlight %}
+
 然后在`glupfile.js`中写这样的东西：
 {% highlight javascript %}
 var elixir = require('laravel-elixir');
@@ -183,19 +191,19 @@ elixir(function(mix){
 	],'public/output/final.js','public/js');
 })
 {% endhighlight %}
-好了，那么都是什么意思呢？`mix`是mixin的意思哦，第二行首先是把[Sass](http://sass-lang.com)编译成`css`，[CoffeeScript](http://coffee-script.org)编译成`Javascript`，是吧^_^   
+好了，那么都是什么意思呢？`mix`是mixin的意思哦，第二行首先是把[Sass](http://sass-lang.com)编译成`css`，[CoffeeScript](http://coffee-script.org)编译成`Javascript`，是吧^_^
+
 然后是混合选定的css文件，怎么选呢？**min.style**的三个参数分别是**被混合的文件名**，**混合后的生成地址**，**被混合文件的所在目录**   
-那么同理，`mix.scripts`也是混合喽~   
+那么同理，`mix.scripts`也是混合喽~
 
 > Ok,there we go!   
-
-这是**jeffery way**老师很开心的一句话~   
 
 那么，如何运行这个命令？好办：
 {% highlight bash %}
 $ glup
 {% endhighlight %}
-这样就可以了。   
+这样就可以了。
+
 **生产环境**怎么办呢？
 {% highlight bash %}
 $ glup --production
@@ -204,7 +212,8 @@ $ glup --production
 {% highlight javascript %}
 mix.version('public/css/final.css');
 {% endhighlight %}
-那么，如何在使用？   
+那么，如何在使用？
+
 只需要在`layout`文件里把link改成：
 {% highlight html %}
 <link rel="stylesheet" href="{ { elixir('css/final.css') } }">
@@ -273,7 +282,9 @@ flash()->overlay('infomation','title');
 {!! Form::close() !!}
 ?>
 {% endhighlight %}
-`tags`那一段的`null`表示的是被选中的情况，如果是1，就表示`value`为1的被选中
+`tags`那一段的`null`表示的是被选中的情况，如果是1，就表示`value`为1的被选中。
+
+如果有时候忘记了参数是什么，随时看源码，写的非常的清楚！
 
 ## Cache
 
@@ -285,11 +296,10 @@ flash()->overlay('infomation','title');
 
 第二步，开启`Redis`缓存，将所有的`Cache`转用到`Redis`，这样可以尽量避免一些`session`的负面影响。
 
-
 ## Packages
 
 需要引入的包要用`composer`的方式引入，例如：
-{% highlight console %}
+{% highlight shell %}
 $ composer require illuminate/html
 {% endhighlight %}
 
