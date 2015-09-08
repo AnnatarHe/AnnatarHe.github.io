@@ -163,7 +163,7 @@ $ php artisan make:controller ArticlesController
 ## Assets
 刚好看到Assets，先稍微写一下：
 `Laravel`使用[gulp](http://gulpjs.com)来对整理前端依赖的。首先要先把gulp依赖下载下来。
-{% highlight shell %}
+{% highlight console %}
 $ npm install
 ## 国内的网络环境你懂的，当然也可以用
 $ cnpm install
@@ -299,7 +299,7 @@ flash()->overlay('infomation','title');
 ## Packages
 
 需要引入的包要用`composer`的方式引入，例如：
-{% highlight shell %}
+{% highlight console %}
 $ composer require illuminate/html
 {% endhighlight %}
 
