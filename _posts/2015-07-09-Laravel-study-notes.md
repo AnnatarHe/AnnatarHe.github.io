@@ -286,6 +286,20 @@ flash()->overlay('infomation','title');
 
 如果有时候忘记了参数是什么，随时看源码，写的非常的清楚！
 
+## Upload
+
+{% highlight php %}
+<?php 
+public function addPhoto(Request $request) {
+	$file = $request->file('file');
+	$name = time() . $file->getClientOriginalName();
+	$file->move('projectName/phtots', $name);
+	return 'Done';
+}
+ ?>
+{% endhighlight %}
+哈哈~这就上传完成啦~
+
 ## Cache
 
 无奈嘛，总想让自己的网站快一点儿。
