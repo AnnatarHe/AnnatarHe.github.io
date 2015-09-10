@@ -36,7 +36,7 @@ $ php artisan make:migration create_articles_table --create="articles"
 {% endhighlight %}
 添加数据库的表
 {% highlight console %}
-$ php artisan make:migration add_excerpt_to_articles_table --table="articles"
+$ php artisan make:migration add_excerpt_to_articles_table --create="articles"
 {% endhighlight %}
 
 如果想要干掉某行（字段），那么需要添加一个`composer`包才能运行：
@@ -73,7 +73,7 @@ use App\User;
 public function run (){
 	Model::unguard();
 	User::truncate();
-	factory(User::class,50)->create()
+	factory(User::class, 50)->create()
 	Model::reguard();
 }
 ?>
@@ -87,6 +87,11 @@ $ php artisan db:seed
 > 当然还有简便的方法，这样的假数据我们只会在测试的时候使用，所以没必要非得在文件里面写入，那么这个简单的方法比较合适   
 >> $ php artisan tinker   
 >> factory('App\User')->create();
+
+然后创建`Model`
+{% highlight console %}
+$ php artisan make:model Article
+{% endhighlight %}
 
 现在需要传入数据到数据库中，那么怎么做呢？直接传入数组数据是不行的，因为比较危险，但是我们比较了解，可以这么用，那么就可以在这里
 `App/Article.php`
@@ -248,7 +253,7 @@ session()->flash('key','value');
 <?php 
 flash('Hello World');
 flash()->success('success infomation');
-flash()->overlay('infomation','title');
+flash()->overlay('infomation', 'title');
 //使用overlay需要在模板加入：
 //<script>$('#flash-overlay-modal').modal()</script>
 ?>
@@ -265,19 +270,19 @@ flash()->overlay('infomation','title');
 <?php 
 {!! Form::open()  !!}
 	<div class="form-group">
-		{!! Form::label('title','Title':) !!}
+		{!! Form::label('title','Title') !!}
 		{!! Form::text('title',null,['class'=>'form-control','placeholder'=>'The Title']) !!}
 	</div>
 	<div class="form-group">
-		{!! Form::label('title','Title':) !!}
+		{!! Form::label('title','Title') !!}
 		{!! Form::input('date','published_at',date('Y-m-d'),['class'=>'form-control']) !!}
 	</div>
 	<div class="form-group">
-		{!! Form::label('title','Title':) !!}
+		{!! Form::label('title','Title') !!}
 		{!! Form::select('tags[]',['1'=>'personal'],null,['class'=>'form-control','multiple']) !!}
 	</div>
 	<div class="form-group">
-		{!! Form::submit('save it',['class'=>'btn btn-default form-control']) !!}
+		{!! Form::submit('save it', ['class'=>'btn btn-default form-control']) !!}
 	</div>
 {!! Form::close() !!}
 ?>
