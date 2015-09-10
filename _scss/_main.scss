@@ -8,12 +8,12 @@ body{
 }
 .main{
 	border-radius:1em;
-	@media (min-width:800px){
-		width:800px;
+	@media (min-width: $mdScreen){
+		width: $mdScreen;
 		margin:30px auto;
 	}
-	@media (max-width:800px){
-		width:95%;
+	@media (max-width: $mdScreen){
+		width:100%;
 		margin:1px auto;
 	}
 	.header{
@@ -50,6 +50,9 @@ body{
 		background-color:white;
 		border-bottom-left-radius:1em;
 		border-bottom-right-radius:1em;
+		@media (max-width:  $mdScreen) {
+			padding: 1em;
+		}
 		ul{
 			li {
 				padding-bottom: .8em;
