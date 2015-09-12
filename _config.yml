@@ -1,10 +1,15 @@
+name: AnnatarHe's blog
+author: AnnatarHe
 url: http://AnnatarHe.github.io
+email: iamhele1994@gmail.com
+uri: http://github.com/AnnatarHe
 sass:
     sass_dir: _scss
 paginate: 12
 paginate_path: "/page:num/"
 gems:
   - jekyll-sitemap
+  - jekyll-feed
 defaults:
   -
     values:
