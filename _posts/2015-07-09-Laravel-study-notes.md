@@ -4,6 +4,21 @@ title: Laravel 学习笔记
 tags: laravel php framework
 ---
 
+## Video
+
+<video id="video" class="video-js vjs-default-skin" controls
+ preload="auto" width="100%" height="555px" poster=""
+ data-setup='{}'>
+  <source src="http://7xjhkb.com1.z0.glb.clouddn.com/02-laravel.mp4" type='video/mp4' >
+  <source src="really-cool-video.webm" type='video/webm'>
+  <p class="vjs-no-js">
+    To view this video please enable JavaScript, and consider upgrading to a web browser
+    that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+  </p>
+</video>
+
+## Hello
+
 最近看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
 
 今天开始做一些小的笔记。

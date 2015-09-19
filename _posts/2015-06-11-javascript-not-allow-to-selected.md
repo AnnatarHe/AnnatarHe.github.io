@@ -4,13 +4,30 @@ title: Javascript 不允许选中
 tags: javascript selected
 ---
 
+## Video
+
+<video id="video" class="video-js vjs-default-skin" controls
+ preload="auto" width="100%" height="555px" poster=""
+ data-setup='{}'>
+  <source src="http://7xjhkb.com1.z0.glb.clouddn.com/01-javascript-not-allow-selected.mp4" type='video/mp4' >
+  <source src="really-cool-video.webm" type='video/webm'>
+  <p class="vjs-no-js">
+    To view this video please enable JavaScript, and consider upgrading to a web browser
+    that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+  </p>
+</video>
+
 ##Finder
 
-是不是发现有些网站不允许选中？   
-不允许选中是什么意思，也就是说，用户不能对里面的数据进行任何的`Ctrl-C`这种的操作。   
-比如我知道一个网站叫*批改网*   
-老师可以在里面出英文题目，学生作答。为了防止同学们用神技`CVS`大法（复制粘贴保存的快捷键）   
-他们网站就运用了这么一些手段，那么基本也都是通过`JavaScript`的方式来达到目的。   
+是不是发现有些网站不允许选中？
+
+不允许选中是什么意思，也就是说，用户不能对里面的数据进行任何的`Ctrl-C`这种的操作。
+
+比如我知道一个网站叫*批改网*
+
+老师可以在里面出英文题目，学生作答。为了防止同学们用神技`CVS`大法（复制粘贴保存的快捷键）
+
+他们网站就运用了这么一些手段，那么基本也都是通过`JavaScript`的方式来达到目的。
 
 说明：一般情况下网站都会允许选中，不允许选中这种场景只适用于展示型的网站。比如PPT什么的
 
@@ -24,12 +41,15 @@ tags: javascript selected
 </body>
 {% endhighlight %}
 
-用起来非常的简单粗暴。   
-那么同理   
+用起来非常的简单粗暴。
+
+那么同理
+
 在`div`上使用是不是也是一样的效果呢？
 
 
-经过我的测试，很明显，是的。   
+经过我的测试，很明显，是的。
+
 我还是贴代码备忘吧。
 {% highlight html %}
 <div onselectstart="return false;">
@@ -39,13 +59,21 @@ tags: javascript selected
 
 ##Solutions
 
-那么，我十分想要复制这个网站的内容。   
-怎么办？   
-好办。   
-首先我默认你安装了新版的浏览器。如果没有，我个人推荐`Chrome`浏览器，这款浏览器是公认的快而且好用，但是国内环境。。。你懂的，所以很多的实用功能并不存在.   
-但是无碍他是一款优秀的浏览器。当然，缺点也是有的，它运行时所占用的*资源*也是十分可怕（相比较其他浏览器）。   
-浏览器听我吹完了吧，那就用新版浏览器打开那张不允许选择的页面，按下`F12`会打开一个开发者工具.   Mac系统的快捷键也许是…好吧，我忘了，我一直用`Ubuntu`，Mac也没用过。Mac的Chrome可以通过点击右上角的`setting`找到`More Tools`下的`Developer tools`打开。   
-之后会看到很多代码，然后就是从里面找了。找到了就成。   
+那么，我十分想要复制这个网站的内容。
+
+怎么办？
+
+好办。
+
+首先我默认你安装了新版的浏览器。如果没有，我个人推荐`Chrome`浏览器，这款浏览器是公认的快而且好用，但是国内环境。。。你懂的，所以很多的实用功能并不存在.
+
+但是无碍他是一款优秀的浏览器。当然，缺点也是有的，它运行时所占用的*资源*也是十分可怕（相比较其他浏览器）。
+
+浏览器听我吹完了吧，那就用新版浏览器打开那张不允许选择的页面，按下`F12`会打开一个开发者工具.
+Mac系统的快捷键也许是…好吧，我忘了，我一直用`Ubuntu`，Mac也没用过。Mac的Chrome可以通过点击右上角的`setting`找到`More Tools`下的`Developer tools`打开。
+
+之后会看到很多代码，然后就是从里面找了。找到了就成。
+
 尽情的复制粘贴吧！
 
 其实还有一种方法，就是禁用`Javascript`这个手段太暴力了。而且可能会导致页面错误什么的（比如`Ajax`不能使用），所以并不推荐。
