@@ -5,6 +5,12 @@ title: About
 
 ## Contact me
 
+我想你可能需要联系我，那么下面有几个联系方式：
+
+* Email： iamhele1994@gmail.com
+* Github: AnnatarHe
+* Weibo: 贺乐同学
+
 
 ## Hello
 
