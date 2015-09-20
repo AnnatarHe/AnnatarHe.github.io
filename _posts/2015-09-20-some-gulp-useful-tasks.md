@@ -122,3 +122,30 @@ gulp.task('production', function() {
 {% endhighlight %}
 
 ## React
+
+现在`React`这么火，我当然也是会写一些`React`项目的。
+
+首先是安装依赖
+
+注意：这里没有写其他的部分。需要`css`部分的，参考上面的部分
+
+{% highlight console %}
+npm install --save-dev gulp browserify vinyl-source-stream babelify
+{% endhighlight %}
+
+然后是任务编写：
+
+{% highlight js %}
+var gulp = require("gulp");
+var browserify = require("browserify");
+var babelify = require("babelify");
+var source = require("vinyl-source-stream");
+
+gulp.task('jsx', function(){
+  return browserify('./js/app.js')
+         .transform(babelify)
+         .bundle()
+         .pipe(source('bundle.js'))
+         .pipe(gulp.dest('js'));
+});
+{% endhighlight %}
