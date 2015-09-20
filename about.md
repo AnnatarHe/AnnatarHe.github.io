@@ -3,6 +3,15 @@ layout: post
 title: About
 ---
 
+## Contact me
+
+我想你可能需要联系我，那么下面有几个联系方式：
+
+* Email： iamhele1994@gmail.com
+* Github: AnnatarHe
+* Weibo: 贺乐同学
+
+
 ## Hello
 
 你好，非常欢迎你来到我的个人博客。既然你能找到这里，想必也是想了解一下我
