@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 一些有用的gulp模板
+title: 一些有用的 gulp 模板
 tags: gulp front-end
 ---
 
@@ -34,6 +34,9 @@ $ npm install 6to5ify gulp gulp-autoprefixer gulp-babel gulp-browserify2 gulp-co
 
 运行`production`则生成生产环境下的文件在`productions`目录
 {% highlight js %}
+/**
+ * 引入依赖
+ */
 var gulp = require('gulp'),
     babel = require('gulp-babel'),
     sass = require('gulp-sass'),
@@ -45,7 +48,11 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     hash = require('gulp-hash'),
     concat = require('gulp-concat');
-
+/**
+ * sass 任务
+ * 引入源文件，转义并加入浏览器兼容代码，然后加入sourcemap，输出，最后提醒成功。
+ * @return {file}   转义完成的css文件
+ */
 gulp.task('sass', function() {
   return gulp.src('src/style/*.scss')
         .pipe(sourcemaps.init())
@@ -56,6 +63,11 @@ gulp.task('sass', function() {
         .pipe(notify({ message: 'normal css file was successfully build!'}));
 });
 
+/**
+ * 生产环境的sass文件转义
+ * 添加了压缩任务。以及hash值的附加
+ * @return {file}   转义压缩完成的css文件
+ */
 gulp.task('production-sass', function() {
   return gulp.src('src/style/*.scss')
         .pipe(sourcemaps.init())
@@ -69,6 +81,10 @@ gulp.task('production-sass', function() {
         .pipe(notify({ message: 'production css file was successfully build!'}));
 });
 
+/**
+ * 转义文件，从ES6转义到ES5
+ * @return {file}   转义完成的文件
+ */
 gulp.task('js', function() {
   return gulp.src('src/js/*.js')
         .pipe(sourcemaps.init())
@@ -86,6 +102,11 @@ gulp.task('js', function() {
         .pipe(notify({ message: 'normal js file was successfully build!'}));
 });
 
+/**
+ * 生产环境的js文件
+ * 不多BB了
+ * @return {file}   转义完成的文件
+ */
 gulp.task('production-js', function() {
   return gulp.src('src/js/*.js')
         .pipe(sourcemaps.init())
@@ -107,15 +128,29 @@ gulp.task('production-js', function() {
         .pipe(notify({ message: 'production js file was successfully build!'}));
 });
 
+/**
+ * 默认任务
+ * 执行sass和js任务
+ * @return {file}   sass和js最后的文件
+ */
 gulp.task('default', function() {
   gulp.start('sass', 'js');
 });
 
+/**
+ * 监视任务
+ * 监视文件的变化并运行相应的程序
+ * @return {file}   按下F5刷新浏览器就可以了
+ */
 gulp.task('watch', function() {
   gulp.watch('src/style/*.scss', ['sass']);
   gulp.watch('src/js/*.js', ['js']);
 });
 
+/**
+ * 生产环境文件打包~
+ * @return {file} 在production文件夹下
+ */
 gulp.task('production', function() {
   gulp.start('production-sass', 'production-js');
 });
@@ -136,11 +171,19 @@ npm install --save-dev gulp browserify vinyl-source-stream babelify
 然后是任务编写：
 
 {% highlight js %}
+/**
+ * 引入gulp依赖神马的
+ * @type {object}
+ */
 var gulp = require("gulp");
 var browserify = require("browserify");
 var babelify = require("babelify");
 var source = require("vinyl-source-stream");
 
+/**
+ * jsx 任务，用于转义jsx => javascript
+ * @return {[file]}     转义完成的js文件。引入即可
+ */
 gulp.task('jsx', function(){
   return browserify('./js/app.js')
          .transform(babelify)
