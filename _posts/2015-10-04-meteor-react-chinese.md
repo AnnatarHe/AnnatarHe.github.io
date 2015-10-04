@@ -122,7 +122,7 @@ if (Meteor.isClient) {
   // 下面的代码最会在客户端运行
  
   Meteor.startup(function () {
-    在页面加载完成之后，使用 Meteor.startup 来渲染 React 组件
+    // 在页面加载完成之后，使用 Meteor.startup 来渲染 React 组件
     React.render(<App />, document.getElementById("render-target"));
   });
 }
@@ -191,15 +191,18 @@ Task = React.createClass({
 在我们的浏览器中，应用将会看起来像这个样子：
 
 > Todo List
+
 > * This is task1
+
 > * This is task2
+
 > * This is task3
 
 如果你的应用看起来并不是这样，请确认你的代码和例子上的一致
 
 #### HTML文件中定义静态内容
 
-`Meteor`将你的应用中的HTML文件切分并识别三个最高等级的标签：**<head>**, **<body>**,还有**<template>**
+`Meteor`将你的应用中的HTML文件切分并识别三个最高等级的标签：**<head>**, **<body>**,还有**\<template\>**
 
 每个在 \<head\>标签中的标签被添加到已被发送的HTML文件的`head`部分，\<body\>标签中的所有标签同样是被添加到已被发送的HTML的`body`部分，就像正常的html文件一样
 
@@ -207,9 +210,9 @@ Task = React.createClass({
 
 #### 用React定义视图组件
 
-在React中，视图组件是被使用`React.createClass`定义的。你的组件可以有任何你想要的方法。除了几个像是`render`这样的特殊方法。组件可以接收来自于父组件通过`props`属性传过来的数据。在这个教程中，我们将看一看更多的一些React特性。你也可以通过[Facebook's React tutorial](https://facebook.github.io/react/docs/tutorial.html)来学习
+在React中，视图组件是被使用`React.createClass`定义的。你的组件可以有任何你想要的方法。除了几个像是`render`这样的特殊方法。组件可以接收来自于父组件通过`props`属性传过来的数据。在这个教程中，我们将看一看更多的一些React特性。你也可以通过[Facebook's React  tutorial](https://facebook.github.io/react/docs/tutorial.html)来学习
 
-#### 从jsx的render方法中得到标记语言(markup)
+#### 从JSX的render方法中得到标记语言(markup)
 
 在React组件中最重要的方法就是`render`, 这个被React调用从应该被显示的HTML中返回内容(description)，HTML内容被叫做`JSX`的`javascript`的扩展语言所编写。这是一种像是在javascript中写HTML的样子。你早就看出了一些明显的不同了吧：在`JSX`中，你使用`className`属性代替`class`，关于JSX一个重要的事情就是它(JSX)并不是一种像是`Spacebars`或是`Angular`的模板语言 -- 它被直接编译成常规的JavaScript文件。了解更多请看[React docs](https://facebook.github.io/react/docs/jsx-in-depth.html)
 
@@ -374,6 +377,8 @@ header .hide-completed {
 #### 添加Sass(可选)
 
 > 我知道你肯定想耍Sass。嘿嘿，来添加上sass吧
+
 > meteor add fourseven:scss
+
 > 只要把simple-todos-react.css改名成simple-todos-react.scss就好了
 
