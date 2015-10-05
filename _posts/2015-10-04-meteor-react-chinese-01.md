@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Meteor React 制作 Todos 中文翻译
+title: [翻译]Meteor React 制作 Todos - 1
 Tags: js Meteor React
 ---
 
