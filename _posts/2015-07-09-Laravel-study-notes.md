@@ -6,7 +6,7 @@ tags: laravel php framework
 
 ## Video
 
-<video id="video" class="video-js vjs-default-skin" controls
+<!-- <video id="video" class="video-js vjs-default-skin" controls
  preload="auto" width="100%" height="555px" poster=""
  data-setup='{}'>
   <source src="http://7xjhkb.com1.z0.glb.clouddn.com/02-laravel.mp4" type='video/mp4' >
@@ -15,7 +15,7 @@ tags: laravel php framework
     To view this video please enable JavaScript, and consider upgrading to a web browser
     that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
   </p>
-</video>
+</video> -->
 
 ## Hello
 
