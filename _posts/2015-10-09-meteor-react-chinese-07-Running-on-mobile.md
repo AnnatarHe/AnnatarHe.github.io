@@ -50,4 +50,35 @@ meteor run android
 
 ### 在安卓设备上运行安卓应用
 
-首先，
+首先，把上面关于安卓的部分都走完，以确保你的电脑上安装了所有的安卓工具。随后，在手机上把开发者工具的**debug**模式打开，同时你的手机要通过USB连接到你的电脑。还有一件事：你在真实设备上运行之前，必须得退出安卓模拟器。
+
+随后，执行这条命令：
+
+{% highlight console %}
+meteor run android-device
+{% endhighlight %}
+
+这个应用将会被构建，并安装到你的设备上。如果你要指定你部署的应用的服务器，你要在上面的步骤中，你得这样写命令：
+
+{% highlight console %}
+meteor run android-device --mobile-server my_app_name.meteor.com
+{% endhighlight %}
+
+### 在你的iPhone或iPad上运行程序(仅限Mac，需要苹果开发者账户)
+
+如果你有一个`Apple`开发者账户，你也可以在你的**IOS**设备上运行你的应用。
+执行这样的一条命令：
+
+{% highlight console %}
+meteor run ios-device
+{% endhighlight %}
+
+这将会为你的应用打开**Xcode**，你也可以使用Xcode来在你任意设备或模拟器上启动应用，当然，前提是Xcode支持。
+
+在上个步骤中如果你想指定服务器，执行这样的命令：
+
+{% highlight console %}
+meteor run ios-device --mobile-server my_app_name.meteor.com
+{% endhighlight %}
+
+现在我们知道了在移动端部署和运行我们应用是有多简单。那么我们来开始为我们的应用添加更多的特性吧！
