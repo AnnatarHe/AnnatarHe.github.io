@@ -1,7 +1,7 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 4 - 表单与事件
-Tags: js Meteor React
+title: [翻译]Meteor React 制作 Todos - 04 - 表单与事件
+tags: js Meteor React
 ---
 
 ## 通过表单(form)添加任务

@@ -1,7 +1,7 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 1
-Tags: js Meteor React
+title: [翻译]Meteor React 制作 Todos - 01 && 02
+tags: js Meteor React
 ---
 
 ## Before

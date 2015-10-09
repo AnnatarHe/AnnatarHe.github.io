@@ -1,7 +1,7 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 5 - 更新删除
-Tags: js Meteor React
+title: [翻译]Meteor React 制作 Todos - 05 - 更新删除
+tags: js Meteor React
 ---
 
 ## 确认完成和删除任务

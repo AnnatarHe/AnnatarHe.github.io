@@ -1,7 +1,7 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 5 - 模板UI的状态
-Tags: js Meteor React
+title: [翻译]Meteor React 制作 Todos - 08 - 模板UI的状态
+tags: js Meteor React
 ---
 
 ## 在组件状态中存储临时数据

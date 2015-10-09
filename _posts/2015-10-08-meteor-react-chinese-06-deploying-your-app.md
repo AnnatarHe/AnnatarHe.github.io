@@ -1,7 +1,7 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 5 - 部署应用
-Tags: js Meteor React
+title: [翻译]Meteor React 制作 Todos - 06 - 部署应用
+tags: js Meteor React
 ---
 
 ## 部署你的应用
