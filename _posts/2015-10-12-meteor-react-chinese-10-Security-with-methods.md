@@ -62,33 +62,33 @@ Meteor.methods({
 {% highlight js %}
 // App.jsx文件中
 
-    // 通过React的ref属性来找到文本的字段
-    var text = React.findDOMNode(this.refs.textInput).value.trim();
-		
-		// 添加开始
-    Meteor.call("addTask", text);
-		// 添加结束
+// 通过React的ref属性来找到文本的字段
+var text = React.findDOMNode(this.refs.textInput).value.trim();
 
-    // Clear form
-    React.findDOMNode(this.refs.textInput).value = "";
+// 添加开始
+Meteor.call("addTask", text);
+// 添加结束
+
+// Clear form
+React.findDOMNode(this.refs.textInput).value = "";
 {% endhighlight %}
 
 {% highlight js %}
 // Tasks.jsx文件中
  
-  toggleChecked() {
-    // 设置确认值为当前属性的相反值
-    // 添加下一行
-    Meteor.call("setChecked", this.props.task._id, ! this.props.task.checked);
-  },
- 
-  deleteThisTask() {
+toggleChecked() {
+  // 设置确认值为当前属性的相反值
+  // 添加下一行
+  Meteor.call("setChecked", this.props.task._id, ! this.props.task.checked);
+},
 
-  	// 添加下面一行
-    Meteor.call("removeTask", this.props.task._id);
-  },
- 
-  render() {
+deleteThisTask() {
+
+	// 添加下面一行
+  Meteor.call("removeTask", this.props.task._id);
+},
+
+render() {
 {% endhighlight %}
 
 现在，我们的输入和按钮又能用了，我们从这些工作中收获了什么呢？
@@ -105,3 +105,10 @@ Meteor.methods({
 
 1. 客户端向服务器端发送一个在安全环境下的请求。就像是AJAX那样的运行的请求。
 2. 一个方法模拟器直接会在客户端运行。它试图通过已有的信息来预测服务端返回的结果
+
+这就意味着来自后端(服务器端)的结果到达客户端之前，新创建的任务已经实际地在屏幕上展现出来了。
+
+如果从服务端返回的结果和在客户端模拟的结果一致，一切仍然像之前所展现的一样。
+如果从服务端返回的结果和在客户端模拟的结果不一致，那么界面将会补充上来自服务端的真实状态的反应。
+
+掌握了Meteor的一些“方法定义”和”乐观的UI“，你就得到了两个世界的精髓 -- 服务端代码的安全保护和无传输延迟(no round-trip delay)。阅读[blog post about optimistic UI](http://info.meteor.com/blog/optimistic-ui-with-meteor-latency-compensation)可以了解更多这方面的知识
