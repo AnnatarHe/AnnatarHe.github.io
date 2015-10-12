@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 08 - 模板UI的状态
+title: 翻译 Meteor React 制作 Todos - 08 - 模板UI的状态
 tags: js Meteor React
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 10 - 方法的安全性
+title: 翻译 Meteor React 制作 Todos - 10 - 方法的安全性
 tags: js Meteor React
 ---
 

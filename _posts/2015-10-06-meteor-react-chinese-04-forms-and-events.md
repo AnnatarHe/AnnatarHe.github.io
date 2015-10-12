@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 04 - 表单与事件
+title: 翻译 Meteor React 制作 Todos - 04 - 表单与事件
 tags: js Meteor React
 ---
 

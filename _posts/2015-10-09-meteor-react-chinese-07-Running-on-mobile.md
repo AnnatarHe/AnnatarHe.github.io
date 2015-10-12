@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 07 - 在移动端运行
+title: 翻译 Meteor React 制作 Todos - 07 - 在移动端运行
 tags: js Meteor React
 ---
 

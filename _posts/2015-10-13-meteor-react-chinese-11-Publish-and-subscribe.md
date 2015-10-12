@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 11 - 发布订阅
+title: 翻译 Meteor React 制作 Todos - 11 - 发布订阅
 tags: js Meteor React
 ---
 

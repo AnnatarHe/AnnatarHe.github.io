@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [翻译]Meteor React 制作 Todos - 09 - 添加用户账户
+title: 翻译 Meteor React 制作 Todos - 09 - 添加用户账户
 tags: js Meteor React
 ---
 
