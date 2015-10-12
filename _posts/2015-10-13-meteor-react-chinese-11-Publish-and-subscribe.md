@@ -158,11 +158,11 @@ render() {
 
 {% highlight js %}
 render() {
-  // Give tasks a different className when they are checked off,
-  // so that we can style them nicely in CSS
+  // 当它们被关闭时给一个不同的className,
+  // 这样我们就可以通过CSS来设置好看的样式了
 
   // 添加开始
-  // Add "checked" and/or "private" to the className when needed
+  // 当我们需要的时候可以给“确认框”添加”私有“样式
   const taskClassName = (this.props.task.checked ? "checked" : "") + " " +
     (this.props.task.private ? "private" : "");
 	// 添加结束
@@ -181,7 +181,7 @@ render() {
 }
  
 if (Meteor.isServer) {
-  // Only publish tasks that are public or belong to the current user
+  // 只发布公有的或者是属于当前用户的任务
   Meteor.publish("tasks", function () {
 
   	// 添加开始
@@ -196,3 +196,43 @@ if (Meteor.isServer) {
   });
 }
 {% endhighlight %}
+
+要测试这个功能是否能用，我们可以使用浏览器的“隐私浏览”模式作为一个不同的用户登录。把两个窗口拍两边，然后标记一个私有任务，看看另一个用户是否能够看到。现在把它再设置成公有状态，它就又会出现了！
+
+### 额外的方法安全
+
+为了完成我们私有任务的特性，我们需要给`deleteTask`和`setChecked`方法一些核实的特性，用来确保只有任务的拥有者可以删除和完成一个私有任务
+
+{% highlight js %}
+// simple-todos-react.jsx
+removeTask(taskId) {
+
+	// 添加开始
+  const task = Tasks.findOne(taskId);
+  if (task.private && task.owner !== Meteor.userId()) {
+    // 如果任务是私有状态，确保只有拥有者可以删除
+    throw new Meteor.Error("not-authorized");
+  }
+	// 添加结束
+
+  Tasks.remove(taskId);
+
+},
+
+setChecked(taskId, setChecked) {
+
+	// 添加开始
+  const task = Tasks.findOne(taskId);
+  if (task.private && task.owner !== Meteor.userId()) {
+    // 如果任务是私有的，确保只有任务拥有者可以完成此项任务
+    throw new Meteor.Error("not-authorized");
+  }
+  // 添加结束
+
+  Tasks.update(taskId, { $set: { checked: setChecked} });
+},
+{% endhighlight %}
+
+> 注意：这个代码允许任何人删除任意公有任务。你应该当尽力做一些小的改变：只有任务拥有者可以删除他们的任务
+
+我们已经完成了私有任务的特性了！当攻击者试着去看或者修改某个私有任务时，我们的应用也是安全的了！
