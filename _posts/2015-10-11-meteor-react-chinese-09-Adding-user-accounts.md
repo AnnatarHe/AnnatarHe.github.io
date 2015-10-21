@@ -101,6 +101,20 @@ Tasks.insert({
 });
 {% endhighlight %}
 
+修改`getMeteorData`中的`return`语句来获取当前登录用户的个人信息
+{% highlight js %}
+// App.jsx
+    return {
+      tasks: Tasks.find(query, {sort: {createdAt: -1}}).fetch(),
+      // 添加开始
+      incompleteCount: Tasks.find({checked: {$ne: true}}).count(),
+      currentUser: Meteor.user()
+      // 添加结束
+    };
+  },
+{% endhighlight %}
+
+
 然后，在`render`方法上，添加判断语句使之只在用户登录后才会显示。
 
 {% highlight js %}

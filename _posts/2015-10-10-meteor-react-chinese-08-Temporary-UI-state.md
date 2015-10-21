@@ -113,7 +113,7 @@ return {
 {% endhighlight %}
 
 {% highlight js %}
-在App.jsx的render方法的return 附近，添加这么一句
+// 在App.jsx的render方法的return 附近，添加这么一句
 return (
   <div className="container">
     <header>
