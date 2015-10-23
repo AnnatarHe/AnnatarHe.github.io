@@ -9,7 +9,21 @@ title: 小贴条
 
 ## JavaScript
 
+### react-native
+{% highlight console %}
+# Windows
+node node_modules/react-native/packager/packager.js --nonPersistent
+{% endhighlight %}
+
+
 ## PHP
+
+### tinker
+
+创建账户
+{% highlight console %}
+App\User::create(['name'=> 'Annatar', 'email' => '123@123.com', 'password'=>password_hash('123123', PASSWORD_BCRYPT)]);
+{% endhighlight %}
 
 ### 验证码
 
