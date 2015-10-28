@@ -74,3 +74,9 @@ div {
   background: linear-gradient(135deg, red, blue);
 }
 {% endhighlight %}
+
+### PHP Configure
+
+{% highlight console %}
+./configure --enable-debug --with-mysql --with-gd --with-curl --prefix=/opt/php5 --enable-fpm --enable-cgi --with-openssl --with-mbstring
+{% endhighlight %}
