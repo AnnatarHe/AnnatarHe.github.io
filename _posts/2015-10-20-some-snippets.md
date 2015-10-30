@@ -74,3 +74,26 @@ div {
   background: linear-gradient(135deg, red, blue);
 }
 {% endhighlight %}
+
+## Back-end
+
+### Vagrant
+{% highlight console %}
+$ vagrant box add mybox /path/to/mybox.box
+{% endhighlight %}
+
+
+### Bash
+{% highlight bash %}
+#!/usr/bin/bash
+apt-get update && apt-get upgrade
+apt-get install nginx php5 php5-fpm mysql-server mysql-client git redis-server mongodb php5-cli php5-dev php5-gd php5-cgi php5-xdebug
+
+
+{% endhighlight %}
+
+### Git
+{% highlight console %}
+git remote add origin git@github.com:AnnatarHe/foo.git
+git push -u origin master
+{% endhighlight %}
