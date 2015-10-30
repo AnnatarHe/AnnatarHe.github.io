@@ -75,6 +75,7 @@ div {
 }
 {% endhighlight %}
 
+<<<<<<< HEAD
 ## Back-end
 
 ### Vagrant
@@ -97,3 +98,10 @@ apt-get install nginx php5 php5-fpm mysql-server mysql-client git redis-server m
 git remote add origin git@github.com:AnnatarHe/foo.git
 git push -u origin master
 {% endhighlight %}
+=======
+### PHP Configure
+
+{% highlight console %}
+./configure --enable-debug --with-mysql --with-gd --with-curl --prefix=/opt/php5 --enable-fpm --enable-cgi --with-openssl --enable-mbstring --with-mcrypt --with-pdo-mysql --with-mysql-sock=/var/run/mysqld/mysqld.sock
+{% endhighlight %}
+>>>>>>> 676e665c64bbf4764a2e07d78248929e41d7a04a
