@@ -24,6 +24,12 @@ Tinker只是在laravel中的名字，其实人家真名叫做[psysh](https://git
 
 安装这种东西我就不说了，他们的readme写的很好。
 
+laravel项目在安装完依赖以后可以输入命令进入：
+
+{% highlight console %}
+$ php artisan tinker
+{% endhighlight %}
+
 ## Basic
 
 很简单的，先写上几行简单的：
@@ -36,3 +42,42 @@ echo $foo
 很简单的，就像是在chrome的console里面写代码一样。
 
 ## ORM
+
+为了给代码作色，我就用php的语法写了，但是其实是像一个console的，我相信你懂的
+
+一定记得，和在工程中写代码是一样的
+
+获取某个集合
+{% highlight php %}
+<?php 
+App\User::all()
+# << 会返回所有users的collections，可以清楚的看到
+App\User::find(1)
+# << 会返回id为1的用户数据
+App\User::find(1)->articles()->get()
+# << 关联查询，获取这个用户的所有文章
+ ?>
+{% endhighlight %}
+
+命名空间也是一样的
+{% highlight php %}
+<?php 
+use App\User;
+# << 会返回false，别担心，已经成功了
+User::all();
+# << 好了，成功了
+ ?>
+{% endhighlight %}
+
+## Factory
+
+开发环境的假数据的是个问题吧？
+
+这个东西不能没有，没有了就不好看效果了。
+
+有数据吧，还得去写数据。小项目三五分钟写完，而稍微多一点儿的怎么办？三五个小时？
+
+laravel作为php中最好的框架，怎么可能会让这么痛苦的事情发生？
+
+factory就很容易解决喽~
+
