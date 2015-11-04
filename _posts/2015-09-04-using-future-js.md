@@ -22,7 +22,7 @@ title: 使用下一代的JS
 * 小项目并不在乎性能
 * jQuery即使要被时代淘汰，但目前仍旧是用的最多库
 
-这篇文章简要写一下最近用原声 `js` 写出来小东西的心得吧
+这篇文章简要写一下最近用原生 `js` 写出来小东西的心得吧
 
 ## Compatibility
 
@@ -82,7 +82,7 @@ foo.addEventListener('click', function(e) {
 });
 
 // 顺带写一个ES6语法的版本
-foo.addEventListener('click', (e) => {
+foo.addEventListener('click', e => {
 	console.log(e);
 });
 {% endhighlight %}
@@ -174,11 +174,6 @@ class Foo {
 
 新的`CSS3`加入了一些新的布局方式，最好用的就是`Flex`布局了
 
-## ChangeLog
-2015-09-04 开始写
+具体可以看[这里的教程](https://css-tricks.com/snippets/css/a-guide-to-flexbox/), 写的非常的全面具体。
 
-2015-09-05 添加`bind(this)`部分
-
-2015-09-07 添加分号，简单修改
-
-2015-09-17 添加flex布局
+而我的目的就是希望新技术可以普及，希望IE早点完蛋 ^_^

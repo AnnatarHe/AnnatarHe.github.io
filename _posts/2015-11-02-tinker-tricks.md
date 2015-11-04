@@ -90,6 +90,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     'name' => $faker->name,
     'email' => $faker->email,
     'password' => bcrypt(123123),
+    // 从另一个factory中创建数据，获取id
     'branch_id' => factory('App\Branch')->create()->id,
     'remember_token' => str_random(10),
   ];
