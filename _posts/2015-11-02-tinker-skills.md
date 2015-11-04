@@ -81,3 +81,32 @@ laravel作为php中最好的框架，怎么可能会让这么痛苦的事情发�
 
 factory就很容易解决喽~
 
+在路径为 **projectName / database /factories /ModelFactory.php**里写入下面的
+
+{% highlight php %}
+<?php 
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+  return [
+    'name' => $faker->name,
+    'email' => $faker->email,
+    'password' => bcrypt(123123),
+    'branch_id' => factory('App\Branch')->create()->id,
+    'remember_token' => str_random(10),
+  ];
+});
+ ?>
+{% endhighlight %}
+
+然后就可以在tinker里面这么写：
+
+{% highlight php %}
+<?php 
+// 创建5个用户放到数据库里
+factory('App\User', 5)->create();
+
+// 创建数据，只是展示，并不存数据库
+factory('App\User', 5)->make();
+ ?>
+{% endhighlight %}
+
+是不是很方便呢？
