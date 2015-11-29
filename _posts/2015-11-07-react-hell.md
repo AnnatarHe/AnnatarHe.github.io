@@ -14,7 +14,9 @@ title: React 填坑记录
 他们官网写着
 
 > JUST THE UI
+>
 > VIRTUAL DOM
+> 
 > DATA FLOW
 
 这三个特性。
@@ -72,7 +74,7 @@ gulp.task('jsx', () => {
 import React from 'react';
 
 class $className$ extends React.Component {
-  
+
   render() {
     return (
         $content$
@@ -117,7 +119,7 @@ export default $className$;
 
 {% highlight js %}
 class App extends React.Component {
-  
+
   handleChange(e) {
     console.log(this);
   }
@@ -243,7 +245,7 @@ state的设置在constructor中并不是setState了，而是变成了赋值。�
 
 {% highlight js %}
 class App extends React.Component {
-  
+
   static PropTypes = {
     url: React.PropTypes.string.isRequired
   }
