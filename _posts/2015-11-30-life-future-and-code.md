@@ -16,7 +16,7 @@ tags: life code
 
 那个时候懂得不多，又挺想融入学校的一切。就参加了创业赛什么的。
 
-参加的时候很辛苦，写了50页的word。还整理了好多PPT，还做了很多的调查，差了很多的资料。
+参加的时候很辛苦，写了50页的word。还整理了好多PPT，还做了很多的调查，查了很多的资料。
 
 到比赛的时候，真的是技不如人。真心很佩服他们的奇思妙想。
 
@@ -104,7 +104,7 @@ laravel可能并不属于初学者接触的东西了，因为有很多其实初�
 
 在入门阶段，我接触的语言不多：
 
-`Java`, `PHP`。
+`Java`, `PHP`
 
 因为开发环境的难度问题，还有学习资料的获取的难易程度，我一直潜移默化的在学PHP。
 
@@ -223,7 +223,7 @@ JS学的时候大概有一个月左右精力是在Angular上的。当时纳闷�
 {% highlight php %}
 <?php
 $foo = $_GET['foo'];
-mysqli_query($con, 'select * from table where foo=$foo');
+mysqli_query($con, "select * from table where foo=$foo");
 {% endhighlight %}
 
 就差写个`eval`了。
@@ -254,6 +254,16 @@ laravel做后端。
 
 后端用的是Node写的，数据库用的[mongoLab](https://mongolab.com/)的免费服务。
 
+### js-markdown
+
+自己写的一个小东西，用来实时转换markdown到html的东西
+
+因为当时富文本编辑器的坑对我写文章造成的影响太大，所以自己动手实现了一个简单的转换器
+
+用ES6写的。
+
+[项目地址](https://github.com/AnnatarHe/js-markdown)
+
 ### zhihu crawler
 
 这几乎是我目前为止做的最好的东西了，然而到现在都是半成品。
@@ -264,7 +274,7 @@ laravel做后端。
 
 大量用到了设计模式方面的东西。现在真感谢当初学的设计模式什么的。
 
-被`PHPStorm`的类型补全震撼到了。
+被`PHPStorm`的自动补全震撼到了。
 
 可以说这个项目如果没有PHPStorm，我根本记不下那么多的Interface， class， method
 
