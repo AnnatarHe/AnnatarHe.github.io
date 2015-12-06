@@ -243,6 +243,17 @@ ExecReload=/bin/kill -USR2 $MAINPID
 WantedBy=multi-user.target
 {% endhighlight %}
 
+## Run
+
+试试看行不行：
+
+{% highlight console %}
+$ php -v
+$ sudo /etc/init.d/php-fpm start
+{% endhighlight %}
+
+没有出错就对了，出错了请在下面留言，我看看怎么回事。
+
 ## Swoole
 
 按照他们的[指导做就行了](https://github.com/swoole/swoole-src)
@@ -255,17 +266,27 @@ $ ./configure
 $ make && sudo make install
 {% endhighlight %}
 
-在php.ini里面写上扩展就行了
+在php.ini里面写上扩展
 
 {% highlight console %}
 $ sudo vim /opt/php7/lib/php.ini
 {% endhighlight %}
 
-随便找个地方，不过我还是建议放到extension那边，大概900行左右
+随便找个地方，不过我还是建议放到extension那边，大概第900行左右
 
 {% highlight console %}
 extension=swoole.so
 {% endhighlight %}
+
+## checkout it
+
+试试看swoole有没有安装好
+
+{% highlight console %}
+$ php -m | grep swoole
+{% endhighlight %}
+
+有输出就是没问题，没输出就是有问题。
 
 ## References
 
