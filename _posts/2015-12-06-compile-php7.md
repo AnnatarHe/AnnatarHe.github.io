@@ -254,6 +254,25 @@ $ sudo /etc/init.d/php-fpm start
 
 没有出错就对了，出错了请在下面留言，我看看怎么回事。
 
+好了，到这里其实已经没有问题了。但是剩下的Nginx也得稍微调整一下
+
+{% highlight console %}
+$ sudo vim /etc/nginx/site-available/default
+{% endhighlight %}
+
+改成这样
+
+{% highlight console %}
+fastcgi_pass 127.0.0.1:9000
+{% endhighlight %}
+
+重启服务，走起！
+
+{% highlight console %}
+$ sudo service nginx restart
+$ sudo service php7-fpm restart
+{% endhighlight %}
+
 ## Swoole
 
 按照他们的[指导做就行了](https://github.com/swoole/swoole-src)
