@@ -321,7 +321,7 @@ $ sudo service nginx start
 
 就像这样：
 
-{% highlight plain %}
+{% highlight console %}
 server {
      listen       443 ssl default_server;
      server_name  domain.com;
@@ -338,7 +338,7 @@ server {
 
 这个时候因为监听的是443，80端口还要做一个301重定向
 
-{% highlight plain %}
+{% highlight console %}
 server {
         listen       80;
         server_name  *.domain.com;
@@ -364,7 +364,7 @@ server {
 
 通过TCP的多路复用有效的提升了速度。在Nginx中开启这个很简单。只要在ssl后面加一个http2就好了
 
-{% highlight plain %}
+{% highlight console %}
 server {
      listen       443 ssl http2 default_server;
      server_name  domain.com;
@@ -382,11 +382,11 @@ server {
 
 只要在nginx的配置文件中这么写上就可了
 
-{% highlight plain %}
+{% highlight console %}
 gzip  on;
 gzip_types
       text/css
-      text/plain
+      text/console
       text/javascript
       application/javascript
       application/json
@@ -419,7 +419,7 @@ gzip_vary on;
 
 在nginx的配置文件中这么写一点儿吧，注意要是`server{}`中
 
-{% highlight plain %}
+{% highlight console %}
 location ~*  \.(jpg|jpeg|png|gif|ico|css|js)$ {
    expires 365d;
 }
