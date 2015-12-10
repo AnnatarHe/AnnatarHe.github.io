@@ -307,6 +307,14 @@ $ php -m | grep swoole
 
 有输出就是没问题，没输出就是有问题。
 
+## Nginx
+
+{% highlight console %}
+$ ./configure --user=nginx --group=nginx --prefix=/opt/nginx --with-http_gzip_static_module --with-http_ssl_module --sbin-path=/usr/sbin/nginx --conf-path=/opt/nginx/nginx.conf --pid-path=/var/run/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-http_v2_module
+{% endhighlight %}
+
+
+
 ## References
 
 * [How to install PHP 5.3 and 5.2 together on Ubuntu 12.04](http://zgadzaj.com/how-to-install-php-53-and-52-together-on-ubuntu-1204)

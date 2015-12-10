@@ -1,6 +1,6 @@
 ---
 layout: post
-title: React 填坑记录
+title: React 注意事项
 ---
 
 ## Warning
@@ -16,7 +16,7 @@ title: React 填坑记录
 > JUST THE UI
 >
 > VIRTUAL DOM
-> 
+>
 > DATA FLOW
 
 这三个特性。
