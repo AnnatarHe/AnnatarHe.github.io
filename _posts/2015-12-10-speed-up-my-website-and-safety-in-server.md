@@ -425,7 +425,30 @@ location ~*  \.(jpg|jpeg|png|gif|ico|css|js)$ {
 }
 {% endhighlight %}
 
+## 移除信息
+
+在header上的php version可能会暴露一些信息，最好隐藏掉
+
+在php.ini中设置这样一行就可以了。
+
+{% highlight console %}
+expose_php = Off;
+{% endhighlight %}
+
+Nginx的版本号最好也能隐藏一下啊
+
+在nginx.conf中设置下
+
+{% highlight console %}
+server_token off;
+{% endhighlight %}
+
 ## 完毕
+
+{% highlight console %}
+$ sudo service php7-fpm restart
+$ sudo service nginx restart
+{% endhighlight %}
 
 这个阶段我所能了解到的关于web服务器的性能提升差不多就是这样了。剩下的大概是代码层面，和数据库部分的提升了。
 
