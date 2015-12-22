@@ -49,7 +49,7 @@ $ sudo apt-get install libpng12-dev
 ## configure
 
 {% highlight console %}
-$ ./configure --enable-debug --with-mysql --with-gd --with-curl --prefix=/opt/php7 --enable-fpm --enable-cgi --with-openssl --enable-mbstring --with-mcrypt --with-pdo-mysql --with-mysql-sock=/var/run/mysqld/mysqld.sock
+$ ./configure --enable-debug --with-mysql --with-gd --with-curl --enable-zip --prefix=/opt/php7 --enable-fpm --enable-cgi --with-openssl --enable-mbstring --with-mcrypt --with-pdo-mysql --with-mysql-sock=/var/run/mysqld/mysqld.sock
 $ make -j 4
 $ sudo make install
 {% endhighlight %}
