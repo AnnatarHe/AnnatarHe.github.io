@@ -4,7 +4,7 @@ title: 生活，未来和代码
 tags: life code
 ---
 
-## 2 years later
+## 时光荏苒
 
 两年了，已经写了两年的代码了。
 
@@ -24,11 +24,11 @@ tags: life code
 
 我看到他们一个个从来没有翻过计划书，从未身体力行去执行。
 
-他们在酷跑，他们在战斗，他们在睡觉，他们在翘课，他们在打情骂俏，他们在嘻嘻哈哈。
+他们在酷跑(手游)，他们在战斗，他们在睡觉，他们在翘课，他们在打情骂俏，他们在嘻嘻哈哈。
 
 愤怒
 
-我剩下的只是愤怒。
+大写的愤怒。
 
 你他妈有那么多改变世界的计划，你倒是做啊！
 
@@ -36,7 +36,7 @@ tags: life code
 
 后来，我学了这些。
 
-## How to learn something
+## Learning something
 
 那个时候真的是愤怒驱动着我去做一些事情。
 
@@ -100,7 +100,7 @@ laravel可能并不属于初学者接触的东西了，因为有很多其实初�
 
 那么就到了现在。
 
-## Languages
+## 语言选择困难症
 
 在入门阶段，我接触的语言不多：
 
@@ -136,7 +136,7 @@ Node很新，JavaScript很棒。我之前说过，我挺喜欢写JS的，所以�
 
 最近写了一个App的Server端，就是用Node写的。运行起来挺不错的。
 
-而爬虫是坑。因为非阻塞异步的特性，整个循环不敢跑起来。写过一点儿，却一直不敢用。
+而爬虫不太给力。因为非阻塞异步的特性，整个循环不敢跑起来。写过一点儿，却一直不敢用。
 
 JS学的时候大概有一个月左右精力是在Angular上的。当时纳闷了，为什么后端的MVC要用到前端，这前端怎么用啊？
 
@@ -224,6 +224,7 @@ JS学的时候大概有一个月左右精力是在Angular上的。当时纳闷�
 <?php
 $foo = $_GET['foo'];
 mysqli_query($con, "select * from table where foo=$foo");
+?>
 {% endhighlight %}
 
 就差写个`eval`了。
@@ -276,7 +277,7 @@ laravel做后端。
 
 被`PHPStorm`的自动补全震撼到了。
 
-可以说这个项目如果没有PHPStorm，我根本记不下那么多的Interface， class， method
+可以说这个项目如果没有PHPStorm，我根本记不下那么多的Interface， class， methods
 
 后来的结果是比较惨的。
 
@@ -319,7 +320,7 @@ laravel做后端。
 {% highlight js %}
 let foo = 0;
 
-if ( foo == 0 ) {
+if ( foo === 0 ) {
     console.log('403 forbidden');
 }else {
     console.log('200 OK');
@@ -332,9 +333,7 @@ if ( foo == 0 ) {
 
 然后这个`foo`就变成`1`了。
 
-对我来说
-
-难以置信
+难以置信!!!
 
 其实到现在我仍旧不能理解。为什么世界是这样的。
 
