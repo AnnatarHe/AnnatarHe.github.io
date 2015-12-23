@@ -33,12 +33,14 @@
 		<p data-link="/index.html">AnnatarHe.github.io</p>
 	</div>
 	<script>
-	(window.onload = function (){
-    console.log('Thanks for u visited my site');
-			document.getElementsByTagName('p')[0].addEventListener('click',function(){
-					window.location.href=this.getAttribute('data-link');
-				});
-		}());
+    'use strict'
+    
+    window.addEventListener('DOMContentLoaded', () => {
+        console.log('Thanks for you visited my site');
+        document.querySelector('p').addEventListener('click', () => {
+            window.location.href = this.getAttribute('data-link')
+        })
+    })
 	</script>
 </body>
 </html>
