@@ -47,12 +47,21 @@ body{
 	}
 	.content{
 		padding:2em;
-		background-color:white;
+		background-color: #fff;
 		border-bottom-left-radius:1em;
 		border-bottom-right-radius:1em;
 		@media (max-width:  $mdScreen) {
 			padding: 1em;
 		}
+    a {
+      display: inline-block;
+      padding: 0 .5rem;
+      /*cursor: crosshair;*/
+      /*&:hover {*/
+        /*background-color: #ddd;*/
+      /*}*/
+
+    }
 		ul{
 			li {
 				padding-bottom: .8em;
@@ -97,7 +106,7 @@ body{
 				a{
 					display: block;
 					color: #c0865e;
-				}
+      				}
 			}
 		}
 	}
