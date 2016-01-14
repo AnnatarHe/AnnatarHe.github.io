@@ -28,7 +28,7 @@ body{
 		background-color:#444;
 		color: white;
 		text-align: center;
-		padding:.8em;
+		padding: .8em;
     a {
       color: #fff;
       &:hover {
@@ -99,10 +99,7 @@ body{
 				padding:20px;
 				vertical-align: middle;
 				text-align: center;
-				border-top:1px solid #ddd;
-				border-left:1px solid #ddd;
-				border-right:1px solid #ddd;
-				border-bottom: 1px solid #ddd;
+				border:1px solid #ddd;
 				a{
 					display: block;
 					color: #c0865e;
@@ -112,15 +109,15 @@ body{
 	}
 }
 footer{
-  padding-top: 1em;
+    padding-top: 1em;
 	text-align:center;
 	ul{
 		list-style: none;
-    margin: 0;
+        margin: 0;
 		li{
 			display: inline-block;
 			padding:1em;
-      padding-top: 0;
+            padding-top: 0;
 			a{
 				color:#000;
 			}

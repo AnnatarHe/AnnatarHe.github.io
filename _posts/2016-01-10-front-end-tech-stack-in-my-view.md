@@ -28,7 +28,7 @@ export default Foo
 Vue 写法：
 {% highlight html %}
 <template>
-    <h1>{{ msg }}</h1>
+    <h1>\{{ msg \}}</h1>
 </template>
 <script>
 export default {
@@ -79,6 +79,7 @@ Vue的源码就比较正常了，虽然风格会乱变，但至少正常。最�
 
 对了，我比较推荐的目录方式是这样的。
 
+```
 --- src
   |-- styles
     |-- normalize.styl
@@ -88,6 +89,7 @@ Vue的源码就比较正常了，虽然风格会乱变，但至少正常。最�
     |-- forms.styl
     |-- lists.styl
     |-- ...其他全局组件
+```
 
 这里不包含单独的在`*.vue`中的独特的样式。
 

@@ -4,18 +4,6 @@ title: Javascript 不允许选中
 tags: javascript selected
 ---
 
-## Video
-
-<!-- <video id="video" class="video-js vjs-default-skin" controls
- preload="auto" width="100%" height="555px" poster=""
- data-setup='{}'>
-  <source src="http://7xjhkb.com1.z0.glb.clouddn.com/01-javascript-not-allow-selected.mp4" type='video/mp4' >
-  <source src="really-cool-video.webm" type='video/webm'>
-  <p class="vjs-no-js">
-    To view this video please enable JavaScript, and consider upgrading to a web browser
-    that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-  </p>
-</video> -->
 
 ##Finder
 
@@ -37,7 +25,7 @@ tags: javascript selected
 
 {% highlight html %}
 <body onselectstart="return false;">
-巴拉巴拉的内容
+    巴拉巴拉的内容
 </body>
 {% endhighlight %}
 
@@ -53,7 +41,7 @@ tags: javascript selected
 我还是贴代码备忘吧。
 {% highlight html %}
 <div onselectstart="return false;">
-<a href="http://iamhele.com">iamhele.com</a>
+    <a href="http://iamhele.com">iamhele.com</a>
 </div>
 {% endhighlight %}
 
