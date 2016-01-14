@@ -8,5 +8,5 @@ This is my personal blog site
 
 All articles was written by [AnnatarHe](https://www.iamhele.com)
 
-All articles under [ 知识共享署名 3.0 中国大陆许可协议 ](http://creativecommons.org/licenses/by/3.0/cn/)
+All articles under [ Creative Commons BY-NC-ND 3.0（自由转载-保持署名-非商用-非衍生）](http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)
 
