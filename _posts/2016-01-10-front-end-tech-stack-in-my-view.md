@@ -28,7 +28,7 @@ export default Foo
 Vue 写法：
 {% highlight html %}
 <template>
-    <h1>{\{ msg }\}</h1>
+    <h1 v-text="msg"></h1>
 </template>
 <script>
 export default {
