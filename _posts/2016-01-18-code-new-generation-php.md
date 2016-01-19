@@ -7,7 +7,7 @@ title: 开始编写新时代的PHP吧
 
 时至今日(2016-01-18)， PHP已经发展到了`PHP 7.0.2`，然而大量的资料和代码依旧停留在上个时代，甚至是上上个时代。
 
-跟着我的这篇博文来试试新时代的PHP吧～
+如果你没有尝试过新生活，跟着我的这篇博文来试试新时代的PHP吧～
 
 ps: 如果你在2017年以后看到这篇文章，那么这就应该属于标配了。
 
@@ -25,12 +25,10 @@ ps: 如果你在2017年以后看到这篇文章，那么这就应该属于标配
 
 {% highlight json %}
 {
-    "package": {
-        "autoload": {
-            "psr-4": {
-                "Acme\\": "src/"
-            }
-        },
+    "autoload": {
+        "psr-4": {
+            "Acme\\": "src/"
+        }
     }
 }
 {% endhighlight %}
@@ -43,7 +41,7 @@ ps: 如果你在2017年以后看到这篇文章，那么这就应该属于标配
 <?php 
 // index.php
 require 'vendor/autoload.php';
-(new \Acme\Bootstrap)->start();
+(new Acme\Bootstrap)->start();
  ?>
 {% endhighlight %}
 
@@ -113,3 +111,31 @@ filter_var('name')
 ## try laravel
 
 试试laravel吧。虽说有一定的学习成本，但是其强大程度几乎是在`php`世界里最给力的框架。
+
+## localhost
+
+自从5.3以后，php支持了命令行的server搭建。
+
+{% highlight console %}
+php -S localhost:8000 -t /path/to/dir/
+{% endhighlight %}
+
+S 大概是`server`的简称。
+
+t 指的是目录
+
+还有一定要注意的是仅仅只能作为开发使用。其内部并不像node一样有什么异步非阻塞特性。并发量稍微起来一点就GG。一定要注意
+
+再说了，拿nginx配置多简单。
+
+## PsyShell
+
+php 和其他语言不太一样的地方在于没有PECL。这样让测试起来其实不太舒服。
+
+这个拓展非常好的解决了这个问题。输入`psysh`就可以进入命令行，尽情的输入php代码吧。
+
+## Swoole
+
+Swoole拓展挺给力的。各种类似于node的特性，非阻塞，异步什么的。多进程用起来尤其的舒服。
+
+推荐作为服务端尝试一下
