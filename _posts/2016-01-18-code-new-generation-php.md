@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 开始编写新时代的PHP吧
+tag: php
 ---
 
 ## New Generation
@@ -98,15 +99,17 @@ PDO大家都蛮熟的了，我就不写了。
 ## stop $_GET
 
 我一开始学PHP时候写的代码屎一样，各种检测都没做。实体转换也不改。
-现在我正式安利`filter_var`
+现在我正式安利[filter_input](http://php.net/manual/zh/function.filter-input.php)
 
 通过名字差不多都能看出意思了。`过滤变量`，具体用法
 
 {% highlight php %}
 <?php 
-filter_var('name')
+$search_url = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_ENCODED);
  ?>
 {% endhighlight %}
+
+当然，它还有系列用法。去看看文档吧
 
 ## try laravel
 
