@@ -380,11 +380,11 @@ server {
 
 开启的方法也很简单，加上一个http header就可以了，默认为你是Nginx的web server
 
-```console
+{% highlight console %}
 server {
     add_header "Strict-Transport-Security: max-age=31536000; includeSubdomains; preload";
 }
-```
+{% endhighlight %}
 
 ## gzip压缩
 
