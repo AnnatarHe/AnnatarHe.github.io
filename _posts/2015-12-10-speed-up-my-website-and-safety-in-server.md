@@ -88,9 +88,9 @@ https在防XSS方面还是很给力的。
 Ubuntu 官方的源里面的版本太低了，不给力，只能自己下载编译。
 
 {% highlight console %}
-$ wget http://nginx.org/download/nginx-1.9.9.tar.gz
-$ tar -zxvf nginx-1.9.9.tar.gz
-$ cd nginx-1.9.9
+$ wget http://nginx.org/download/nginx-1.9.10.tar.gz
+$ tar -zxvf nginx-1.9.10.tar.gz
+$ cd nginx-1.9.10
 $ ./configure --user=nginx --group=nginx --prefix=/opt/nginx --with-http_gzip_static_module --with-http_ssl_module --sbin-path=/usr/sbin/nginx --conf-path=/opt/nginx/nginx.conf --pid-path=/var/run/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-http_v2_module
 $ make
 $ sudo make install
@@ -127,7 +127,7 @@ test -x $DAEMON || exit 0
 . /lib/lsb/init-functions
 
 # Try to extract nginx pidfile
-PID=$(cat /etc/nginx/nginx.conf | grep -Ev '^\s*#' | awk 'BEGIN { RS="[;{}]" } { if ($1 == "pid") print $2 }' | head -n1)
+PID=$(cat /opt/nginx/nginx.conf | grep -Ev '^\s*#' | awk 'BEGIN { RS="[;{}]" } { if ($1 == "pid") print $2 }' | head -n1)
 if [ -z "$PID" ]
 then
 	PID=/run/nginx.pid
@@ -371,6 +371,20 @@ server {
 {% endhighlight %}
 
 现在只要支持http2的浏览器就会用http2协议了，而不支持的也会自动退回到http1.1
+
+## HSTS
+
+不要以为上了HTTPS就很安全了，实际上每次懒省事都是通过301跳转到https的，而这一段路，是非常不安全的！因为很有可能有有心人剥离ssl。
+
+更安全的做法是用上HSTS，在所设定的时限中必须通过https才能访问，这就一定程度上减少了ssl剥离攻击。
+
+开启的方法也很简单，加上一个http header就可以了，默认为你是Nginx的web server
+
+```console
+server {
+    add_header "Strict-Transport-Security: max-age=31536000; includeSubdomains; preload";
+}
+```
 
 ## gzip压缩
 

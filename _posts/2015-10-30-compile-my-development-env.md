@@ -94,6 +94,8 @@ $ git config --global user.name 'AnnatarHe'
 $ sudo apt-get install nginx
 {% endhighlight %}
 
+当然，你如果要求比较高，也想参考一下我的编译的话，可以[点击这里]({% post_url 2015-12-10-speed-up-my-website-and-safety-in-server %})
+
 ## MySQL
 
 我是用apt-get安装的，但是最近出了5.7版本，性能好像是好到爆，还有原生json支持。过几天编译安装一遍好了
@@ -271,7 +273,7 @@ $ composer global require "phpunit/phpunit=5.0.*" # 安装phpunit
 所以我用了[nvm](https://github.com/creationix/nvm)来对node进行版本控制
 
 {% highlight console %}
-$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
 $ cd
 $ vim .zshrc # 也可能是.bashrc
 {% endhighlight %}
