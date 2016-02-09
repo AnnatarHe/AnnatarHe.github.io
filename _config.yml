@@ -9,6 +9,7 @@ paginate: 12
 paginate_path: "/page:num/"
 gems:
   - jekyll-sitemap
+  - jekyll-paginate
   - jekyll-feed
 defaults:
   -
