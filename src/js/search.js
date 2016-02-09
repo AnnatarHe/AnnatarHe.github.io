@@ -1,4 +1,4 @@
-// warning:
+// Warning:
 // this script for search post by json that jekyll generated
 // this script is coding. DO NOT use it in production!!!
 //
@@ -6,16 +6,6 @@
 // @Email   iamhele1994@gmail.com
 // @License MIT
 'use strict'
-
-// Scan the browser support es6 or not.
-// if not support... fuck off
-try {
-    const test = {foo: 'bar'}
-    for(let i of test) {
-    }
-}catch(e) {
-    alert('哥，咱更新下浏览器吧 \n 我没对低版本做兼容')
-}
 
 // get the doms
 const searchBtn = document.querySelector('.searchBtn')

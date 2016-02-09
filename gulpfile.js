@@ -10,7 +10,7 @@ const babel = require('gulp-babel')
 const concat = require('gulp-concat')
 
 gulp.task('css', () => {
-    return gulp.src('src/styles/**/*.styl')
+    return gulp.src('src/styles/app.styl')
         .pipe(sourcemaps.init())
         .pipe(stylus({
             compress: true
