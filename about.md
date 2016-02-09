@@ -16,7 +16,7 @@ title: About
 
 求实习生工作啦。JavaScript，PHP的都可以
 
-最好是南京，杭州的。
+最好是南京，杭州，上海的。
 
 简历页面在这里：[AnnatarHe](https://www.iamhele.com)
 

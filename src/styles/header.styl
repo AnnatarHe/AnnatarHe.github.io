@@ -1,3 +1,4 @@
+@import './utils'
 .header
         background-color #222
         color white
@@ -10,14 +11,18 @@
         color white
         text-align center
         padding .8em
-        a 
+        .nav__link
             color #fff
+            padding .8rem 1.5rem
             &:hover
                 text-decoration underline
-        ul
-            list-style none
-            padding-left 0
-            li 
-                display inline-block
-                text-align center
-                padding-left 10px
+        i.fa
+            margin-right .5rem
+
+.nav__list
+    flex-design()
+    margin 0
+    flex-center()
+    li
+        display flex
+        flex-center()

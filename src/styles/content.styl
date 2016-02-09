@@ -1,24 +1,39 @@
 @import './variable'
-.content
+@import './utils'
+.common__page
     padding 2em
     background-color #fff
     border-bottom-left-radius 1em
     border-bottom-right-radius 1em
     @media (max-width: $mdScreen) 
         padding 1em
-    a
-        display inline-block
-        width 100%
-        padding 2rem 0
-    ul
-        li 
-            padding-bottom .8em
-    img
-        max-width 90%
-    code
-        font-family $codeFont
-        font-size 0.9em
-        background-color rgba(0,0,0,0.05)
-        padding 0.5em
-        border-radius 5px
-        color #f34b7d
+    &--posts
+        .page__link
+            display inline-block
+            width 100%
+            padding 1.5rem 0
+    &--content
+        a
+            color #0000EE
+            background-color transparent
+            padding .5rem
+            transition all .15s
+            &:hover
+                background-color $grey-lite
+                box-shadow .1rem .1rem .1rem $grey-lite
+            &:visited
+                color #0000EE
+
+        // markdown design
+        ul
+            li 
+                padding-bottom .8em
+        img
+            max-width 90%
+        code
+            font-family $codeFont
+            font-size 0.9em
+            background-color rgba(0,0,0,0.05)
+            padding 0.5em
+            border-radius 5px
+            color #f34b7d

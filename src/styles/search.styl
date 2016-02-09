@@ -1,0 +1,97 @@
+@import './utils'
+$radius-at-form = .5rem
+.search__mask
+	position fixed
+	top 0
+	left 0
+	width 100%
+	background-color rgba(0,0,0, .5)
+	display flex
+	justify-content center
+	transition all .35s ease-out
+	visibility hidden
+	&.show
+		visibility visible
+		height 100%
+	&.hide
+		visibility hidden
+		height 50%
+	.search__content
+		padding-top 3rem
+		flex-design()
+		background-color teal
+		justify-content flex-start
+		align-items center
+		width 100%
+		height 20rem
+		border-bottom-left-radius 100%
+		border-bottom-right-radius 100%
+		flex-direction column
+	.search__form
+		width 25rem
+		display flex
+		.search__input
+			width 25rem
+			background-color $grey-lite
+			border none
+			font-size 1.5rem
+			padding .5rem .3rem
+			border-top-left-radius $radius-at-form
+			&:focus
+				outline none
+		.search__action
+			border none
+			padding 0 1rem
+			border-top-right-radius $radius-at-form
+			transition all .15s
+			&:focus
+				outline none
+				background-color darken($grey-lite, 30%)
+	.search__result
+		flex-design()
+		justify-content flex-start
+		align-items flex-start
+		flex-direction column
+		background-color $grey-lite
+		width 25rem
+		border-bottom-left-radius $radius-at-form
+		border-bottom-right-radius $radius-at-form
+		&--lists
+			flex-design()
+			margin .5rem 0 0 0
+			padding-left 0
+			flex-direction column
+			width 100%
+			li
+				flex-design()
+				flex-direction column
+				width 100%
+				a
+					flex-design()
+					flex-direction column
+					color #000
+					padding 1rem
+					transition all .15s
+					.title
+						flex-design()
+						font-size 1.1rem
+						font-weight 700
+					.url
+						flex-design()
+						font-size .8rem
+					&:hover
+						background-color darken($grey-lite, 30%)
+			
+			
+	.search__close
+		position absolute
+		top 1rem
+		right 1rem
+		background-color transparent
+		padding 1rem
+		border-radius 5%
+		cursor pointer
+		transition all .35s
+		&:hover
+			background-color $alert-font-error-color
+			box-shadow .1rem .1rem .3rem #d1d1d1

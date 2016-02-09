@@ -4,27 +4,31 @@
 		<h1>{{ page.title }}</h1>
 	</div>
 	<nav>
-    <ul>
+    <ul class="list-unstyled nav__list">
       <li>
-        <a href="{{ site.url }}">
-          <i class="fa fa-home fa-lg"></i> Index
+        <a href="{{ site.url }}" class="nav__link">
+          <i class="fa fa-home fa-lg"></i>Index
          </a>
       </li>
       <li>
-        <a href="{{ site.baseurl }}/about.html">
-          <i class="fa fa-slack fa-lg"></i> About
+        <a href="{{ site.baseurl }}/about.html" class="nav__link">
+          <i class="fa fa-slack fa-lg"></i>About
           </a>
       </li>
       <li>
-        <a href="{{ site.baseurl }}/feed.xml">
-          <i class="fa fa-rss-square fa-lg"></i> RSS
+        <a href="{{ site.baseurl }}/feed.xml" class="nav__link">
+          <i class="fa fa-rss-square fa-lg"></i>RSS
         </a>
       </li>
       <li>
-        <a href="https://www.iamhele.com" target="_blank">
-          <i class="fa fa-location-arrow fa-lg"></i> Resume
+        <a href="https://www.iamhele.com" target="_blank" class="nav__link">
+          <i class="fa fa-location-arrow fa-lg"></i>Resume
+        </a>
+      </li>
+      <li>
+        <a href="javascript:;" class="nav__link searchTrigger">
+          <i class="fa fa-search fa-lg"></i>Search
         </a>
       </li>
     </ul>
 	</nav>
-	<div class="content">

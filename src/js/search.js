@@ -8,9 +8,9 @@
 'use strict'
 
 // get the doms
-const searchBtn = document.querySelector('.searchBtn')
-const searchText = document.querySelector('.searchText')
-const resultDom = document.querySelector('.result-dom')
+const searchBtn = document.querySelector('.search__action')
+const searchText = document.querySelector('.search__input')
+const resultDom = document.querySelector('.search__result--lists')
 
 // Search action. 
 // First of all. get the input by user.
