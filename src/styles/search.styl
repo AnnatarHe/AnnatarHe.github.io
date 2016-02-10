@@ -1,8 +1,8 @@
 @import './utils'
 $radius-at-form = .5rem
+$mask-height = 25rem
 .search__mask
 	position fixed
-	top 0
 	left 0
 	width 100%
 	background-color rgba(0,0,0, .5)
@@ -10,20 +10,21 @@ $radius-at-form = .5rem
 	justify-content center
 	transition all .35s ease-out
 	visibility hidden
+	height 100%
 	&.show
 		visibility visible
-		height 100%
+		top 0
 	&.hide
 		visibility hidden
-		height 50%
+		top - $mask-height
 	.search__content
-		padding-top 3rem
+		padding 3rem 0
 		flex-design()
-		background-color teal
+		background linear-gradient(180deg, teal, #eee)
 		justify-content flex-start
 		align-items center
 		width 100%
-		height 20rem
+		height $mask-height
 		border-bottom-left-radius 100%
 		border-bottom-right-radius 100%
 		flex-direction column
@@ -49,6 +50,7 @@ $radius-at-form = .5rem
 				background-color darken($grey-lite, 30%)
 	.search__result
 		flex-design()
+		overflow-y scroll
 		justify-content flex-start
 		align-items flex-start
 		flex-direction column
@@ -57,20 +59,19 @@ $radius-at-form = .5rem
 		border-bottom-left-radius $radius-at-form
 		border-bottom-right-radius $radius-at-form
 		&--lists
+			list-style none
 			flex-design()
 			margin .5rem 0 0 0
 			padding-left 0
 			flex-direction column
 			width 100%
 			li
-				flex-design()
-				flex-direction column
 				width 100%
 				a
 					flex-design()
 					flex-direction column
 					color #000
-					padding 1rem
+					padding .5rem 1rem
 					transition all .15s
 					.title
 						flex-design()
@@ -95,3 +96,4 @@ $radius-at-form = .5rem
 		&:hover
 			background-color $alert-font-error-color
 			box-shadow .1rem .1rem .3rem #d1d1d1
+			color #fff
