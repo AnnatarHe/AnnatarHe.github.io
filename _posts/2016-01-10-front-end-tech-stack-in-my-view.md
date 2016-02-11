@@ -79,17 +79,15 @@ Vue的源码就比较正常了，虽然风格会乱变，但至少正常。最�
 
 对了，我比较推荐的目录方式是这样的。
 
-{% highlight console%}
---- src
-  |-- styles
-    |-- normalize.styl
-    |-- variables.styl
-    |-- animates.styl
-    |-- global.styl
-    |-- forms.styl
-    |-- lists.styl
-    |-- ...其他全局组件
-{% endhighlight %}
+    --- src
+      |-- styles
+        |-- normalize.styl
+        |-- variables.styl
+        |-- animates.styl
+        |-- global.styl
+        |-- forms.styl
+        |-- lists.styl
+        |-- ...其他全局组件
 
 这里不包含单独的在`*.vue`中的独特的样式。
 
