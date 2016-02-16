@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 开启 sublime
+tags: tools sublime
 ---
 
 # Install

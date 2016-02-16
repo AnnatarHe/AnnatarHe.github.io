@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 开始编写新时代的PHP吧
-tag: php
+tags: php
 ---
 
 ## New Generation

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 小贴条
+tags: snippets
 ---
 
 ## Purpose

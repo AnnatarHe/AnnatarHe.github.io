@@ -1,6 +1,7 @@
 ---
 layout: post
 title: React 注意事项
+tags: react js
 ---
 
 ## Warning

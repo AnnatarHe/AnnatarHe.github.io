@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Javascript 不允许选中
-tags: javascript selected
+tags: javascript selected js
 ---
 
 

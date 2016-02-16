@@ -1,6 +1,7 @@
 ---
 layout: post
 title: English study
+tags: english life
 ---
 
 Giant panda is a kind of tame animal with unique black and white fur. Because of the small numbers, panda is listed as endangered species. Panda has a special meaning toward the WWF. Since the founding of the fund in 1961, panda has been its symbol. Panda, which lives in the forest of the south-west of China, is the rarest in bear species. Nowadays, there are approximately 1000 pandas in the world. These animals whose food is mainly bamboo are under serious threat. Thus, the survival of panda is much more important than ever before.

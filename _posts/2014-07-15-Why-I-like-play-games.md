@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 为什么我爱玩游戏
+tags: life play games
 ---
 
 我不是爱玩游戏，我只是认真。

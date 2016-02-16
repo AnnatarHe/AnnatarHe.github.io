@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 编译我的开发环境
+tags: snippets tools
 ---
 
 ## Long long ago

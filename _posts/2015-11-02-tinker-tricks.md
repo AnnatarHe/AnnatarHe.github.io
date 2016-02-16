@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Tinker 小技巧
+tags: snippets php
 ---
 
 首先祝自己生日快乐啦 ^_^

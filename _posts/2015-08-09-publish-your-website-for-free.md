@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 免费发布网站的几种方法
-Tags: website pages SAE
+tags: website pages SAE
 ---
 
 ## Sumary

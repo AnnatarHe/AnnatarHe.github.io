@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 一些有用的 gulp 模板
-tags: gulp front-end
+tags: gulp front-end js snippets
 ---
 
 ## Introduction

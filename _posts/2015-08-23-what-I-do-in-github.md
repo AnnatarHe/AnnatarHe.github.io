@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 我在 GitHub 都做些什么
+tags: life tools
 ---
 
 ## Start

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 使用下一代的JS
+tags: js modern
 ---
 
 ## JS

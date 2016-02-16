@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 2016 Ajax 二三事
-tags: 前端 front-end ajax vue fetch
+tags: 前端 front-end ajax vue fetch js
 ---
 
 ## Sumary

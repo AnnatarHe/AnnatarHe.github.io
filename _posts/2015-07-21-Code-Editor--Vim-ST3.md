@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 编辑器 - Vim 和 Sublime
-Tags: sublime vim editor
+tags: tools sublime vim editor
 ---
 
 ## Meet up
