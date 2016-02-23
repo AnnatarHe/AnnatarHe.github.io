@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 为何单向数据流如此有必要
+title: SPA 杂谈
 tags: js front-end
 ---
 
