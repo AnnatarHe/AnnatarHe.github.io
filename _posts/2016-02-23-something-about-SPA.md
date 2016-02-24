@@ -118,9 +118,9 @@ export default Index
 
 ## 性能
 
-只写200行代码其实没什么问题，写成渣，V8也能优化成超跑。然而二十万行代码呢，处处是事件监听，再监听个像什么`resize`这种事件，碰上IE8这种坑队友。网页基本就崩了。
+只写200行代码其实没什么问题，写成渣，V8也能优化成超跑。然而二十万行代码呢，处处是事件监听，再监听个像什么`resize`这种事件，碰上IE8这种[坑队友](https://undefinedblog.com/recent-ie-quirks/)。网页基本就崩了。
 
-代码质量是一部分问题了。然而更多的问题还是更大量的代码。
+代码质量是一部分问题了。然而更多的问题还是代码量的增长。
 
 试想多年前的应用，一张页面才几百行的js。性能问题是有，但是也不怎么大吧。
 
@@ -134,7 +134,7 @@ export default Index
 
 如何加载，每个文件都会发起一个http请求，而每个请求消耗资源又很多。Facebook传说有几万套针对不同地区不同人群的不同资源map。如何控制？
 
-他们的解决方案是big pipe，不过没有太多的研究。
+他们的解决方案是[big pipe](https://www.facebook.com/notes/facebook-engineering/bigpipe-pipelining-web-pages-for-high-performance/389414033919/)，不过没有太多的研究。
 
 目前来说最好的解决方案应该是http2了。然而http2最棒的特性`server push`并没有被nginx实现。所以啊。。。加载性能可不像上面几个问题那样容易解决了。
 
@@ -169,7 +169,7 @@ export default Index
 简单的。如何控制这个显示隐藏状态？
 
 {% highlight js %}
-let current_state = true // true: show.   false:false
+let current_state = true // true: show.   false:hide
 const nav = document.querySelector('#nav')
 nav.addEventListener('click', e => {
     if( current_state ) {
@@ -198,4 +198,6 @@ nav.addEventListener('click', e => {
 
 现在有个更新的解决方案。[RxJS](https://github.com/Reactive-Extensions/RxJS)。有兴趣的看一下吧。我是真没精力倒腾这个了。
 
-暂时先发布好了。明天再改 :)
+关于资料，推荐的英文资料是[这个](http://xgrommx.github.io/rx-book/index.html), 中文资料[在这里](https://segmentfault.com/a/1190000004293922)
+
+:)
