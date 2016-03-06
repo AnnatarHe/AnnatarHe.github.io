@@ -58,6 +58,38 @@ context.fillRect(x, y, width, height) // 填充矩形
 context.strokeRect(x, y, width, height) // 画有边框矩形
 {% endhighlight %}
 
+## Transform
+
+`translate`的所有属性的叠加的，即用两次是两次相加。是个值得注意的地方。
+
+解决方法有两种，第一是在图形变换后在用一次`translate(-x, -y)`转换回来。
+
+另一种是用`context.save()`和`context.restore()`组合。`save`是保存当前上下文所有设置, `restore`是恢复。很像之前单机游戏里面的存档读档。
+
+`scale`也有问题，就是他会使得坐标点也产生缩放。解决方案是不使用边框。`context.stroke()`不用就好了
+
+`transform`需要有一点儿《线性代数》的知识...(一个生无可恋的表情)
+
+{% highlight js %}
+context.translate(x, y) // 坐标点修改至x, y
+context.rotate(deg) // 旋转角度
+context.scale(x, y) // 缩放
+
+/*****************
+// 矩阵：
+// a   c   e
+// b   d   f
+// 0   0   1
+******************/
+/**
+ * @param a, d 水平，垂直缩放
+ * @param b, c 水平，垂直倾斜
+ * @param e, f 水平，垂直位移
+ **/
+context.transform(a, b, c, d, e, f)
+context.setTransform(a, b, c, d, e, f) // 忘掉之前所有的transform，只使用自己的transform
+{% endhighlight %}
+
 ## Drwa a Star
 
 一定要看课程[画一个五角星](http://www.imooc.com/video/3488)
