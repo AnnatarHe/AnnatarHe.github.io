@@ -119,6 +119,20 @@ function drawStar( cxt, r, R, x, y, rotation) {
 // context.lineWidth = 10
 {% endhighlight %}
 
+## 线性渐变
+
+{% highlight js %}
+// 从哪儿开始，到哪儿结束
+let grd = context.createLinearGradient(0, 0, 800, 800)
+// 从起始的0.0开始，白色。 注意浮点数
+grd.addColorStop(0.0, '#fff')
+// 到1.0为止， 黑色
+grd.addColorStop(1.0, '#000')
+
+// 渲染
+context.fillStyle = grd
+context.fillRect(0, 0, 800, 800)
+{% endhighlight %}
 
 
 ## References
