@@ -151,4 +151,8 @@ Flex其实兼容性还是可以的。Android 4.4就全都支持了(逃...)。PC�
 
 是不是很清晰。
 
+这里有一些资料，需要的可以看看
+
+* [BEM 101](https://css-tricks.com/bem-101/)
+* [BEM思想之彻底弄清BEM语法](http://www.w3cplus.com/css/mindbemding-getting-your-head-round-bem-syntax.html)
 好了，就这样了。有了什么好东西再写出来啦。
