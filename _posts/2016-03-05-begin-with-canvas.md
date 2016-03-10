@@ -119,11 +119,15 @@ function drawStar( cxt, r, R, x, y, rotation) {
 // context.lineWidth = 10
 {% endhighlight %}
 
-## 线性渐变
+## 渐变
 
 {% highlight js %}
+// 线性渐变
 // 从哪儿开始，到哪儿结束
 let grd = context.createLinearGradient(0, 0, 800, 800)
+// 径向渐变
+// 起始点坐标和半径，终止点坐标和半径
+let rgd = context.createRadialGradient(x0, y0, r0, x1, y1, r1)
 // 从起始的0.0开始，白色。 注意浮点数
 grd.addColorStop(0.0, '#fff')
 // 到1.0为止， 黑色
@@ -132,6 +136,19 @@ grd.addColorStop(1.0, '#000')
 // 渲染
 context.fillStyle = grd
 context.fillRect(0, 0, 800, 800)
+{% endhighlight %}
+
+## images
+
+{% highlight js %}
+const img = new Image()
+img.src = 'foo.jpg'
+img.onload = () => {
+    // 背景图添加
+    let pattern = context.createPattern( img, 'no-repeat')
+    context.fillStyle = pattern
+    context.fillRect(0, 0, 800, 800)
+}
 {% endhighlight %}
 
 
