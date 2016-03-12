@@ -151,6 +151,14 @@ img.onload = () => {
 }
 {% endhighlight %}
 
+## Arc
+
+
+{% highlight js %}
+context.arc(centerX, centerY, radius, startingAngle, endingAngle, anticlockwise = false)
+
+{% endhighlight %}
+
 
 ## References
 
