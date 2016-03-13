@@ -121,4 +121,92 @@ fetch('/url', {
 
 那么来看看如何实现的。首先定义一个类变量来表示body是不是被用过了。
 
-然后定一个`_initBody(body)`的函数。从名字看出是初始化
+然后定一个`_initBody(body)`的函数。从名字看出是初始化。
+
+首先的几个if else先判定输入的body是什么鬼，分别给赋值。然后一个大if给设置header，因为不同的body有不同的`content-type`
+
+然后如果支持blob就执行解析。顺便做两个函数`blob`, `arrayBuffer`, 还顺带一个`text`解析。
+
+否则是文本了，解析一下，通过`Promise.resolve`来传递数据。同时也创建了个`text`解析。
+
+如果支持formData就把文本decode了。也创建了个`json()`方法。
+
+## Request
+
+首先做了个methods的数组，就是HTTP的几种方法。
+
+然后定一个helper，用来过滤method
+
+然后到正文了。先列举下它的方法。
+
+* constructor(input, options = {})
+* clone()
+
+这里其实才是整个入口。这里有个棒棒的特性，如果你是重复定义的request，那么它也能解析，什么意思呢
+
+{% highlight js %}
+let req = fetch('/url')
+fetch(req).then(doSomeThings())
+{% endhighlight %}
+
+就是这样，它可以复用之前的参数。如果是正常的那么就直接贴到url了。这里的`Request.prototype.isPrototypeOf(input)`用得精髓啊！
+
+`options`就是很容易理解了。就是一些参数写进去嘛。做了很多默认值的设置，让用户可以更简单地使用。当然还有容错。
+
+一切就绪就会initBody,前面说过了。
+
+## Helpers again
+
+又来了几个helpers。显示解析body的函数，前面有过调用。把body解析出来然后附加到FormData上，再返回出去。实现很漂亮！
+
+{% highlight js %}
+function decode(body) {
+    var form = new FormData()
+    body.trim().split('&').forEach(function(bytes) {
+        if (bytes) {
+            var split = bytes.split('=')
+            var name = split.shift().replace(/\+/g, ' ')
+            var value = split.join('=').replace(/\+/g, ' ')
+            form.append(decodeURIComponent(name), decodeURIComponent(value))
+            }
+        })
+    return form
+}
+{% endhighlight %}
+
+再看看前面的使用，得知其实text的body也用了formData哦～
+
+`headers(xhr)`是调用Header class的，从xhr上得到headers，然后给Headers class，最后返回出去。等等看哪里会调用。
+
+这里无头无脑来了个`Body.call(Request.prototype)`，不知何意。
+
+## Response
+
+这里来了个Response。看这个名字也能猜出来了。
+
+* constructor(bodyInit, options = {})
+* clone()
+* error // 静态函数
+* redirect(url, status) // 静态函数
+
+在最后一行又一个`this._initBody(bodyInit)`，纳闷，没定义这个函数啊。那这个this是什么意思。
+
+别急，下面还有一句`Body.call(Response.prototype)`。哦，终于明白了，原来是调用的Body的this啊！
+
+上面的Request也是调用的Body的this
+
+然后把`Headers`, `Request`, `Response`都绑定到了self(window)上！我总觉得这样并不合适。污染全局变量哎
+
+然后是在self(window)上挂载全局变量，也是主角`fetch`
+
+整个被包裹在一个大的Promise上。下面就没什么有意思的东西了，都是调用上面写好的函数，一般的xhr发送
+
+最后还特别友情地加了一行
+
+{% highlight js %}
+self.fetch.polyfill = true
+{% endhighlight %}
+
+告诉大家可以检测一下
+
+完.
