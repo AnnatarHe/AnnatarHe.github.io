@@ -4,4 +4,4 @@
             window.location.protocol = 'https';
         }
     });
-});
+})();
