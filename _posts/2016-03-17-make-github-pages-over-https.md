@@ -36,13 +36,10 @@ title: 通过HTTPS 访问 github pages
 很抱歉，因为是静态站点，服务端不归我们管，只能通过js的方式来达到效果。
 
 {% highlight js %}
-'use strict'
 (function() {
-    window.addEventListener('DOMContentLoaded', function() {
-        if ( window.location.protocol.indexOf('s') < 0) {
-            window.location.protocol = 'https'
-        }
-    })
+    if ( window.location.protocol.indexOf('s') < 0 ) {
+        window.location.protocol = 'https'
+    }
 })()
 {% endhighlight %}
 
