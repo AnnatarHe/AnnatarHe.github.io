@@ -6,7 +6,7 @@ tags: life js
 
 今天试了试*Swift*发在了微博上，和[kee](http://ikee.xin/)就说了一些。他是专攻IOS方面的，我就是闲来无聊找找其他语言的乐子。我就说让他准备关于Swift的资料。
 
-想了想我也应该自己写一份关于*js*的资料了，*PHP*我觉得已经不是我的主力语言了，后面也稍微写一些吧。
+想了想我也应该自己写一份关于*js*的资料了，*PHP*我虽然已经不是我的主力语言了，但后面也稍微写一些吧。
 
 ## 入门
 
@@ -40,11 +40,11 @@ tags: life js
 
 * [Http](http://www.amazon.cn/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97-%E5%90%89%E5%B0%94%E5%88%A9/dp/B008XFDQ14/ref=sr_1_1?ie=UTF8&qid=1458484840&sr=8-1&keywords=http+%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97) 关于HTTP的，这本书超级厚，我看的时候蛮痛苦的。
 
-* [Sass]() 任意一门CSS预处理器
+* [Sass](http://sass-lang.com/) 任意一门CSS预处理器
 
 ## 中级
 
-* [算法精解]() 我没有推荐算法导论，我认为那个太难了。我在看着这本书在一个个写，不难，都能理解。
+* [算法精解](http://www.amazon.cn/%E7%AE%97%E6%B3%95%E7%B2%BE%E8%A7%A3-C%E8%AF%AD%E8%A8%80%E6%8F%8F%E8%BF%B0-Kyle-Loudon/dp/B00E87TVL0/ref=sr_1_1?ie=UTF8&qid=1458644780&sr=8-1&keywords=%E7%AE%97%E6%B3%95%E7%B2%BE%E8%A7%A3) 我没有推荐算法导论，我认为那个太难了。我在看着这本书在一个个写，不难，都能理解。
 
 * [JavaScript设计模式与开发实践](http://www.amazon.cn/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E6%9B%BE%E6%8E%A2/dp/B00XJ2AU3S/ref=sr_1_1?ie=UTF8&qid=1458484332&sr=8-1&keywords=javascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5) 学到了特别多的东西，比如对闭包的理解又进了一步(设计模式从PHP那儿学到的更多)
 
@@ -57,6 +57,8 @@ tags: life js
 * [TypeScript](https://zhongsp.gitbooks.io/typescript-handbook/content/doc/handbook/Basic%20Types.html) 了解一下目前比较火的TypeScript吧，不能说是业界方向，但我个人认为类型安全还是挺好的。
 
 * [RxJS](http://xgrommx.github.io/rx-book/index.html) 响应式编程。这一块我也了解不多，但是认为大有前途！
+
+* [Node入门](http://www.nodebeginner.org/index-zh-cn.html) 蛮简单的Node入门，讲服务端Node的
 
 ## 高级
 
@@ -74,11 +76,11 @@ tags: life js
 
 书的话，这里有三本比较推荐
 
-* [深入理解PHP]()
+* [深入理解PHP](http://www.amazon.cn/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3PHP-%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B8%8E%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E4%B9%8C%E5%B0%94%E6%9B%BC/dp/B00HMXAHFQ/ref=sr_1_1?ie=UTF8&qid=1458644818&sr=8-1&keywords=%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3PHP)
 
-* [深入PHP面向对象，模式与实践]()
+* [深入PHP面向对象，模式与实践](http://www.amazon.cn/%E6%B7%B1%E5%85%A5PHP-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%AE%9E%E8%B7%B5-Mart-Zandstra/dp/B005D6IRRY/ref=sr_1_1?ie=UTF8&qid=1458644841&sr=8-1&keywords=%E6%B7%B1%E5%85%A5PHP)
 
-* [Modern PHP]()
+* [Modern PHP](http://www.amazon.cn/Modern-PHP-%E4%B9%94%E5%B8%8C%C2%B7%E6%B4%9B%E5%85%8B%E5%93%88%E7%89%B9/dp/B016MGW5G2/ref=sr_1_1?ie=UTF8&qid=1458644884&sr=8-1&keywords=modern+php)
 
 ## Tools
 
@@ -100,9 +102,23 @@ laracasts有一些
 
 ## 博客
 
-一些我认为吊吊的前端博客
+一些我认为吊吊的个人博客
 
-* []()
+* [王垠](http://www.yinwang.org/) 王垠的博客，不算前端，但是每篇文章都有其独特的观点。大牛。
+
+* [purplebamboo.github.io](http://purplebamboo.github.io/) 文章质量非常的高，推荐.
+
+* [屈屈](https://imququ.com/) 360前端，最近的文章大多在讨论http2
+
+* [小胡子哥](http://www.barretlee.com/entry/) 淘宝前端，文章质量挺好的
+
+* [阿城的blog](http://qiutc.me/) 还不错的前端博客
+
+* [ishell.me](https://blog.ishell.me/) 还不错的前端博客
+
+* [杨森](https://undefinedblog.com/) 阿里前端
+
+* [KingDomPan](http://kingdompan.github.io/) 关于前端的文章挺好的
 
 当然还有我的[AnnatarHe's blog](https://AnnatarHe.github.io) :)
 
@@ -120,7 +136,7 @@ laracasts有一些
 
 我觉得到这个阶段，做个架构师应该是不成问题的了。
 
-说了这么多，主旨就在于多去读[Node API]()，多看看底层的HTTP。
+说了这么多，主旨就在于多去读[Node API](https://nodejs.org/dist/latest-v5.x/docs/api/)，多看看底层的HTTP。
 
 前端框架也是如此，管他什么Angular, React, Vue, Ploymer，会了DOM操作，会了算法，会了设计模式，这些我们也能写出来。
 
@@ -128,8 +144,8 @@ laracasts有一些
 
 ## 其他
 
-* [禅与摩托车维修艺术]() 超棒的书，强力推荐
+* [禅与摩托车维修艺术](http://www.amazon.cn/%E7%A6%85%E4%B8%8E%E6%91%A9%E6%89%98%E8%BD%A6%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF-%E7%BD%97%E4%BC%AF%E7%89%B9%E2%80%A2M-%E6%B3%A2%E8%A5%BF%E6%A0%BC/dp/B005O4PUFC/ref=sr_1_1?ie=UTF8&qid=1458649214&sr=8-1&keywords=%E7%A6%85%E4%B8%8E%E6%91%A9%E6%89%98%E8%BD%A6%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF) 超棒的书，强力推荐
 
-* [十一家注孙子]() 孙子兵法，目前只看了*计篇*，受益良多。
+* [十一家注孙子](http://www.amazon.cn/%E4%B8%AD%E5%8D%8E%E5%9B%BD%E5%AD%A6%E6%96%87%E5%BA%93-%E5%8D%81%E4%B8%80%E5%AE%B6%E6%B3%A8%E5%AD%99%E5%AD%90-%E5%AD%99%E6%AD%A6/dp/B008A2QVM6/ref=sr_1_1?ie=UTF8&qid=1458649240&sr=8-1&keywords=%E5%8D%81%E4%B8%80%E5%AE%B6%E6%B3%A8%E5%AD%99%E5%AD%90) 孙子兵法，目前只看了*计篇*，受益良多。
 
 暂时就这些吧。希望对读者有所帮助。
