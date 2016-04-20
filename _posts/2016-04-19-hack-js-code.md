@@ -4,7 +4,7 @@ title: JavaScript 装逼指南
 tags: js javascript
 ---
 
-## Sumary
+## Summary
 
 本文秉承着
 
