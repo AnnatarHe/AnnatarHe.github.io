@@ -19,7 +19,7 @@ tags: js javascript
 这个技巧用的很多，也非常的简单
 
 {% highlight js %}
-!!'fuck'
+!!'foo'
 {% endhighlight %}
 
 通过两个取反，可以强制转换为Boolean类型。较为常用。
@@ -88,8 +88,8 @@ var isType = function(type) {
 
 {% highlight js %}
 var times = 0
-var fuck = document.querySelector('.fuck')
-fuck.addEventListener('click', function() {
+var foo = document.querySelector('.foo')
+foo.addEventListener('click', function() {
     times++
     console.log(times)
 }, false)
@@ -100,7 +100,7 @@ fuck.addEventListener('click', function() {
 这个时候这样一个事件监听代码就比较牛逼了
 
 {% highlight js %}
-fuck.addEventListener('click', (function() {
+foo.addEventListener('click', (function() {
     var times = 0
     return function() {
         times++
