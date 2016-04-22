@@ -133,6 +133,8 @@ foo.addEventListener('click', (function() {
 
 这个技巧十分装逼，原理是`~`是一个叫做**按位非**的操作，会返回数值的反码。是二进制操作。
 
+原因在于JavaScript中的number都是double类型的，在位操作的时候要转化成int，两次~就还是原数。
+
 ## Hex
 
 十六进制操作。其实就是一个`Array.prototype.toString(16)`的用法
