@@ -1,6 +1,6 @@
 ---
 layout: post
-title: JavaScript 装逼指南
+title: 基础 JavaScript 装逼指南
 tags: js javascript
 ---
 
