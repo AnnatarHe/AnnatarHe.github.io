@@ -144,7 +144,7 @@ foo.addEventListener('click', (function() {
 做到随机的话可以这样
 
 {% highlight js %}
-(~~(Math.random()*((1<<24)-1))).toString(16)+'00000').substring(0,7)
+((~~(Math.random()*((1<<24)-1))).toString(16)+'00000').substring(0,7)
 {% endhighlight %}
 
 底下的原文链接非常建议去读一下，后三个技巧都是在那里学到的。
