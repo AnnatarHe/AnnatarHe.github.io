@@ -144,7 +144,7 @@ foo.addEventListener('click', (function() {
 做到随机的话可以这样
 
 {% highlight js %}
-((~~(Math.random()*((1<<24)-1))).toString(16)+'00000').substring(0,7)
+('00000'+(0|Math.random()*(1<<24)).toString(16)).slice(-6)
 {% endhighlight %}
 
 底下的原文链接非常建议去读一下，后三个技巧都是在那里学到的。
@@ -152,8 +152,10 @@ foo.addEventListener('click', (function() {
 > 注：
 >
 > 此随机数会产生五位，四位，甚至一位的颜色。所以严谨的话还是要做一下判定的
+> 
+> 然后其实也有了很多改进的地方。详细请看下面的评论
 >
-> 谢谢`@yangfch3`和`@scar`的勘误
+> 谢谢`@yangfch3`, `@scar`, `@mitsunchieh`的勘误, 真的从各位大神身上学到了很多
 
 ## <<
 
