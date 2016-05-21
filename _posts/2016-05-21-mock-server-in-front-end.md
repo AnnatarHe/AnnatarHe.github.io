@@ -169,7 +169,5 @@ DELETE /api/activity/1
 ## References
 
 * [JSON Server](https://github.com/typicode/json-server)
-
 * [faker.js](https://github.com/Marak/faker.js)
-
 * [Egghead.io free video tutorial - Creating demo APIs with json-server](https://egghead.io/lessons/nodejs-creating-demo-apis-with-json-server)
