@@ -68,6 +68,8 @@ fetch(`${prefix}/api/users`).then(res => res.json()).then(data => todo(data))
 
 这套方案就很棒，完全不用修改请求url。
 
+![mock server](/images/mock_server/mock_server.png)
+
 说干就干：
 
 {% highlight console %}
