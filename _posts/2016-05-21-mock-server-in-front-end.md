@@ -168,6 +168,7 @@ DELETE /api/activity/1
 
 ## References
 
+* [你是如何构建 Web 前端 Mock Server 的？](https://www.zhihu.com/question/35436669)
 * [JSON Server](https://github.com/typicode/json-server)
 * [faker.js](https://github.com/Marak/faker.js)
 * [Egghead.io free video tutorial - Creating demo APIs with json-server](https://egghead.io/lessons/nodejs-creating-demo-apis-with-json-server)
