@@ -36,7 +36,7 @@ tags: js fe mock
 
 就像是这样
 
-{% highlight js linenos %}
+{% highlight js %}
 // release前修改
 const prefix = 'http://dev.foo.com/'
 
