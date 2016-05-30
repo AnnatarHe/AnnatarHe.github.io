@@ -18,6 +18,7 @@
   ga('create', 'UA-66374339-1', 'auto');
   ga('send', 'pageview');
 
+
   var posts = [
     {% for post in site.posts %}
     {
@@ -28,6 +29,9 @@
     {% endfor %}
 ];
 </script>
-<script src="/dist/js/app.js"></script>
+<!-- <script src="/dist/js/app.js"></script> -->
+<script src="/src/js/global.js"></script>
+<script src="/src/js/search.js"></script>
+<script src="/src/js/search_trigger.js"></script>
 </body>
 </html>

@@ -1,8 +1,9 @@
 (function() {
     'use strict';
-    if ( window.location.protocol.indexOf('s') < 0) {
-        window.location.protocol = 'https'
-    }
+    // if env is `production`, comment this
+    // if ( window.location.protocol.indexOf('s') < 0) {
+    //     window.location.protocol = 'https'
+    // }
 
     document.addEventListener("visibilitychange", (function() {
         var title = document.title

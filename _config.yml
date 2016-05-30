@@ -5,7 +5,7 @@ email: iamhele1994@gmail.com
 uri: https://github.com/AnnatarHe
 paginate: 12
 paginate_path: "/page:num/"
-exclude: ['node_modules']
+exclude: ['node_modules', '_site']
 gems:
   - jekyll-sitemap
   - jekyll-paginate

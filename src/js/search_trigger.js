@@ -6,6 +6,13 @@
 	const searchMaskBtn = document.querySelector('.search__mask')
 	const searchMask = searchMaskBtn.classList
 
+	// handle close
+	// just css animation
+	const handleCloseEvent = () => {
+		searchMask.remove('show')
+		searchMask.add('hide')
+	}
+
 	trigger.addEventListener('click', () => {
 		searchMask.remove('hide')
 		searchMask.add('show')
@@ -25,6 +32,7 @@
 			return
 		}
 	}, false)
+
 	document.body.addEventListener('keydown', e => {
 		let eCode = e.keyCode
 		if (searchMask.contains('show') && eCode == 27) {
@@ -34,10 +42,5 @@
 		}
 	}, false)
 
-	// handle close
-	// just css animation
-	function handleCloseEvent() {
-		searchMask.remove('show')
-		searchMask.add('hide')
-	}
+
 })()

@@ -16,8 +16,8 @@
     // Secondly. Using user input comparse with the json file
     // Finally. put it in dom!
     // Tips: innerHTML maybe good performance 
-    function handleSearcher() {
-        new Promise((resolve, reject) => {
+    const handleSearcher = () => {
+        return new Promise((resolve, reject) => {
             let searchVal = searchText.value.toLowerCase().trim()
             let res = posts.filter((item) => {
                 return (item.title.toLowerCase().indexOf(searchVal) > 0) || (item.url.toLowerCase().indexOf(searchVal) > 0)
