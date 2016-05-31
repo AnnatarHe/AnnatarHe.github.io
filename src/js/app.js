@@ -1,4 +1,3 @@
+import {msg} from './module'
 
-export default () => {
-    console.log('fuck something')
-}
+console.log(msg)

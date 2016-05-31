@@ -5,47 +5,45 @@
 // @License MIT
 
 // get the doms
-(function() {
-    'use strict'
-    const searchBtn = document.querySelector('.search__action')
-    const searchText = document.querySelector('.search__input')
-    const resultDom = document.querySelector('.search__result--lists')
+'use strict'
+const searchBtn = document.querySelector('.search__action')
+const searchText = document.querySelector('.search__input')
+const resultDom = document.querySelector('.search__result--lists')
 
-    // Search action. 
-    // First of all. get the input by user.
-    // Secondly. Using user input comparse with the json file
-    // Finally. put it in dom!
-    // Tips: innerHTML maybe good performance 
-    const handleSearcher = () => {
-        return new Promise((resolve, reject) => {
-            let searchVal = searchText.value.toLowerCase().trim()
-            let res = posts.filter((item) => {
-                return (item.title.toLowerCase().indexOf(searchVal) > 0) || (item.url.toLowerCase().indexOf(searchVal) > 0)
-            })
-            resolve(res)
+// Search action. 
+// First of all. get the input by user.
+// Secondly. Using user input comparse with the json file
+// Finally. put it in dom!
+// Tips: innerHTML maybe good performance 
+const handleSearcher = () => {
+    return new Promise((resolve, reject) => {
+        let searchVal = searchText.value.toLowerCase().trim()
+        let res = posts.filter((item) => {
+            return (item.title.toLowerCase().indexOf(searchVal) > 0) || (item.url.toLowerCase().indexOf(searchVal) > 0)
         })
-        .then(res => {
-            // contact the dom string
-            let domStr = ''
-            for (let post of res ) {
-                domStr += `
-                <li>
-                    <a href="${post.url}">
-                        <span class="title">${post.title}</span>
-                        <span class="url">${post.url}</span>
-                    </a>
-                </li>
-                `
-            }
-            return domStr
-        })
-        .then(domStr => {
-            // render it!
-            resultDom.innerHTML = domStr
-        })
-    }
+        resolve(res)
+    })
+    .then(res => {
+        // contact the dom string
+        let domStr = ''
+        for (let post of res ) {
+            domStr += `
+            <li>
+                <a href="${post.url}">
+                    <span class="title">${post.title}</span>
+                    <span class="url">${post.url}</span>
+                </a>
+            </li>
+            `
+        }
+        return domStr
+    })
+    .then(domStr => {
+        // render it!
+        resultDom.innerHTML = domStr
+    })
+}
 
-    // listening double event.
-    searchText.addEventListener('input', handleSearcher, false)
-    searchBtn.addEventListener('click', handleSearcher, false)
-})()
+// listening double event.
+searchText.addEventListener('input', handleSearcher, false)
+searchBtn.addEventListener('click', handleSearcher, false)
