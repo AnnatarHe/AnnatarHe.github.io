@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+// import 'babel-polyfill'
 // This script for search post by json that jekyll generated
 //
 // @Author  AnnatarHe
