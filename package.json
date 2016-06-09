@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "js": "rollup --config rollup.config.js",
+    "css": "stylus src/styles/app.styl -o dist/app.css -c -m",
     "test": "mocha test"
   },
   "repository": {
@@ -21,23 +22,13 @@
   },
   "homepage": "https://github.com/AnnatarHe/AnnatarHe.github.io#readme",
   "devDependencies": {
-    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2015-rollup": "^1.1.1",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-babel": "^6.1.2",
-    "gulp-concat": "^2.6.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-stylus": "^2.3.0",
-    "gulp-uglify": "^1.5.2",
     "rollup": "^0.26.3",
     "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-stylus-css-modules": "^1.0.3",
     "rollup-plugin-uglify": "^0.3.1",
+    "stylus": "^0.54.5",
     "uglify-js": "^2.6.2"
-  },
-  "dependencies": {
-    "babel-preset-es2015": "^6.9.0",
-    "gulp-stylus": "^2.4.0",
-    "gulp-uglify": "^1.5.3"
   }
 }

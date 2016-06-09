@@ -1,8 +1,8 @@
 'use strict'
-const trigger = document.querySelector('.searchTrigger')
+export const trigger = document.querySelector('.searchTrigger')
 const close = document.querySelector('.search__close')
 
-const searchMaskBtn = document.querySelector('.search__mask')
+export const searchMaskBtn = document.querySelector('.search__mask')
 const searchMask = searchMaskBtn.classList
 
 // handle close
@@ -12,13 +12,13 @@ const handleCloseEvent = () => {
     searchMask.add('hide')
 }
 
-trigger.addEventListener('click', () => {
+export const showModal = () => {
     searchMask.remove('hide')
     searchMask.add('show')
-},false)
+}
 
-// handle close event
-searchMaskBtn.addEventListener('click', e => {
+
+export const closeModalWithMask = e => {
     let targetClassList = e.target.classList
     let isMaskClicked = targetClassList.contains('search__mask') ? true : false
     let isCloseBtnClicked = targetClassList.contains('search__close') ? true : false
@@ -30,14 +30,15 @@ searchMaskBtn.addEventListener('click', e => {
     }else {
         return
     }
-}, false)
+}
 
-document.body.addEventListener('keydown', e => {
+
+export const closeModalEvent = e => {
     let eCode = e.keyCode
     if (searchMask.contains('show') && eCode == 27) {
         handleCloseEvent()
     }else {
         return
     }
-}, false)
+}
 

@@ -5,7 +5,6 @@
 // @License MIT
 
 // get the doms
-'use strict'
 const searchBtn = document.querySelector('.search__action')
 const searchText = document.querySelector('.search__input')
 const resultDom = document.querySelector('.search__result--lists')
@@ -15,7 +14,7 @@ const resultDom = document.querySelector('.search__result--lists')
 // Secondly. Using user input comparse with the json file
 // Finally. put it in dom!
 // Tips: innerHTML maybe good performance 
-const handleSearcher = () => {
+export const handleSearcher = () => {
     return new Promise((resolve, reject) => {
         let searchVal = searchText.value.toLowerCase().trim()
         let res = posts.filter((item) => {
@@ -44,6 +43,3 @@ const handleSearcher = () => {
     })
 }
 
-// listening double event.
-searchText.addEventListener('input', handleSearcher, false)
-searchBtn.addEventListener('click', handleSearcher, false)

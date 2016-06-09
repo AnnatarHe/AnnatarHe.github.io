@@ -1,12 +1,6 @@
 'use strict';
-// if env is `production`, comment this
-export checkoutHttps = () => {
-    if ( window.location.protocol.indexOf('s') < 0) {
-        window.location.protocol = 'https'
-    }
-}
 
-export titleShow = () => {
+export const titleShow = () => {
     var title = document.title
     return () => {
         if (document.visibilityState == 'hidden') {
@@ -17,4 +11,3 @@ export titleShow = () => {
     }
 }
 
-document.addEventListener('visibilitychange', titleShow())
