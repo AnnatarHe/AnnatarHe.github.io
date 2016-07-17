@@ -139,9 +139,8 @@ google 创建了一套生态，让用户逐渐融入其中，等想离开的时�
 * Email： iamhele1994@gmail.com
 * Github: [AnnatarHe](https://github.com/AnnatarHe)
 * Weibo: [AnnatarHe](http://weibo.com/AnnatarHe/home)
-* 知乎: [贺乐](https://www.zhihu.com/people/AnnatarHe)
+* 知乎: [AnnatarHe](https://www.zhihu.com/people/AnnatarHe)
 
-简历页面在这里：[AnnatarHe](https://www.iamhele.com)
 
 ## 谢谢
 
