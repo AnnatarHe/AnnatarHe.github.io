@@ -10,7 +10,7 @@ tags: editor code
 
 改建的意义在于将 Ctrl 映射到 Caps Lock 上。原因在于小拇指很容易按到这个大写锁定而很难按到原来 ctrl 的位置。
 
-改建对于 Emacs 用户更为重要。
+改键对于 Emacs 用户更为重要。
 
 操作方法：Ubuntu 参考[这篇文章](http://www.cnblogs.com/lzhskywalker/archive/2012/07/20/2600854.html), windows是改注册表，自行google吧。
 
