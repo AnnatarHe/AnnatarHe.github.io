@@ -102,6 +102,8 @@ someRender() {
 }
 {% endhighlight %}
 
+不过 map 有一点不好的地方在于不能控制循环的流程，如果不能完成，就返回**undefined**继续下一次迭代。所以遇到可能会返回undefined的情况应该用forEach或者for循环遍历
+
 还有filter用法和map一模一样，只是它用来过滤数据。非常的好用。
 
 ## arguments
