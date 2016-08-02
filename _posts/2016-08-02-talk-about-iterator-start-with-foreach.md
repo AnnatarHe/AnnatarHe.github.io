@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 从 forEach 开始谈谈
+title: 从 forEach 开始谈谈迭代
 tags: js
 ---
 
