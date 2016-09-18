@@ -104,13 +104,40 @@ for(var index = 0; index < 100; index++) {
 
 ## 其他
 
-其他的就是技术相关了，吹了一会儿经济学，幸好我经济学学的还行。差点儿吹起来宗教相关，幸亏打住了。
+其他的就不是技术相关了，吹了一会儿经济学，幸好我经济学学的还行。差点儿吹起来宗教相关，幸亏打住了。
 
 Ukulele弹得差，说了一点儿。
 
 ## 质数
 
 路上碰到一个MIT的PhD。偶然说到这道题，他说好些master都不会写。好在还会写 T_T
+
+我的天。。。我这几天又翻了几页**SICP**，发现自己竟然不会了。
+
+似乎要用到费马小定理：
+
+> 如果 n 是一个素数，a 是小于 n 的任意正整数，那么 a 的 n 次方与 a 模 n 同余
+
+{% highlight scheme %}
+(define (expmod base exp m)
+    (cond ((= exp 0) 1)
+    ((even? exp)
+     (remainder (square (expmod base (/ exp 2) m))
+                m))
+    (else
+     (remainder (* base (expmod base (- exp 1) m))
+                m))))
+
+(define (fermat-test n)
+    (define (try-it a)
+        (= (expmod a n n) a))
+    (try-it (+ 1 (random (- n 1)))))
+
+(define (fast-prime? n times)
+    (cond ((= times 0) true)
+          ((fermat-test n) (fast-prime? n (- times 1)))
+          (else false)))
+{% endhighlight %}
 
 ## 总结
 
