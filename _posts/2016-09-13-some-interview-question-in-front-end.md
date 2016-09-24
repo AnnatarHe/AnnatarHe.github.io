@@ -76,7 +76,7 @@ for(var index = 0; index < 100; index++) {
 
 后来查了一些文章。[ReactJS组件间沟通的一些方法](http://www.alloyteam.com/2016/01/some-methods-of-reactjs-communication-between-components/)
 
-发现自己对原生brower还是没有想清楚. 可以通过全局事件这样的事情来做的！
+发现自己对原生browser还是没有想清楚. 可以通过全局事件这样的事情来做的！
 
 真的好蠢 T_T
 
