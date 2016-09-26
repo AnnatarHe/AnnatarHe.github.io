@@ -45,7 +45,7 @@ this.setData({
 
 语法上还是很像的，对吧？
 
-[「微信小程序」剖析（二）：框架原理 | 在桌面浏览器上运行的尝试](http://mp.weixin.qq.com/s?__biz=MjM5Mjg4NDMwMA==&mid=2652974111&idx=1&sn=93a868cdb59b5dd77c65c7a5303e6e31&scene=1&srcid=0924Q4gJJUa1P5HtJ7A45yPd&from=groupmessage&isappinstalled=0#wechat_redirect) 这篇文章后面有一段讲的是数据变动渲染什么的。说的比较含糊，没看太懂
+[「微信小程序」剖析（二）：框架原理 在桌面浏览器上运行的尝试](http://mp.weixin.qq.com/s?__biz=MjM5Mjg4NDMwMA==&mid=2652974111&idx=1&sn=93a868cdb59b5dd77c65c7a5303e6e31&scene=1&srcid=0924Q4gJJUa1P5HtJ7A45yPd&from=groupmessage&isappinstalled=0#wechat_redirect) 这篇文章后面有一段讲的是数据变动渲染什么的。说的比较含糊，没看太懂
 
 绑定事件上也比较像react对吧，不过我比较偏爱的是 vue 的语法，很优雅
 
