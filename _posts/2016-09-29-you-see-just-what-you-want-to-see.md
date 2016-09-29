@@ -178,5 +178,5 @@ tags: life
 
 最后由Jobs的话结束这篇文章
 
-> Stay foolish, stay hungry
+> Stay Foolish, Stay Hungry
 
