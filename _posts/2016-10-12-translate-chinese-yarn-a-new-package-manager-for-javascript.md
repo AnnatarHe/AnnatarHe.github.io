@@ -56,17 +56,52 @@ Yarn 解决版本控制和安装不精确的问题是通过使用 **lockfils** �
 
 3. 链接。最终，Yarn 通过从一起链接全局缓存中拷贝所有需要的文件到本地 node_modules 文件夹中
 
-通过分解这几步，就有了干净的，确定的结果。
+通过分解这几步，就有了干净的，确定的结果，Yarn 就可以并行化这些操作，最大限度地利用资源使得安装进程更快。在一些 Facebook 的项目中， Yarn 的安装进程减少了一个数量级，从几分钟缩短到了仅仅几秒钟。Yarn 也用了互斥的手段去保证多个命令行进程间不会互相碰撞污染对方。
 
+在整个过程中，Yarn 对包的安装过程做了严格的保护。 你可以控制从哪个 package 在哪些生命周期执行命令。package 验证码也会被保存在 lockfile 中，用来保证每一次安装的都是同一个包。
 
+## 特性
 
+除了使安装更加迅速，更加简单以外，Yarn 也有一些额外的特性去进一步简化依赖管理的工作流。
 
+* 兼容 npm 和 bower 的工作流并支持混合的仓库(registry)
 
+* 尽量限制已安装模块的许可和许可证信息输出的手段
 
+* 暴露出稳定的，公开的，有日志抽象能力的 JS API 提供给构建工具去使用
 
+* 易读的，尽量少的，好看的命令行输出
 
+## 生产环境中的 Yarn
 
+在 Facebook，我们已经在生产环境中用 Yarn 了，并且干得很好。它接管了依我们很多个 JavaScript 项目的依赖和包管理工作。随着每一次迁移(migration, 更新?)，我们尽量要求工程师去构建出离线的，并能加速他们工作流(的更新)。你可以看到 React Native 在不同条件下 Yarn 和 npm 的安装速度的比较。你可以在[这里](https://yarnpkg.com/en/compare) 找到
 
+## 起步
 
+最简单的起步方法是运行：
 
+{% highlight console %}
+$ npm install -g yarn
+$ yarn
+{% endhighlight %}
+
+在你的开发工作流中用 Yarn 命令行命令替换掉 npm，无论是一个匹配得上的命令或者是新命令，相似的命令如下：
+
+* npm instal → yarn
+
+不带参数的话， `yarn` 命令会读取你的 package.json 文件，并从 npm 仓库中获取包，并填充到你的 node_modules 文件夹中。它等价于 `npm install`
+
+* npm install --save <name> → yarn add <name>
+
+我们移除了 `npm install <name>` 命令中的“不可见依赖”，并分离了这个命令。执行 `yarn add <name>` 就等价于执行 `npm install --save <name>`
+
+## 未来
+
+我们很多人集合在一起去构建 Yarn 去解决共同的问题，并且我们知道我们也想 Yarn 变成一个每个人都能用的真正的社区项目。 Yarn 现在已经在 [GitHub 发布了](https://github.com/yarnpkg/yarn)，并且我们准备好(告诉) Node 社区做什么是最好的选择： 使用 Yarn， 分享想法，编写文档，互帮互助并帮助建立一个伟大的社区去照顾它。我们相信 Yarn 已经有了一个伟大的开始，在你的帮助下它会变得更好。
+
+> [Yarn: A new package manager for JavaScript](https://code.facebook.com/posts/1840075619545360/yarn-a-new-package-manager-for-javascript/)
+
+## 译者的话
+
+我觉得自己翻译得不算很好，有一些句子翻译得可能略生硬，如果你觉得我哪里翻译得有问题，欢迎在下面留言让我知道，或者给我发邮件：iamhele1994#gmail.com
 
