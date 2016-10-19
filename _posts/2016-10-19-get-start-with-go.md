@@ -160,13 +160,13 @@ let foo = ['hello', 'world']
 比如打开一个文件，可以立即写一个 defer 以防后面忘记
 
 {% highlight go %}
-file, err := os.Open('file.txt')
+file, err := os.Open("file.txt")
 defer file.Close()
 {% endhighlight %}
 
 js里似乎没有这么牛逼的功能。有点儿叼的。
 
-## function
+## Function
 
 定义函数很多种方法。
 
@@ -175,7 +175,7 @@ js里似乎没有这么牛逼的功能。有点儿叼的。
 比如：
 
 {% highlight go %}
-someFunc := func() func() int{
+someFunc := func() (func() int) {
     // do some stuff
     return func() {
         // return a function
@@ -197,7 +197,7 @@ let someFunc = () => () => 1
 那么，自执行函数呢，Go 也有！
 
 {% highlight go %}
-foo := func() int{
+foo := func() int {
     return 1
 }()
 {% endhighlight %}
@@ -239,7 +239,7 @@ for _, v := range names {
 
 哈哈，是的。和一些著名的js面试题一样，因为进行的很快，所以最后只会输出“AnnatarHe”，我猜你看到这里应该会改了哦~
 
-{% highlight js %}
+{% highlight go %}
 go func(name) {
     fmt.Printf("Hello, %s", name)
 }(v)
