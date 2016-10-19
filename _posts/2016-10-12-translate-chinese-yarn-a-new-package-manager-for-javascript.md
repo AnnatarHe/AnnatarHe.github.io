@@ -87,11 +87,11 @@ $ yarn
 
 在你的开发工作流中用 Yarn 命令行命令替换掉 npm，无论是一个匹配得上的命令或者是新命令，相似的命令如下：
 
-* npm instal → yarn
+* npm install → yarn
 
 不带参数的话， `yarn` 命令会读取你的 package.json 文件，并从 npm 仓库中获取包，并填充到你的 node_modules 文件夹中。它等价于 `npm install`
 
-* npm install --save <name> → yarn add <name>
+* npm install --save &lt;name&gt; → yarn add &lt;name&gt;
 
 我们移除了 `npm install <name>` 命令中的“不可见依赖”，并分离了这个命令。执行 `yarn add <name>` 就等价于执行 `npm install --save <name>`
 
