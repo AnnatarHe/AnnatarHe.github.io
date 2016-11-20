@@ -117,6 +117,27 @@ Touch ID集成了。不过只有App Store能用到，其他地方没有调用。
 
 下面那么大一块的触控板有点儿吸引眼球。学了一点儿多指操作，感觉还挺好的。
 
+## Terminal 代理
+
+作为一个码农，自然是要会某些技能的。
+
+我有时候也写一点儿Go，而Go的一些包在google code上。今天在下载第三方包的时候碰到了很大的问题，我明明是有代理的，但是却一直提示我链接失败。
+
+后来找到了答案。原来是因为Terminal并不会用在网络设置中的代理，因为终端只是运行命令的，而没有网络链接。
+
+解决方法也是有的。
+
+要在自己的`.zshrc`中设置两个环境变量：
+
+{% highlight bash %}
+export http_proxy=http://your.agent.site:port
+export https_proxy=$http_proxy
+# 终端中
+$ source .zshrc
+{% endhighlight %}
+
+好了，可以正常得用梯子了。
+
 ## 感受
 
 总体还挺不错的。
