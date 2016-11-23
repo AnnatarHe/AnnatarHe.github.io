@@ -145,3 +145,5 @@ $ source .zshrc
 屏幕很棒，操作很爽，颜值很高。
 
 问题嘛，Office用着很不适应，导致我论文格式都不好改。
+
+![mbp](/images/mbp_2016/mbp.jpeg)
