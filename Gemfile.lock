@@ -1,5 +1,5 @@
 GEM
-  remote: https://ruby.taobao.org/
+  remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
     activesupport (4.2.5.1)
@@ -126,6 +126,7 @@ DEPENDENCIES
   github-pages
   jekyll-feed
   jekyll-paginate
+  jemoji
 
 BUNDLED WITH
-   1.11.2
+   1.13.6
