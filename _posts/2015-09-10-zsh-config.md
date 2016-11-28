@@ -43,7 +43,7 @@ $ chsh -s /bin/zsh
 
 File -> New profile --创建新的`profile`
 
-Edit -> Profiles -> 选中刚创建的profile -> Edit -> 字号修改成13
+Edit -> Profiles -> 选中刚创建的profile -> Edit -> 字号修改成 13
 
 其实字号这个东西跟屏幕的关系非常的大。我自己外置了一个24吋的屏幕，这个字号看起来是非常舒服的
 
@@ -51,7 +51,7 @@ Edit -> Profiles -> 选中刚创建的profile -> Edit -> 字号修改成13
 
 好啦～看图！
 
-![zsh-meetup](http://cdn.iamhele.com/github.io/images/zsh/zsh-meetup.png)
+![zsh-meetup](http://cdn.iamhele.com/github.io/images/zsh-meetup.png)
 
 恩，看起来挺好的。
 

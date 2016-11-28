@@ -21,7 +21,7 @@ $ npm install
 
 现在看到目录结构如下
 
-![dirctory](http://cdn.iamhele.com/github.io/images/build_lager_scale_app_with_vue/dirctory.png)
+![dirctory](http://cdn.iamhele.com/github.io/images/dirctory.png)
 
 下面来稍微介绍下
 

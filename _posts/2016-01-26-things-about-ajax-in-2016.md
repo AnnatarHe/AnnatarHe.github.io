@@ -28,7 +28,7 @@ tags: 前端 front-end ajax vue fetch js
 
 一开始是各种google希望找到怎么在Nginx配置可以跨域，后来发现github API貌似是个好例子
 
-![ajax](http://cdn.iamhele.com/github.io/images/ajax_in_2016/github_api_header.png)
+![ajax](http://cdn.iamhele.com/github.io/images/github_api_header.png)
 
 看看，是不是能学到很多。
 

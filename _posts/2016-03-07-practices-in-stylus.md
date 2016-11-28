@@ -109,7 +109,7 @@ Flex其实兼容性还是可以的。Android 4.4就全都支持了(逃...)。PC�
 
 无论如何先安利[Vue](http://vuejs.org)。我一直觉得这样写着比jsx要开心很多
 
-![vue](http://cdn.iamhele.com/github.io/images/parital_in_stylus/vue.png)
+![vue](http://cdn.iamhele.com/github.io/images/vue.png)
 
 好了，说说我自己的stylus编码规范
 
