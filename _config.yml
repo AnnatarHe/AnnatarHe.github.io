@@ -4,7 +4,7 @@ url: https://AnnatarHe.github.io
 email: iamhele1994@gmail.com
 uri: https://github.com/AnnatarHe
 paginate: 12
-paginate_path: "/page:num/"
+paginate_path: "/page/:num"
 exclude: ['node_modules', '_site']
 host: 0.0.0.0
 gems:

@@ -17,7 +17,6 @@ export const showModal = () => {
     searchMask.add('show')
 }
 
-
 export const closeModalWithMask = e => {
     let targetClassList = e.target.classList
     let isMaskClicked = targetClassList.contains('search__mask') ? true : false
@@ -25,20 +24,9 @@ export const closeModalWithMask = e => {
     let isCloseIconClicked = targetClassList.contains('fa-close') ? true : false
     // if clicked is target 
     // then trigger close event
-    if (isMaskClicked || isCloseBtnClicked || isCloseIconClicked) {
-        handleCloseEvent()
-    }else {
-        return
-    }
+    return isMaskClicked || isCloseBtnClicked || isCloseIconClicked ? handleCloseEvent() : null
 }
 
 
-export const closeModalEvent = e => {
-    let eCode = e.keyCode
-    if (searchMask.contains('show') && eCode == 27) {
-        handleCloseEvent()
-    }else {
-        return
-    }
-}
+export const closeModalEvent = e => searchMask.contains('show') && e.keyCode === 27 ? handleCloseEvent() : null
 
