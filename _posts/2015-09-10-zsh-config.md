@@ -51,7 +51,7 @@ Edit -> Profiles -> 选中刚创建的profile -> Edit -> 字号修改成 13
 
 好啦～看图！
 
-![zsh-meetup](http://cdn.iamhele.com/github.io/images/zsh-meetup.png)
+![zsh-meetup]({{ site.cdn }}/zsh-meetup.png)
 
 恩，看起来挺好的。
 

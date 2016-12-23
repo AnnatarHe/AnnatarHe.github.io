@@ -84,7 +84,7 @@ tags: life tools
 
 ## And then
 
-![Contributions](http://cdn.iamhele.com/github.io/images/Contributions.png)
+![Contributions]({{ site.cdn }}/Contributions.png)
 
 以后会一直这么坚持下去。
 

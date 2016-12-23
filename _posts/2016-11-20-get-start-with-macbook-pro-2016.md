@@ -11,7 +11,7 @@ title: 关于 MacBook Pro 的入门
 
 关于钱，是真的贵。我一个普通的15英寸MBP达到了2万的售价。好不容易求着我爹才给买的。
 
-![MBP profile](http://cdn.iamhele.com/github.io/images/screenfetch.png)
+![MBP profile]({{ site.cdn }}/screenfetch.png)
 
 幸好学生优惠还能用，所以售价为19948.
 
@@ -146,4 +146,4 @@ $ source .zshrc
 
 问题嘛，Office用着很不适应，导致我论文格式都不好改。
 
-![mbp](http://cdn.iamhele.com/github.io/images/mbp.jpeg)
+![mbp]({{ site.cdn }}/mbp.jpeg)

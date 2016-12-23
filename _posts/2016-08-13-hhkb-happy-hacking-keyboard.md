@@ -4,7 +4,7 @@ title: HHKB 并没有神乎其神
 tags: life hhkb
 ---
 
-![hhkb](http://cdn.iamhele.com/github.io/images/hhkb.jpg)
+![hhkb]({{ site.cdn }}/hhkb.jpg)
 
 ## 过程
 
@@ -42,7 +42,7 @@ tags: life hhkb
 
 一个比较大的改变可能只是键盘的声音。我原先的 Cherry 是青轴的，声响爆炸的一笔，现在 HHKB 却可以做到几乎无声。实在不错。而且手感略有提升。
 
-![all](http://cdn.iamhele.com/github.io/images/all.jpg)
+![all]({{ site.cdn }}/all.jpg)
 
 ## 细节
 

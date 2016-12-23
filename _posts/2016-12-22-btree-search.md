@@ -18,7 +18,7 @@ nodeA := Node{data: "a", left: &nodeB, right: &nodeC}
 
 图例如下:
 
-![btree](http://cdn.iamhele.com/github.io/images/btree.png)
+![btree]({{ site.cdn }}/github.io/images/btree.png)
 
 结果应该是分别是：
 
