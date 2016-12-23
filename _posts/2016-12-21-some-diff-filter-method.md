@@ -1,6 +1,6 @@
 ---
 layout: 'post'
-title: 数组去重的玩法
+title: js 数组去重
 tags: js array algorithm
 ---
 
