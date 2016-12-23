@@ -7,6 +7,12 @@ tags: go algorithm
 ## 生成二叉树
 
 {% highlight go %}
+type Node struct {
+	data  string
+	left  *Node
+	right *Node
+}
+
 nodeG := Node{data: "g", left: nil, right: nil}
 nodeF := Node{data: "f", left: &nodeG, right: nil}
 nodeE := Node{data: "e", left: nil, right: nil}
@@ -18,7 +24,7 @@ nodeA := Node{data: "a", left: &nodeB, right: &nodeC}
 
 图例如下:
 
-![btree]({{ site.cdn }}/github.io/images/btree.png)
+![btree]({{ site.cdn }}/btree.png)
 
 结果应该是分别是：
 
