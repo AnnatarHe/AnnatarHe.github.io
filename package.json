@@ -5,7 +5,8 @@
   "main": "gulpfile.js",
   "scripts": {
     "js": "rollup --config rollup.config.js",
-    "css": "stylus src/styles/app.styl -o dist/app.css -c -m",
+    "css": "stylus src/styles/app.styl -o dist/app.css -c -m -w",
+    "assets": "npm run js && npm run css",
     "test": "mocha test"
   },
   "repository": {
