@@ -77,7 +77,108 @@ func preOrderRecursive(node Node) {
 
 ## 非递归版遍历
 
-// TODO
+这个地方强烈建议读一下下面的第一个链接，我遵照着那篇文章实现的，只是用Go改写了而已。
+
+### seqStack
+
+首先定义一个数据结构，用来存储一些Node的信息。
+
+{% highlight go %}
+type seqStack struct {
+	data [100]*Node
+	tag [100]int // 后续遍历准备
+	top int // 数组下标
+}
+{% endhighlight %}
+
+### preOrder
+
+{% highlight go %}
+func preOrderLoop(node *Node) (result []string) {
+	var s seqStack
+	s.top = -1 // 空
+	if node == nil {
+		panic("no data here")
+	}else {
+		for node != nil || s.top != -1 {
+			for node != nil {
+				result = append(result, node.data)
+				s.top++
+				s.data[s.top] = node
+				node = node.left
+			}
+			s.top--
+			node = s.data[s.top + 1]
+			node = node.right
+		}
+	}
+	return
+}
+{% endhighlight %}
+
+## midOrder
+
+{% highlight go %}
+func midOrderLoop(node *Node) (result []string) {
+	var s seqStack
+	s.top = -1
+	if node == nil {
+		panic("no data here")
+	}else {
+		for node != nil || s.top != -1 {
+			for node != nil {
+				s.top++
+				s.data[s.top] = node
+				node = node.left
+			}
+			s.top--
+			node = s.data[s.top + 1]
+			result = append(result, node.data)
+			node = node.right
+		}
+	}
+	return
+}
+{% endhighlight %}
+
+### postOrder
+
+这里是可以运行的，但是总会抛出一个数组越界的错误，我看了半天也没看出来哪里有问题，Mac版的devel我这边又有bug，没用起来。至少思路对了，我后面再看一下哪里的问题。
+
+{% highlight go %}
+func postOrderLoop(node *Node) (result []string)  {
+	var s seqStack
+	s.top = -1
+
+	if node == nil {
+		panic("no data here")
+	}else {
+		for node != nil || s.top != -1 {
+			for node != nil {
+				s.top++
+				s.data[s.top] = node
+				s.tag[s.top] = 0
+				node = node.left
+			}
+
+			if s.tag[s.top] == 0 {
+				node = s.data[s.top]
+				s.tag[s.top] = 1
+				node = node.right
+			}else {
+				for s.tag[s.top] == 1 {
+					s.top--
+					node = s.data[s.top + 1]
+					fmt.Println(node.data)
+					result = append(result, node.data)
+				}
+				node = nil
+			}
+		}
+	}
+	return
+}
+{% endhighlight %}
 
 ## References
 
@@ -88,7 +189,4 @@ func preOrderRecursive(node Node) {
 * [Python 广度优先/深度优先遍历二叉树](http://www.jianshu.com/p/7d665f3c01bc)
 
 * [JS中的二叉树遍历](https://segmentfault.com/a/1190000004620352)
-
-
-
 
