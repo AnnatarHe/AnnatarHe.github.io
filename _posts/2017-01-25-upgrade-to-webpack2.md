@@ -346,13 +346,17 @@ module.exports = [clientConfig, serverConfig]
 我们项目原来三个文件分别是：
 
 vendor: 287kb
+
 bundle: 147kb
+
 css: 22kb
 
 经过webpack2的打包降成了：
 
 vendor: 217kb
+
 bundle: 87kb
+
 css: 22kb
 
 效果显著。
