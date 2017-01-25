@@ -4,6 +4,8 @@ title: 翻译 - Yarn 一个新的 JavaScript包管理器
 tags: translate yarn js
 ---
 
+> [Yarn: A new package manager for JavaScript](https://code.facebook.com/posts/1840075619545360/yarn-a-new-package-manager-for-javascript/)
+
 在 JavaScript 社区，工程师们分享成千上万个代码包，使得我们不用重复编写我们自己的基本组件，库，或者框架。每一个代码库又可能依赖于另外的几个代码库，这些依赖被包管理器所管理。最出名的 JavaScript 包管理器是 npm client， 它提供了连接进 npm 仓库(registry) 的方式，它拥有超过30万个包！ 还有超过 500 万工程师使用着每月下载量超过 50 亿的 npm client！
 
 Facebook 曾很开心地用着 npm client 很多年，但是随着我们基础代码的扩大和工程师的加入成长，我们碰到了 *一致性(consistency)*，*安全性(security)*和*性能(performance)* 的问题。在每次出现问题之后我们都竭力尝试去解决，之后，我们开始构建一个新的解决方案去帮助我们更可靠地管理我们的依赖包。这个产品被称为 **Yarn** —— 一个快速的，可靠地，安全的 npm client 替代品。
@@ -99,7 +101,6 @@ $ yarn
 
 我们很多人集合在一起去构建 Yarn 去解决共同的问题，并且我们知道我们也想 Yarn 变成一个每个人都能用的真正的社区项目。 Yarn 现在已经在 [GitHub 发布了](https://github.com/yarnpkg/yarn)，并且我们准备好(告诉) Node 社区做什么是最好的选择： 使用 Yarn， 分享想法，编写文档，互帮互助并帮助建立一个伟大的社区去照顾它。我们相信 Yarn 已经有了一个伟大的开始，在你的帮助下它会变得更好。
 
-> [Yarn: A new package manager for JavaScript](https://code.facebook.com/posts/1840075619545360/yarn-a-new-package-manager-for-javascript/)
 
 ## 译者的话
 
