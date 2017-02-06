@@ -18,8 +18,12 @@ tags: fe webpack2 webpack
 
 因为yarn拥有更快的安装速度，比较推荐yarn，如果不熟悉，可以看一下[这篇文章](https://annatarhe.github.io/2016/10/12/translate-chinese-yarn-a-new-package-manager-for-javascript.html)了解一下
 
-{% highlight bash %}
-yarn add webpack webpack-dev-server react-hot-loader@next extract-text-webpack-plugin@2.0.0-beta.5 babel-loader babel-preset-es2015 babel-preset-react babel-preset-stage-0 style-loader css-loader autopprefixer postcss-loader postcss-modules-values
+{% highlight sh %}
+$ yarn add webpack webpack-dev-server\
+    react-hot-loader@next extract-text-webpack-plugin@2.0.0-beta.5\
+    babel-loader babel-preset-es2015 babel-preset-react\
+    babel-preset-stage-0 style-loader css-loader\
+    autopprefixer postcss-loader postcss-modules-values
 {% endhighlight %}
 
 ## dev
@@ -109,16 +113,15 @@ function getCssLoader(locals = false) {
       sourceMap: true
     }
   }, {
-    loader: 'postcss-loader',
-    options: {
-      plugins: () => [require('postcss-modules-values'), require('autoprefixer')]
-    }
+    loader: 'postcss-loader'
   }]
 
   return locals ? originCssLoaders : ExtractTextPlugin.extract({
     fallbackLoader: 'style-loader',
     loader: [
-      'css-loader?modules=true&camelCase=true&importLoaders=1&localIdentName=[name]_[local]-[hash:base64:4]&sourceMap=true' + (process.env.NODE_ENV === 'production' ? '&minimize=true' : ''),
+      'css-loader?modules=true&camelCase=true&importLoaders=1' +
+      '&localIdentName=[name]_[local]-[hash:base64:4]&sourceMap=true' +
+      (process.env.NODE_ENV === 'production' ? '&minimize=true' : ''),
       'postcss-loader'
     ]
   })
@@ -206,7 +209,8 @@ function proxyThis(where) {
 
 {% highlight json %}
 "scripts": {
-    "dev": "cross-env NODE_ENV=development_local webpack-dev-server --colors --config ./build/webpack.config.dev.js"
+    "dev": "cross-env NODE_ENV=development_local webpack-dev-server\
+    --colors --config ./build/webpack.config.dev.js"
 }
 {% endhighlight %}
 
@@ -311,7 +315,8 @@ module.exports = [clientConfig, serverConfig]
 
 {% highlight json %}
 "scripts": {
-    "compile": "cross-env NODE_ENV=production webpack --colors --config ./build/webpack.config.server.js && node ./build/postCompile.js"
+    "compile": "cross-env NODE_ENV=production webpack\
+    --colors --config ./build/webpack.config.server.js && node ./build/postCompile.js"
 }
 {% endhighlight %}
 
@@ -327,39 +332,102 @@ module.exports = [clientConfig, serverConfig]
 { "presets" : [[ "es2015", {"modules": false}], "react"]}
 {% endhighlight %}
 
-经过我亲身实践，没错，它是骗你的。不要去掉就可以了。
+经过我亲身实践，没错，它是骗你的。
+
+这个点说出来全是泪：有时候要加上`modules: false`，而有时候不需要。我在mac下是不需要加，而Ubuntu又要加。版本更新依旧如此。
+
+所以这个地方，你可能需要靠猜了，加`modules: false`试试，如果报错类似于`exports is not defined`这样的错误就去掉再试试。
+
+变成类似于这样的就可以了：
+
+{% highlight json %}
+{
+  "presets": [
+    "es2015",
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    "transform-runtime",
+    "react-hot-loader/babel",
+  ]
+}
+{% endhighlight %}
 
 * ExtractTextPlugin
 
 这个插件也改了配置，需要传入对象。还有，注意不要拼错单词 😑
 
+* import
+
+webpack2推荐使用`import()`异步加载脚本，然而用的时候**有时候**会报错类似于`import and export may only appear at the top level`这样的问题，解决方法是这样的：
+
+{% highlight shell %}
+$ yarn add -D babel-plugin-syntax-dynamic-import
+{% endhighlight %}
+
+然后加入如下内容到.babelrc中：
+{% highlight json %}
+{ "plugins": ["syntax-dynamic-import"] }
+{% endhighlight %}
+
+* laoder-utils
+
+如果你碰到了类似于这样的报错：`parseQuery should get a string as first argument`，恭喜你，你可能又踩坑了，解决方案是更新一下`loader-utils`，这个问题贼坑，我在Ubuntu上没碰到，@可诚 在Mac上碰到了。
+{% highlight shell %}
+$ yarn upgrade loader-utils
+{% endhighlight %}
+
+* postcss
+
+如果你还用了一大堆postcss的插件，那么你可能需要更新到一个新的`postcss.config.js`中了。
+
+类似于这样的：
+
+{% highlight js %}
+module.exports = {
+    plugins: [
+        require('postcss-modules-values'),
+        require('autoprefixer')
+    ]
+}
+{% endhighlight %}
+
 * React-router.match
 
-服务端渲染需要用到match，找了很多资料，都是当做同步函数使用的，然而实际上是异步的. 所以在使用的时候一定要注意。
+服务端渲染需要用到match，找了很多资料，都是当做同步函数使用的，然而实际上是异步的. 所以在使用的时候一定要注意。一定要注意！一定要注意！
 
 关于服务端渲染请参考这篇文章的实现：[教你如何搭建一个超完美的服务端渲染开发环境](http://www.jianshu.com/p/0ecd727107bb)
 
+## 如果你还有问题
+
+如果你还有问题，公司的配置我不能开放出来，但是推荐你去看看我另一个项目的配置文件，少了服务端渲染的部分，但是服务端渲染所需要注意的地方我都在这篇文章中说明了。应该没什么问题了的。
+
+[AnnatarHe-graduation-project/exam-online-fe](https://github.com/AnnatarHe-graduation-project/exam-online-fe)
+
 ## 结论
 
-效果非常好。
+忘记webpack2的无限大坑文档，升级之后的打包效果非常好。
 
-我们项目原来三个文件分别是：
+我们项目原来的三个主要文件分别是(未gzip压缩)：
 
-vendor: 287kb
+vendor: 283kb
 
 bundle: 147kb
 
-css: 22kb
+css: 18.5kb
 
 经过webpack2的打包降成了：
 
-vendor: 217kb
+vendor: 216kb
 
-bundle: 87kb
+bundle: 86kb
 
-css: 22kb
+css: 21.9kb
 
-效果显著。
+所以`vendor`减少到了webpack1的 **76.3%**，而`bundle`则减少到了原来的**58.5%**
 
-推荐你也快升级吧~
+效果还是挺显著的。
+
+推荐你也快升(cai)级(keng)吧~
 
