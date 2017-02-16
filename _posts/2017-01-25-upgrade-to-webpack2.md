@@ -6,7 +6,33 @@ tags: fe webpack2 webpack
 
 近期在公司把 PC-WWW 项目从之前比较复杂的脚本改成了webpack，随后因为看到webpack2发布了正式版本又升级到了 webpack2。效果非常好。
 
-最后会给出前后的结果。
+## 为什么使用 webpack
+
+webpack 是一款非常非常强大的前端资源处理工具，可以把所有前端需要的资源统一处理。比如js文件，css文件，甚至图片，字体文件，html文件。通过一个个独特的 loader 来对文件进行一些处理。
+
+比如可以通过 babel-loader 对使用ES2015+的js代码进行编译处理，改成浏览器可以理解的es5甚至是es3的语法。通过css-loader对css文件进行一些处理，比如hash掉class名，通过stylus-loader将stylus语法的文件转成css语法，通过file-loader对图片进行处理，等等等等。
+
+还有更强大的功能么？当然是有的。
+
+可以通过配置publicPath将静态资源文件直接改成cdn路径。通过html插件将资源文件直接写入html。仅仅通过一个`-p`参数实现生产环境的配置。通过`react-hot-loader`实现热重载。通过postcss-loader对css文件进行更好的处理。
+
+webpack 使得前端开发变得更加工程化，更加合理，更加舒适，更具有灵活性。
+
+## 为什么升级 webpack2
+
+既然 webpack1 已经很好用了，为什么还要费大力气升级 webpack2，而且坑也比较多。
+
+主要是因为两个原因：
+
+* 服务端渲染
+
+如果哪位读者做过服务端渲染就会知道，路由的异步加载需要用到 require.ensure，但是这在服务端没有，所以需要 polyfill，很麻烦。而升级到 webpack2 的话就不需要处理这些，用自带的 `import` 即可。
+
+* 性能
+
+webpack2 用了 Treeshaking。可以分析引用文件，进而不加载不需要的文件，有效减少文件的大小，减少一定的加载时间，提升用户体验。
+
+就最后的结果来看，服务端渲染正常，而前端js代码文件明显减少，效果很好。
 
 ## 结构
 
@@ -29,6 +55,9 @@ $ yarn add webpack webpack-dev-server\
 ## dev
 
 由于使用了react-hot-loader，需要在entry加上一些配置
+
+react-hot-loader 是用来热加载组件的，简单来说修改组件以后可以自动在局部刷新，而不用整个页面刷新。可以减少等待时间，使得整个过程没有之前整页刷新那样痛苦。
+
 {% highlight js %}
 entry: [
     'react-hot-loader/patch',
@@ -38,7 +67,8 @@ entry: [
 ],
 {% endhighlight %}
 
-至于output的配置也是比较正常的，有一点需要注意的是尽量使用 `path.resolve` 来解析路径，我踩了很多次
+至于output的配置也是比较正常的，有一点需要注意的是尽量使用 `path.resolve` 来解析路径。
+output 的作用是告诉 webpack 应该将文件输出在哪里，以什么样的名字输出
 
 {% highlight js %}
 output: {
@@ -49,9 +79,9 @@ output: {
 },
 {% endhighlight %}
 
-module的地方配置项变了很多，需要一些调整：
+module 是主要的文件处理规则，需要处理的文件在这里定义规则：.css文件需要用css-loader来处理这样的规则。所以 module 的地方配置项变了很多，需要一些调整：
 
-这个module我因为dev和server两个部分都要用，所以把它写成了一个func放在base中。至于做成函数而不是配置项是因为css需要在服务端渲染的时候需要切换成另一套配置。
+这个module因为dev和server两个部分都要用，所以把它写成了一个func放在base中。至于做成函数而不是配置项是因为css需要在服务端渲染的时候需要切换成另一套配置。
 
 {% highlight js %}
 function getModules(cssLocals = false) {
@@ -98,7 +128,7 @@ function getModules(cssLocals = false) {
 }
 {% endhighlight %}
 
-getCssLoader 是这么写的，需要在不同的环境下返回不同的配置
+getCssLoader 的作用是根据不同的参数，返回不同的css配置文件：在服务端渲染阶段，只用生成名字即可，无须将内容输出，而在浏览器中不仅需要生成对应的名字，而且也需要将文件输出，使得样式可见。
 
 {% highlight js %}
 function getCssLoader(locals = false) {
@@ -128,13 +158,15 @@ function getCssLoader(locals = false) {
 }
 {% endhighlight %}
 
-所以现在只要调用就可以得到相应的module配置了：
+因为上面定义了 getModules， 所以现在只要调用就可以得到相应的module配置了，这样webpack就知道如何处理对应的文件：
 
 {% highlight js %}
 module: getModules(false)
 {% endhighlight %}
 
-关于plugin，新版取消了几个配置，这个配置目前感觉是比较合适的：
+plugins 是一些插件的配置, 而新版取消了几个配置，这些插件目前感觉是比较合适的：
+
+其作用分别是热更新插件，配置项插件，相同文件打包插件，环境变量定义插件，HTML处理插件，css样式提取插件
 
 {% highlight js %}
   plugins: [
@@ -174,7 +206,7 @@ resolve: {
 }
 {% endhighlight %}
 
-devServer也需要进行一部分设置：
+devServer是在开发阶段用到的一些配置，也需要进行一部分设置：
 
 {% highlight js %}
 devServer: {
@@ -188,7 +220,7 @@ devServer: {
 }
 {% endhighlight %}
 
-这里的proxy可以根据自己的需要进行配置，如果有多个配置项推荐写成一个函数调用：
+这里的proxy作用是对请求进行拦截，转发至另外的服务器。在这个配置中通用的做法是把请求转到mock server上。可以根据自己的需要进行配置，如果有多个配置项推荐写成一个函数调用：
 
 {% highlight js %}
 function proxyThis(where) {
@@ -216,7 +248,8 @@ function proxyThis(where) {
 
 ## server
 
-项目中用到了server render，所以还需要对服务端代码进行打包。打包过程分为两个部分，分为客户端打包和服务端打包。
+项目中用到了server render，所以还需要对服务端代码进行打包。打包过程分为两个部分，分为客户端打包和服务端打包。之所以分为两个部分是因为两个部分需求不同，客户端需要代码压缩，需要css文件输出，需要把外部文件打包出来。而服务侧代码则不同，完全拒绝代码压缩，css不需要文件输出，外部node模块直接引用，而无需打包。
+
 在客户端的打包配置如下：
 
 {% highlight js %}
@@ -292,7 +325,8 @@ const serverConfig = {
   ]
 }
 {% endhighlight %}
-这里的getModules是把整个`node_modules`作为externals：
+
+这里的getExternals是把整个`node_modules`作为externals：
 
 {% highlight js %}
 function getExternals() {
@@ -334,7 +368,7 @@ module.exports = [clientConfig, serverConfig]
 
 经过我亲身实践，没错，它是骗你的。
 
-这个点说出来全是泪：有时候要加上`modules: false`，而有时候不需要。我在mac下是不需要加，而Ubuntu又要加。版本更新依旧如此。
+这个点说出来全是泪：有时候要加上`modules: false`，而有时候不需要。我在mac下是需要加，而Ubuntu又不能加。版本更新依旧如此。
 
 所以这个地方，你可能需要靠猜了，加`modules: false`试试，如果报错类似于`exports is not defined`这样的错误就去掉再试试。
 
@@ -371,9 +405,12 @@ $ yarn add -D babel-plugin-syntax-dynamic-import
 { "plugins": ["syntax-dynamic-import"] }
 {% endhighlight %}
 
-* laoder-utils
+* loader-utils
 
 如果你碰到了类似于这样的报错：`parseQuery should get a string as first argument`，恭喜你，你可能又踩坑了，解决方案是更新一下`loader-utils`，这个问题贼坑，我在Ubuntu上没碰到，@可诚 在Mac上碰到了。
+
+解决方法是更新一下这个包
+
 {% highlight shell %}
 $ yarn upgrade loader-utils
 {% endhighlight %}
@@ -407,7 +444,7 @@ module.exports = {
 
 ## 结论
 
-忘记webpack2的无限大坑文档，升级之后的打包效果非常好。
+如果不在意webpack2的无限大坑文档，其实升级之后的打包效果非常好。
 
 我们项目原来的三个主要文件分别是(未gzip压缩)：
 
