@@ -8,7 +8,7 @@ tags: js web 坑 http
 
 这个地方是实现不同而导致的问题，而且我认为这属于一个比较重大的坑。
 
-表现上是：javascriptCore 和 webkit 两者的结果返回是不一致的。
+表现上是：safari 和 chrome 两者的结果返回是不一致的。
 
 {% highlight js %}
 // 在chrome中：
