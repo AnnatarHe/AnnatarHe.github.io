@@ -14,7 +14,7 @@ webpack 是一款非常非常强大的前端资源处理工具，可以把所有
 
 还有更强大的功能么？当然是有的。
 
-可以通过配置publicPath将静态资源文件直接改成cdn路径。通过html插件将资源文件直接写入html。仅仅通过一个`-p`参数实现生产环境的配置。通过`react-hot-loader`实现热重载。通过postcss-loader对css文件进行更好的处理。
+可以通过配置publicPath将静态资源文件直接改成cdn路径。通过html插件将资源文件直接写入html。仅仅通过一个`-p`参数实现生产环境的配置。通过`react-hot-loader`实现热重载。通过postcss-loader对css文件进行添加前缀，变量支持等处理。
 
 webpack 使得前端开发变得更加工程化，更加合理，更加舒适，更具有灵活性。
 
@@ -438,15 +438,21 @@ module.exports = {
 
 ## 如果你还有问题
 
-如果你还有问题，公司的配置我不能开放出来，但是推荐你去看看我另一个项目的配置文件，少了服务端渲染的部分，但是服务端渲染所需要注意的地方我都在这篇文章中说明了。应该没什么问题了的。
+如果你还有问题，公司的配置我不能开放出来，但是推荐你去看看我另一个项目的配置文件，少了服务端渲染的部分，但是服务端渲染所需要注意的地方在这篇文章中有了一些说明。应该不会有什么问题了的。
 
 [AnnatarHe-graduation-project/exam-online-fe](https://github.com/AnnatarHe-graduation-project/exam-online-fe)
 
+## babel-polyfill
+
+这是一个babel用于兼容低版本浏览器的包，里面又引用了[core.js](https://github.com/zloirock/core-js)，包括了很多es6,7实现的一些方法的实现，这个包挺大的。如果项目中没有用到其中的一些函数，可以选择部分加载。
+
+详细请看[这里](https://github.com/zloirock/core-js/blob/master/shim.js), 选择项目中用到的函数加载好了。
+
 ## 结论
 
-如果不在意webpack2的无限大坑文档，其实升级之后的打包效果非常好。
+如果不在意webpack2的无限大坑文档，其实升级之后的打包效果比较好的。
 
-我们项目原来的三个主要文件分别是(未gzip压缩)：
+我们项目原来的三个主要文件分别是(未gzip压缩, 未去除babel-polyfill)：
 
 vendor: 283kb
 
@@ -458,13 +464,13 @@ css: 18.5kb
 
 vendor: 216kb
 
-bundle: 86kb
+bundle: 177kb
 
 css: 21.9kb
 
-所以`vendor`减少到了webpack1的 **76.3%**，而`bundle`则减少到了原来的**58.5%**
+总共降低了37kb.
 
-效果还是挺显著的。
+效果还是有的。
 
-推荐你也快升(cai)级(keng)吧~
+推荐你也快升(cai)级(keng)吧~😊
 

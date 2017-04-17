@@ -1,8 +1,7 @@
 import { titleShow } from './global'
-import { handleSearcher } from './search'
+import { handleSearcher, leSearch } from './search'
 import { trigger, searchMaskBtn, showModal, closeModalWithMask, closeModalEvent } from './search_trigger'
 import { toTopFunc } from './back'
-
 
 const $back = document.querySelector('.back-to-top')
 const searchBtn = document.querySelector('.search__action')
@@ -23,3 +22,5 @@ trigger.addEventListener('click', showModal, false)
 searchMaskBtn.addEventListener('click', closeModalWithMask, false)
 
 document.body.addEventListener('keydown', closeModalEvent, false)
+
+leSearch('.searchTrigger')

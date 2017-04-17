@@ -44,3 +44,28 @@ export const handleSearcher = () => {
     })
 }
 
+function getSearchInput() {
+    const input = document.querySelector('input.__le-search-input')
+    if (input) {
+        return input
+    }
+
+    const _input = document.createElement('input')
+    _input.classList.add('.__le-search-input')
+    document.body.appendChild(_input)
+    return _input
+}
+
+export function leSearch(dom) {
+    if (typeof dom !== 'string') {
+        throw new TypeError('you should pass dom name like className to leSearch')
+    }
+
+    const trigger = document.querySelector(dom)
+
+    trigger.addEventListener('click', () => {
+        let input = getSearchInput()
+    })
+
+}
+
