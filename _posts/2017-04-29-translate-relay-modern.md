@@ -16,7 +16,7 @@ Relay Modern: 更简单，更快速，更具拓展性
 
 我们 Relay 的目标就是让开发人员能够更快更多地专注到创建它们的应用上，更少地考虑重新实现那些复杂的，容易出错的细节。为了达成这些目标，Relay要介绍两个概念：组合数据和视图定义，声明式的数据获取。
 
-## 数据和视图的排布
+### 数据和视图的托管
 
 当使用 React 构建界面时，我们介绍了通过一系列内嵌的组件构建整个应用。News Feed 是 stories 的集合；每个 story 都有头部，内容和列表组件；每个评论都有作者和内容；等。这些小块视图通过单个 React 组件表示，允许开发人员在整个应用内部解决数据。这种方法也可以重用，相同的 story 组件或许会详情页的被 News Feed 重用。
 
@@ -24,8 +24,7 @@ Relay Modern: 更简单，更快速，更具拓展性
 
 在我们创建 Relay 的时候，我们意识到这些概念可以被抽象并定义为强大的形式化单位：托管视图逻辑和每个组件的数据依赖的容器。这里是一个 Relay Modern 容器的例子，它渲染用户的名字和照片而且相应地声明了数据依赖：
 
-hhh
-
+{% highlight js %}
 const UserProfile = Relay.createFragmentContainer(
   // View: A React component (functional or class)
   props => {
@@ -49,10 +48,11 @@ const UserProfile = Relay.createFragmentContainer(
     
 // Use as a normal React component:
 <UserProfile data={...} />
+{% endhighlight %}
 
 Relay 容器(containers) 无缝集成了 React 和 GraphQL： 正常的 React 组件按照开发者所期望的那样组合在一起，而 GraphQL 片段(fragments)通过标准的 GraphQL 语法组合在一起。 自从介绍了 Relay 的数据和视图托管以后， 我们在 Facebook 的每个使用 GraphQL 的地方都申请使用这种方式，我们也建议 GraphQL 社区将这种托管作为最佳实践
 
-## 声明式的数据获取
+### 声明式的数据获取
 
 和 React 的让开发人员去表达什么应该被渲染而不是应该被如何渲染是一个套路。Relay 使开发人员去指定需要什么数据，而不是如何加载，如何缓存，如何更新。将开发人员从如何直接处理网络中解放出来， Relay 帮助减少应用的复杂度并阻止了潜藏在源码中的 bug 和附带的性能问题。
 
