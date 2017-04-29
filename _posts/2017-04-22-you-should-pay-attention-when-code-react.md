@@ -18,7 +18,7 @@ redux 异步处理的中间件现在很多，有 thunk, promise, saga, observabl
 
 像是这样：
 
-{% highlight jsx %}
+{% highlight js %}
 class Page extends React.PureComponent {
     render() {
         return (
@@ -39,7 +39,7 @@ const BComponent = ({ onChange }) => (<button onClick={onChange}>some action</bu
 绑定事件的时候有时候会碰到找不到this的情况，这是因为作用域不一样了。而老式代码建议用bind，但是实际上bind第一是创建了新的函数，一定程度上影响性能，另一方面也是容易出错。只要少写了一个，this就找不到了。代码也会因此多一些样本代码。
 
 老版本是这样的：
-{% highlight jsx %}
+{% highlight js %}
 class CComponent extends React.PureComponent {
     constructor(props) {
         super(props)
@@ -62,7 +62,7 @@ class CComponent extends React.PureComponent {
 
 其实可以用es6的箭头函数来减少bind代码。箭头函数会自动绑定父作用域，所以省的显示表明this作用域了。
 
-{% highlight jsx %}
+{% highlight js %}
 class CComponent extends React.PureComponent {
     handle = e => {
         this.setState({ val: e.target.value })
@@ -82,7 +82,7 @@ class CComponent extends React.PureComponent {
 
 比如我最近做的一个时间轴的项目。一个时间对应一堆数据，而这些也大部分是无后端的。所以我自定义一个数据结构，然后遍历出来渲染，而不是在组件中把html写死。
 
-{% highlight jsx %}
+{% highlight js %}
 const data = {
     "2017-04-22": { isFull: true, backgroundColor: '#fff', hasEvent: true }
 }
@@ -102,7 +102,7 @@ render() {
 
 形成了这样的一种数据结构：
 
-{% highlight jsx %}
+{% highlight js %}
 const EVENTS = {
     "1": {
         getTitle: (data) => data.title
@@ -121,7 +121,7 @@ const EVENTS = {
 
 那么在调用的时候就不用写一大堆 **switch case** 了
 
-{% highlight jsx %}
+{% highlight js %}
 render() {
     const { data } = this.props
     const _getContentFunc = EVENTS[data.type].getContent
@@ -148,7 +148,7 @@ render() {
 
 有时候客户端为了图快，直接把`data`一股脑丢进组件里了。写成这样的形式：
 
-{% highlight jsx %}
+{% highlight js %}
 render() { return <Msgs msgs={data} />}
 {% endhighlight %}
 
@@ -156,7 +156,7 @@ render() { return <Msgs msgs={data} />}
 
 而在我看来可以多传一些props来控制组件，而子组件内部根据各种不同的状态进行一些渲染，组件内部不关心如何获取数据，只是渲染。
 
-{% highlight jsx %}
+{% highlight js %}
 render() { return <Msgs msgs={data.msg.msgContent} />}
 {% endhighlight %}
 
@@ -200,7 +200,7 @@ store设计是门学问的。设计优良的store结构，可以尽量减少不�
 
 有很多人觉得`()`没必要，我们程序员都能读懂优先级。然而事实上我觉得一些括号可以避免阅读上的误会，也对代码的美观程度有些提升。
 
-{% highlight jsx %}
+{% highlight js %}
 // Bad
 const A = () => <Profile
         name="foo"
@@ -226,7 +226,7 @@ jsx 丑的一大原因就是在jsx里面写了太多的遍历，判断之类的�
 
 比如这样写就不好看：
 
-{% highlight jsx %}
+{% highlight js %}
 // bad
 render() {
     return (
@@ -253,7 +253,7 @@ render() {
 
 那么如果把中间的判断提取出来，就会变得比较可读。
 
-{% highlight jsx %}
+{% highlight js %}
 const A = () => (<div>section A </div>)
 const B = () => (<div>section B </div>)
 
