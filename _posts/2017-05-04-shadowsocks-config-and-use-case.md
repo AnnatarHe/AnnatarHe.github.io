@@ -117,7 +117,7 @@ serverSlots1 = 32
 命令行需要设置环境变量。重新加载后才能用。
 
 {% highlight bash %}
-set -x http_proxy http://h1.agent02.net:26324
+set -x http_proxy http://server.com:12345
 set -x https_proxy $http_proxy
 {% endhighlight %}
 
