@@ -56,25 +56,23 @@ Hyper.js 应该已经安装好了。现在到用户目录下找到一个叫做 `
 然后进入 bash，先换源
 
 {% highlight console %}
-sudo sed -i 's/archive.ubuntu.com/mirrors.163.com/g' /etc/apt/sources.list
-sudo sed -i 's/security.ubuntu.com/mirrors.163.com/g' /etc/apt/sources.list
+$ sudo sed -i 's/archive.ubuntu.com/mirrors.163.com/g' /etc/apt/sources.list
+$ sudo sed -i 's/security.ubuntu.com/mirrors.163.com/g' /etc/apt/sources.list
 {% endhighlight %}
 
 {% highlight console %}
-apt update
-apt upgrade
-
+$ apt update
+$ apt upgrade
 # 安装 fish shell
-sudo apt-add-repository ppa:fish-shell/release-2
-sudo apt-get update
-sudo apt-get install fish
-
+$ sudo apt-add-repository ppa:fish-shell/release-2
+$ sudo apt-get update
+$ sudo apt-get install fish
 {% endhighlight %}
 
 {% highlight console %}
 # 生成新用户
-useradd -m -G sudo username
-passwd username
+$ useradd -m -G sudo username
+$ passwd username
 {% endhighlight %}
 
 这个时候可以在windows那边改变启动的用户
@@ -87,11 +85,11 @@ LxRun.exe /setdefaultuser username
 
 {% highlight console %}
 # 安装 oh-my-fish
-curl -L https://get.oh-my.fish | fish
+$ curl -L https://get.oh-my.fish | fish
 # 安装主题
-omf install robbyrussell
+$ omf install robbyrussell
 # 生成公私钥
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 {% endhighlight %}
 
 然后将 `~/.ssh/id_rsa.pub` 中的内容复制到 github 的 ssh 中，然后就可以拉代码了~
@@ -130,3 +128,5 @@ ps: 最近 windows 的 gvim 好像也抽风了。搞得字体没办法上下对�
 * [Bash on Windows 实际体验如何？](https://www.zhihu.com/question/42228124)
 
 * [Map capslock to control in windows 10](https://superuser.com/questions/949385/map-capslock-to-control-in-windows-10)
+
+* [Fish as Default Shell on Windows 10](https://www.kennethreitz.org/essays/fish-as-default-shell-on-windows-10)
