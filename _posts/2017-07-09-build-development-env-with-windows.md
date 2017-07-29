@@ -104,7 +104,7 @@ if [ -t 1 ]; then
 fi
 {% endhighlight %}
 
-期间还需要下载 [visual studio](https://www.visualstudio.com/)，有社区版的，免费。
+期间还需要下载 [visual studio](https://www.visualstudio.com/)，有社区版的，免费。记得一定要装上"Windows Universal CRT SDK"
 
 之后需要把`capslock`改键成 `Ctrl`：新建一个 `remap.reg`，拷贝进去。之后双击执行，重启电脑即可。
 {% highlight console %}
@@ -130,3 +130,5 @@ ps: 最近 windows 的 gvim 好像也抽风了。搞得字体没办法上下对�
 * [Map capslock to control in windows 10](https://superuser.com/questions/949385/map-capslock-to-control-in-windows-10)
 
 * [Fish as Default Shell on Windows 10](https://www.kennethreitz.org/essays/fish-as-default-shell-on-windows-10)
+
+* [Cannot find corecrt.h: $(UniversalCRT_IncludePath) is wrong](https://stackoverflow.com/questions/38290169/cannot-find-corecrt-h-universalcrt-includepath-is-wrong)
