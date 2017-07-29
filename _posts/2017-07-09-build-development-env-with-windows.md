@@ -119,6 +119,8 @@ Windows Registry Editor Version 5.00
 
 ps: 最近 windows 的 gvim 好像也抽风了。搞得字体没办法上下对齐，很气。
 
+![](https://ww1.sinaimg.cn/large/8112eefdgy1fi0tkxnxnfj20s40jt74d.jpg)
+
 ## References
 
 * [How to set up the perfect modern dev environment on Windows](https://char.gd/blog/2017/how-to-set-up-the-perfect-modern-dev-environment-on-windows)
