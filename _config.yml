@@ -8,6 +8,7 @@ paginate: 12
 paginate_path: "/pages/:num"
 exclude: ['node_modules', '_site']
 host: 0.0.0.0
+incremental: true
 gems:
   - jekyll-sitemap
   - jekyll-paginate
