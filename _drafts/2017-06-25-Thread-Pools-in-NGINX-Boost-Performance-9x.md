@@ -80,11 +80,276 @@ Nginx 里面所发生的事情跟这个情况是很相似的。当读取一个�
 
 看起来我们有了另一条队列。是的。但是这个队列只被具体的资源所限制。我们读数据不能比生产数据还要快。现在，至少是这趟车不会阻塞其他事件进程了，而且只有需要访问文件的请求会等待而已。
 
-从硬盘读取文件的操作是一个在阻塞例子中常用的栗子，然而事实上在 Nginx 中实现的线程池可以
+从硬盘读取文件的操作是一个在阻塞例子中常用的栗子，然而事实上在 Nginx 中实现的线程池可以做任何不适合在主工作轮询中执行的任务。
 
+那个时候，扔到线程池里只有三个基本操作：大多数操作系统的`read()`系统调用, Linux 的 `sendfile`和 Linux 中调用`aio_write()`去写入一些例如缓存的临时文件。我们将继续测试并对实现做性能基准测试，而且我们未来将会把更多的可以获得明显收益的其他操作也放到线程池中。
 
+编辑注：对`aio_write()`的支持在 [Nginx 1.9.13](http://hg.nginx.org/nginx/rev/fc72784b1f52?_ga=2.186120108.44381088.1502087922-798194221.1502087922) 和 [Nginx Plus R9](https://www.nginx.com/blog/nginx-plus-r9-released/#aio-write) 中添加。
 
+## 基准测试
 
+是时候从理论转为实际了。为了证明使用线程池的效果，我们做了一个模拟阻塞和非阻塞操作混合中最坏情况的合成基准测试。
+
+这需要一组不适合放在内存中的数据集。一台拥有 48G RAM的机器上，我们用 4MB 的文件生成了 256GB 的随机数据，随后配置 Nginx 1.9.0 并打开服务。
+
+配置项非常简单：
+
+{% highlight nginx %}
+worker_processes 16;
+
+events {
+    accept_mutex off;
+}
+
+http {
+    include mime.types;
+    default_type application/octet-stream;
+
+    access_log off;
+    sendfile on;
+    sendfile_max_chunk 512k;
+
+    server {
+        listen 8000;
+
+        location / {
+            root /storage;
+        }
+    }
+}
+{% endhighlight %}
+
+就像你看到的那样，为了得到更好的性能，我们对一些配置做了调整：[logging](http://nginx.org/en/docs/http/ngx_http_log_module.html?&_ga=2.185940652.44381088.1502087922-798194221.1502087922#access_log) 和 [accept_mutex](http://nginx.org/en/docs/ngx_core_module.html?&_ga=2.185940652.44381088.1502087922-798194221.1502087922#accept_mutex) 被关掉了, [sendfile](http://nginx.org/en/docs/http/ngx_http_core_module.html?&_ga=2.185940652.44381088.1502087922-798194221.1502087922#sendfile) 打开了，[sendfile_max_chunk](http://nginx.org/en/docs/http/ngx_http_core_module.html?&_ga=2.174511399.44381088.1502087922-798194221.1502087922#sendfile_max_chunk) 也设置了。最后一个指令可以减少阻塞 `sendfile` 调用的最大花费时间，因为 Nginx 不会一次性发送整个文件，而是分成 512KB 的小块。
+
+这个机器有两个 Intel Xeon E5645(共计 12 核，24 线程)，有一个 10-Gps 网卡，硬盘子系统是由4块西部数码的 WD 1003FBYX 硬盘用 RAID10 阵列组成。所有这些硬件由 Ubuntu Server 14.04.1 LTS 提供支持。
+
+客户端由两台相同规格的机器组成，其中一台机器上，[wrk](https://github.com/wg/wrk)创建Lua脚本，这个脚本从服务器上以乱序发起并发请求，获取文件，并发量是 200 个连接。而且每个请求结果很可能并不能命中缓存，需要阻塞地从硬盘中读取文件，我们称这个负载为 **随机负载**
+
+我们的第二个客户端机器会执行另一个 wrk。它会多次请求同一个文件，以 50 个并发请求。因为这个文件被经常访问，所以它会被一直放在内存中。通常情况下，Nginx 对这些请求会响应得非常快。所以我们叫这个负载是 **固定负载**
+
+性能测评会被在服务器上的用 **ifstat** 监控的吞吐量以及两个客户端的 **wrk** 结果作为标准。
+
+现在，首先运行没有线程池的那个，结果并不是很满意。
+
+{% highlight bash %}
+% ifstat -bi eth2
+eth2
+Kbps in  Kbps out
+5531.24  1.03e+06
+4855.23  812922.7
+5994.66  1.07e+06
+5476.27  981529.3
+6353.62  1.12e+06
+5166.17  892770.3
+5522.81  978540.8
+6208.10  985466.7
+6370.79  1.12e+06
+6123.33  1.07e+06
+{% endhighlight %}
+
+正如你所看到的那样，以这个配置，服务器大概总共有 1Gbps 的吞吐量。`top` 的输出表明大部分 worker 进程都耗时在了阻塞 输入/输出 操作上(D 状态下):
+
+{% highlight bash %}
+top - 10:40:47 up 11 days,  1:32,  1 user,  load average: 49.61, 45.77 62.89
+Tasks: 375 total,  2 running, 373 sleeping,  0 stopped,  0 zombie
+%Cpu(s):  0.0 us,  0.3 sy,  0.0 ni, 67.7 id, 31.9 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:  49453440 total, 49149308 used,   304132 free,    98780 buffers
+KiB Swap: 10474236 total,    20124 used, 10454112 free, 46903412 cached Mem
+
+  PID USER     PR  NI    VIRT    RES     SHR S  %CPU %MEM    TIME+ COMMAND
+ 4639 vbart    20   0   47180  28152     496 D   0.7  0.1  0:00.17 nginx
+ 4632 vbart    20   0   47180  28196     536 D   0.3  0.1  0:00.11 nginx
+ 4633 vbart    20   0   47180  28324     540 D   0.3  0.1  0:00.11 nginx
+ 4635 vbart    20   0   47180  28136     480 D   0.3  0.1  0:00.12 nginx
+ 4636 vbart    20   0   47180  28208     536 D   0.3  0.1  0:00.14 nginx
+ 4637 vbart    20   0   47180  28208     536 D   0.3  0.1  0:00.10 nginx
+ 4638 vbart    20   0   47180  28204     536 D   0.3  0.1  0:00.12 nginx
+ 4640 vbart    20   0   47180  28324     540 D   0.3  0.1  0:00.13 nginx
+ 4641 vbart    20   0   47180  28324     540 D   0.3  0.1  0:00.13 nginx
+ 4642 vbart    20   0   47180  28208     536 D   0.3  0.1  0:00.11 nginx
+ 4643 vbart    20   0   47180  28276     536 D   0.3  0.1  0:00.29 nginx
+ 4644 vbart    20   0   47180  28204     536 D   0.3  0.1  0:00.11 nginx
+ 4645 vbart    20   0   47180  28204     536 D   0.3  0.1  0:00.17 nginx
+ 4646 vbart    20   0   47180  28204     536 D   0.3  0.1  0:00.12 nginx
+ 4647 vbart    20   0   47180  28208     532 D   0.3  0.1  0:00.17 nginx
+ 4631 vbart    20   0   47180    756     252 S   0.0  0.1  0:00.00 nginx
+ 4634 vbart    20   0   47180  28208     536 D   0.0  0.1  0:00.11 nginx<
+ 4648 vbart    20   0   25232   1956    1160 R   0.0  0.0  0:00.08 top
+25921 vbart    20   0  121956   2232    1056 S   0.0  0.0  0:01.97 sshd
+25923 vbart    20   0   40304   4160    2208 S   0.0  0.0  0:00.53 zsh
+{% endhighlight %}
+
+这种情况下，吞吐量受限于硬盘系统，CPU 则没事做，wrk 返回的结果表示非常的慢：
+
+{% highlight bash %}
+Running 1m test @ http://192.0.2.1:8000/1/1/1
+  12 threads and 50 connections
+  Thread Stats   Avg    Stdev     Max  +/- Stdev
+    Latency     7.42s  5.31s   24.41s   74.73%
+    Req/Sec     0.15    0.36     1.00    84.62%
+  488 requests in 1.01m, 2.01GB read
+Requests/sec:      8.08
+Transfer/sec:     34.07MB
+{% endhighlight %}
+
+记住，这些文件应该被放在内存中！过大的延迟是因为所有的工作进程在从硬盘中读文件的时候非常的繁忙，它们在应对第一个客户端*随机负载*发出的200个并发请求。而不能在合适的时间内响应我们的请求。
+
+是时候把线程池放进来啦。为了加入我们只需要添加 [aio](http://nginx.org/en/docs/http/ngx_http_core_module.html?&_ga=2.245314816.44381088.1502087922-798194221.1502087922#aio) thread 指令到 location 中。
+
+{% highlight nginx %}
+location / {
+    root /storage;
+    aio threads;
+}
+{% endhighlight %}
+
+然后让 Nginx 去读取这个配置项。
+
+然后我们重复测试：
+
+{% highlight bash %}
+% ifstat -bi eth2
+eth2
+Kbps in  Kbps out
+60915.19  9.51e+06
+59978.89  9.51e+06
+60122.38  9.51e+06
+61179.06  9.51e+06
+61798.40  9.51e+06
+57072.97  9.50e+06
+56072.61  9.51e+06
+61279.63  9.51e+06
+61243.54  9.51e+06
+59632.50  9.50e+06
+{% endhighlight %}
+
+现在我们的服务器产生了 **9.5Gbps**, 对比一下没有线程池的 1Gbps 左右的结果。
+
+它可能会更高，但是这个数值已经到达了最大物理网卡容量了。所以在这个测试中， Nginx 受限于网卡接口。工作进程大部分时候都沉睡并等待心得事件(*top* 命令 S 模式下):
+
+{% highlight bash %}
+top - 10:43:17 up 11 days,  1:35,  1 user,  load average: 172.71, 93.84, 77.90
+Tasks: 376 total,  1 running, 375 sleeping,  0 stopped,  0 zombie
+%Cpu(s):  0.2 us,  1.2 sy,  0.0 ni, 34.8 id, 61.5 wa,  0.0 hi,  2.3 si,  0.0 st
+KiB Mem:  49453440 total, 49096836 used,   356604 free,    97236 buffers
+KiB Swap: 10474236 total,    22860 used, 10451376 free, 46836580 cached Mem
+
+  PID USER     PR  NI    VIRT    RES     SHR S  %CPU %MEM    TIME+ COMMAND
+ 4654 vbart    20   0  309708  28844     596 S   9.0  0.1  0:08.65 nginx
+ 4660 vbart    20   0  309748  28920     596 S   6.6  0.1  0:14.82 nginx
+ 4658 vbart    20   0  309452  28424     520 S   4.3  0.1  0:01.40 nginx
+ 4663 vbart    20   0  309452  28476     572 S   4.3  0.1  0:01.32 nginx
+ 4667 vbart    20   0  309584  28712     588 S   3.7  0.1  0:05.19 nginx
+ 4656 vbart    20   0  309452  28476     572 S   3.3  0.1  0:01.84 nginx
+ 4664 vbart    20   0  309452  28428     524 S   3.3  0.1  0:01.29 nginx
+ 4652 vbart    20   0  309452  28476     572 S   3.0  0.1  0:01.46 nginx
+ 4662 vbart    20   0  309552  28700     596 S   2.7  0.1  0:05.92 nginx
+ 4661 vbart    20   0  309464  28636     596 S   2.3  0.1  0:01.59 nginx
+ 4653 vbart    20   0  309452  28476     572 S   1.7  0.1  0:01.70 nginx
+ 4666 vbart    20   0  309452  28428     524 S   1.3  0.1  0:01.63 nginx
+ 4657 vbart    20   0  309584  28696     592 S   1.0  0.1  0:00.64 nginx
+ 4655 vbart    20   0  30958   28476     572 S   0.7  0.1  0:02.81 nginx
+ 4659 vbart    20   0  309452  28468     564 S   0.3  0.1  0:01.20 nginx
+ 4665 vbart    20   0  309452  28476     572 S   0.3  0.1  0:00.71 nginx
+ 5180 vbart    20   0   25232   1952    1156 R   0.0  0.0  0:00.45 top
+ 4651 vbart    20   0   20032    752     252 S   0.0  0.0  0:00.00 nginx
+25921 vbart    20   0  121956   2176    1000 S   0.0  0.0  0:01.98 sshd
+25923 vbart    20   0   40304   3840    2208 S   0.0  0.0  0:00.54 zsh
+{% endhighlight %}
+
+仍然有大量的 CPU 资源。
+
+**wrk**的结果：
+
+{% highlight bash %}
+Running 1m test @ http://192.0.2.1:8000/1/1/1
+  12 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max  +/- Stdev
+    Latency   226.32ms  392.76ms   1.72s   93.48%
+    Req/Sec    20.02     10.84    59.00    65.91%
+  15045 requests in 1.00m, 58.86GB read
+Requests/sec:    250.57
+Transfer/sec:      0.98GB
+{% endhighlight %}
+
+响应 4MB 文件的平均时间从 7.42 秒降低到了 226.32 毫秒(少了33倍)。每秒请求量增加了31倍(250 vs 8)！
+
+解释就是我们的请求不再等着事件队列去由 worker 进程执行读取的阻塞操作。而是被空闲的线程处理。硬盘系统尽其所能去干活的时候它也能从第一台机器上发出的随机负载请求。 Nginx 使用剩余的 CPU 资源和网络容量去响应第二个客户端的请求，从内存里拿到数据。
+
+## 仍旧不是银弹
+
+出于对阻塞操作的恐惧并取得了一些令人欣喜的结果之后，你们大多数可能已经准备去在你们的服务器上配置线程池了，别急。
+
+真相是这样的。大多数读文件和发送文件都很幸运地不会去处理慢速硬盘。如果你有足够的RAM去存储数据集，之后操作系统都会很聪明地存储那些经常访问的文件，这叫做 "page cache"。
+
+页缓存活很棒，使得 Nginx 在大多数情况下都能表现出极佳的性能。从页缓存中读数据非常的快，以至于没人把它当作是"阻塞"操作。并一方面，扔到线程池会有一些开销的。
+
+所以如果你有足够的 RAM，而且你的执行数据不会非常大的时候，Nginx 在没有线程池的情况下已经做了最好的优化。
+
+把读操作扔在线程池里是针对特定任务的技术手段，当经常访问的内容的空间和操作系统的 VM 缓存不匹配的时候很有用。情况可能是这样的，例如负载很大的，以 Nginx 为基础的流媒体服务器，这就是我们做基准测试时候的情况。
+
+如果我们可以提升读操作放到线程池的性能就很好了。我们所需要的是一个有效的方式去知道需要的数据是不是在内存中，而且只有第二种情况我们应该把读操作分到另一个线程中去。
+
+继续回到销售员的比较上，当前销售员并不知道顾客要的商品是不是在店里，所以它要么把所有的订单都给快递服务，要么自己接管所有订单。
+
+罪魁祸首就是操作系统丢掉了这些新功能。第一个把它以 [fincore](https://lwn.net/Articles/371538/)系统调用加到 Linux 上的尝试发生在 2010 年，但是并没有结果。随后有数次尝试，作为一个新的 `preadv2()` 带着 RWF_NONBLOCK 标志的系统调用实现(详情查看 LWN.net 上的信息[Non-blocking buffered file read operations](https://lwn.net/Articles/612483/) 和 [Asynchronous buffered read operations](https://lwn.net/Articles/636967/))。所有这些补丁的命运仍旧是不清楚。令人伤心的是这里有一个主要原因，为什么这些补丁至今仍然没有被内核所接受，[继续被放逐](http://bikeshed.com/)
+
+另一方面，FreeBSD 的用户一点儿都不用担心，FreeBSD 早就有了一套足够好的异步读取文件的接口，你应该用它来替换线程池。
+
+## 配置线程池
+
+那么如果你确定你的情况在配置线程池后会获得一些收益，那么时时候去深入了解这些配置了。
+
+它的配置非常的简单灵活。第一件事就是你得有 Nginx 1.7.11 及其以上的版本，带着 *--with-threads* 参数编译到 *configure* 命令上。Nginx Plus 用户需要版本 7 及其以上。最简单的情况下，配置看来来很普通，你所做的就是把 [aio](http://nginx.org/en/docs/http/ngx_http_core_module.html?&_ga=2.207491734.44381088.1502087922-798194221.1502087922#aio) **threads** 指令配置到合适的上下文中。
+
+{% highlight nginx %}
+# in the 'http', 'server', or 'location' context
+aio threads;
+{% endhighlight %}
+
+这是关于线程池的最少配置了。实际上它是下面这个配置的缩减版。
+
+{% highlight nginx %}
+# in the 'main' context
+thread_pool default threads=32 max_queue=65536;
+
+# in the 'http', 'server', or 'location' context
+aio threads=default;
+{% endhighlight %}
+
+它定义了一个叫做**default**的线程池，这个线程池有32个工作线程，并有最大的任务队列 —— 65536 个任务。如果任务队列超出了，Nginx 会拒绝请求，并记录这个错误：
+
+{% highlight bash %}
+thread pool "NAME" queue overflow: N tasks waiting
+{% endhighlight %}
+
+这个错误意味着可能是因为线程并不能处理这些工作处理得足够快，快过添加到队列中。你可以试着增加队列最大值，但如果这么做没什么用的话，它就意味着你的系统不能提供如此之多的连接容量。
+
+你可能早就注意到了，带着[thread_pool](http://nginx.org/en/docs/ngx_core_module.html?&_ga=2.241506951.44381088.1502087922-798194221.1502087922#thread_pool)指令，你可以配置线程的数量，队列的最大长度，还有特定的线程池的名称。最后一个提示就是，你可以配置多个独立的线程池，并在你配置项的不同地方去使用，针对不同的目的：
+
+{% highlight nginx %}
+# in the 'main' context
+thread_pool one threads=128 max_queue=0;
+thread_pool two threads=32;
+
+http {
+    server {
+        location /one {
+            aio threads=one;
+        }
+
+        location /two {
+            aio threads=two;
+        }
+
+    }
+    # ...
+}
+{% endhighlight %}
+
+如果 **max_queue** 没有指定，默认值是 65536。如图所示，你也可以配置 **max_queue** 到 0。这种情况下线程池只能处理所配置的线程一样多的任务; 队列中不会有等待的任务。
+
+现在
 
 
 
