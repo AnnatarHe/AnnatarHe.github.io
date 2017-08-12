@@ -9,7 +9,7 @@ title: AnnatarHe
         <a href="{{ post.url }}" class="page__link">{{ post.title }}</a>
     </td>
 	<td>
-        {{ post.date|date_to_string }}
+        <time datetime="{{ post.date }}">{{ post.date | date_to_string }}</time>
     </td>
 </tr>
 {% endfor %}
