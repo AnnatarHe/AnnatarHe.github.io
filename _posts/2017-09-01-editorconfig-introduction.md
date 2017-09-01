@@ -86,7 +86,7 @@ indent_size = 2
 
 讲真的，这真是个好东西。现在往项目里加个配置文件，一点儿都不晚。
 
-## Refencens
+## References
 
 * [editorconfig](http://editorconfig.org/)
 
