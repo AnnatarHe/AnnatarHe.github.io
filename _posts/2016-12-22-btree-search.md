@@ -24,7 +24,7 @@ nodeA := Node{data: "a", left: &nodeB, right: &nodeC}
 
 图例如下:
 
-![btree]({{ site.cdn }}/btree.png)
+![btree]({{ site.cdn }}/btree-02.png)
 
 结果应该是分别是：
 
@@ -143,7 +143,7 @@ func midOrderLoop(node *Node) (result []string) {
 
 ### postOrder
 
-这里是可以运行的，但是总会抛出一个数组越界的错误，我看了半天也没看出来哪里有问题，Mac版的devel我这边又有bug，没用起来。至少思路对了，我后面再看一下哪里的问题。
+这里是可以运行的，但是总会抛出一个数组越界的错误，我看了半天也没看出来哪里有问题，Mac版的devel我这边又有bug，没用起来。至少思路对了，我后面再看一下哪里的问题。(感谢 @RiXu 指正)
 
 {% highlight go %}
 func postOrderLoop(node *Node) (result []string)  {
@@ -171,6 +171,9 @@ func postOrderLoop(node *Node) (result []string)  {
 					node = s.data[s.top + 1]
 					fmt.Println(node.data)
 					result = append(result, node.data)
+					if s.top < 0 {
+						break
+					}
 				}
 				node = nil
 			}
