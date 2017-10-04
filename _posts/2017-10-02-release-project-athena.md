@@ -52,8 +52,6 @@ tags: Athena full-stack code
 
 爬虫模块目前来说已经基本搞定了, 短期内应该不会做大的改变了。
 
-// TODO: 一个IP池生成，三个爬虫，一个过滤器，一个数据库，图片展示
-
 ![crawler]({{ site.cdn }}/athena-crawler.png)
 
 ## Server
@@ -104,7 +102,7 @@ app.get('/auth', validParams, ipCheck, (req, res) => {
 
 ## Android
 
-[ Android 项目地址](https://github.com/AnnatarHe-Athena/android)
+[Android 项目地址](https://github.com/AnnatarHe-Athena/android)
 
 花了半个月入门了一下 Java 和 Android。 之前一直感觉 Java 是民工语言。 现在真的仔细往里看发现这门语言是用来建摩天大楼的，技术稍微差一些也很难写出太烂的代码，而其他语言用得稍微不好一点儿就只能盖个小平房，而且到处都是 undefined (说的就是你 JS)。
 
@@ -146,7 +144,6 @@ ios 是通过写 build script 来生成最新的 graphql 请求文件。而 Andr
 图标换了两三次，其实到作图的时候才发现自己脑袋里空空如也。拿公司里专业设计师出的图学习了好久，又刷了两本设计的入门书，终于有了一丢丢的感觉。不过图标，设计稿依旧没有感觉。
 
 目前的图标是根据一个教程画的简单版本。
-
 
 ## 项目管理
 
