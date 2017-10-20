@@ -15,6 +15,7 @@ const handleCloseEvent = () => {
 export const showModal = () => {
     searchMask.remove('hide')
     searchMask.add('show')
+    document.querySelector('.search__input').focus()
 }
 
 export const closeModalWithMask = e => {
@@ -28,5 +29,6 @@ export const closeModalWithMask = e => {
 }
 
 
+// ESC key
 export const closeModalEvent = e => searchMask.contains('show') && e.keyCode === 27 ? handleCloseEvent() : null
 
