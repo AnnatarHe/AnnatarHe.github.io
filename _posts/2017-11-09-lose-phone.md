@@ -46,13 +46,13 @@ tags: life
 
 之后小偷终于是恼羞成怒，做出了最没脑子的事情，用自己的手机给姐姐发了一条短信。
 
-![shadow-socks-use-arch]({{ site.cdn }}/fake-wow.jpg)
+![shadow-socks-use-arch]({{ site.cdn }}/wow.jpg)
 
 拿到手机号开动脑筋，先查了一下归属地，郑州。那么居住在郑州，而又使用郑州手机号，就有理由断定这个手机号跟了他应该挺久的了。
 
 随后查一下微信，果然搜到了。
 
-![shadow-socks-use-arch]({{ site.cdn }}/fake-thief.jpg)
+![shadow-socks-use-arch]({{ site.cdn }}/thief.jpg)
 
 加上中途通过 find my iPhone 找到的地址，大致可以得出家庭住址，籍贯。我觉得这么多的信息量足够抓到人了。
 
