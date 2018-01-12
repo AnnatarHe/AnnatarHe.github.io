@@ -652,8 +652,12 @@ P.S. 你可以实现 **addr** 消息来开始优化这个网络，就像是比�
 2. [比特币协议文档](https://en.bitcoin.it/wiki/Protocol_documentation)
 3. [比特币网络](https://en.bitcoin.it/wiki/Network)
 
-*其他的文章请返回首页查看.*
-
-*TODO: 添加文章链接*
+* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
+* [工作量证明](% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %)
+* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
+* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
+* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
+* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
+* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
 
 非常感谢 **Ivan Kuznetsov** 的文章，感谢 [buctwbzs](https://github.com/buctwbzs) 的校对和 [小洁](https://weibo.com/u/2808613111)的辅助翻译

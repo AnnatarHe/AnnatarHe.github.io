@@ -14,9 +14,9 @@ tags: blockchain code
 
 1. [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
 2. [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
-3. [数据持久化和命令行](/)
-4. [交易1](/)
-5. [地址](/)
+3. [数据持久化和命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli%})
+4. [交易1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1%})
+5. [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
 
 
 > 这个部分的介绍有重大的代码变化，所以没必要全都解释清楚，请参考 [这个页面](https://github.com/Jeiwan/blockchain_go/compare/part_5...part_6#files_bucket) 了解自上篇文章以来的变化
@@ -502,6 +502,11 @@ func (b *Block) HashTransactions() []byte {
 7. [比特币与智能合约](https://medium.com/@maraoz/smart-contracts-and-bitcoin-a5d61011d9b1)
 8. [为何每个比特币用户都应该理解"SPV安全"](https://medium.com/@jonaldfyookball/why-every-bitcoin-user-should-understand-spv-security-520d1d45e0b9)
 
-*其他的文章请返回首页查看.*
+* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
+* [工作量证明](% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %)
+* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
+* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
+* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
+* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
+* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
 
-*TODO: 添加文章链接*

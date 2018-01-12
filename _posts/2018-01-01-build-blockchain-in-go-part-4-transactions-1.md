@@ -28,13 +28,13 @@ tags: blockchain code
 
 一笔交易就是入账和出账的结合：
 
-```go
+{% highlight golang %}
 type Transaction struct {
     ID   []byte
     Vin  []TXInput
     Vout []TXOutput
 }
-```
+{% endhighlight %}
 
 一笔新的交易入账依赖于上次交易的出账(这里其实有个例外，我们一会儿再谈)。出账就是钱到底存在哪里。下面的示意图演示了交易的内在联系：
 
@@ -42,9 +42,9 @@ type Transaction struct {
 
  有几点需要注意一下：
 
- 1. 这里的出账是和入账无关的
+ 1. 有出账并非和入账相连。
  2. 一次交易中，入账可以参考多笔交易的出账。
- 3. 一个入账必须依赖于一笔出账
+ 3. 一个入账必须依赖于一笔出账。
 
 概览整篇文章。我们用了类似于这样的词 "钱", "币"，"花", "发", "账户"，等。但仍然对比特币没有概念。交易只是用只能被锁定它对的人解锁的脚本锁定的一些值，
 
@@ -52,12 +52,12 @@ type Transaction struct {
 
 先看一眼出账的数据结构：
 
-```go
+{% highlight golang %}
 type TXOutput struct {
     Value        int
     ScriptPubKey string
 }
-```
+{% endhighlight %}
 
 事实上，这是存储 "币(coins)" 的出账(注意一下上面的 **Value** 字段)。而且，存储意味着迷一样的锁住，所在 **ScriptPubKey** 里。深入其中的话，比特币使用了一种叫做 *Script* 的脚本语言，它一般被用来定义出账的锁定和解锁逻辑。这种语言十分的原始(是故意这么做的，为了避免可能存在的入侵和滥用)，但我们不会在细节上去讨论它。你可以在 [这里](https://en.bitcoin.it/wiki/Script)找到关于它的细节解释。
 
@@ -73,13 +73,13 @@ type TXOutput struct {
 
 这是入账的数据结构：
 
-```go
+{% highlight golang %}
 type TXInput struct {
     Txid      []byte
     Vout      int
     ScriptSig string
 }
-```
+{% endhighlight %}
 
 之前我们就提到了入账会引用前一个出账： **Txid** 就存储着上一个交易的 ID，**Vout** 存储着交易中的出账索引。**ScriptSig** 是一个提供在出账中使用的 **ScriptPubKey** 数据的脚本。如果数据时正确的，出账可以被解锁，这个值也可以被用来生成新的出账；如果不对，出账就不能被入账所引用。这种机制就保障了用户不能花别人的钱。
 
@@ -99,7 +99,7 @@ type TXInput struct {
 
 我们来创建一个币基交易吧：
 
-```go
+{% highlight golang %}
 func NewCoinbaseTX(to, data string) *Transaction {
     if data == "" {
         data = fmt.Sprintf("Reward to '%s'", to)
@@ -112,7 +112,7 @@ func NewCoinbaseTX(to, data string) *Transaction {
 
     return &tx
 }
-```
+{% endhighlight %}
 
 一个币基交易只有一个入账。在我们的实现中， **Txid** 是空的， **Vout** 也等于 -1。而且一个币基交易并不在 **ScriptSig** 中存储脚本。一个任意数据被存在那里。
 
@@ -124,7 +124,7 @@ func NewCoinbaseTX(to, data string) *Transaction {
 
 到现在为止，每个区块至少存储一笔交易。而且没可能不带交易信息就挖坑。这就意味着我们应该移除 **Block** 中的 **Data** 字段，并用交易替代：
 
-```go
+{% highlight golang %}
 type Block struct {
     Timestamp     int64
     Transactions  []*Transaction
@@ -132,11 +132,11 @@ type Block struct {
     Hash          []byte
     Nonce         int
 }
-```
+{% endhighlight %}
 
 相应地，**NewBlock** 和 **NewGenesisBlock** 也必须跟着变：
 
-```go
+{% highlight golang %}
 func NewBlock(transactions []*Transaction, prevBlockHash []byte) *Block {
     block := &Block{time.Now().Unix(), transactions, prevBlockHash, []byte{}, 0}
     ...
@@ -145,11 +145,11 @@ func NewBlock(transactions []*Transaction, prevBlockHash []byte) *Block {
 func NewGenesisBlock(coinbase *Transaction) *Block {
     return NewBlock([]*Transaction{coinbase}, []byte{})
 }
-```
+{% endhighlight %}
 
 接下来调整新区块链创建的部分：
 
-```go
+{% highlight golang %}
 func CreateBlockchain(address string) *Blockchain {
     ...
     err = db.Update(func(tx *bolt.Tx) error {
@@ -162,7 +162,7 @@ func CreateBlockchain(address string) *Blockchain {
     })
     ...
 }
-```
+{% endhighlight %}
 
 现在，这个函数带着一个将接收挖掘创始区块奖励的的地址了。
 
@@ -170,7 +170,7 @@ func CreateBlockchain(address string) *Blockchain {
 
 工作量证明算法也要考虑到区块中被存入了交易。为了保证存储交易区块链的一致性和可靠性。我们得改一下 **ProofOfWork.prepareData** 方法：
 
-```go
+{% highlight golang %}
 func (pow *ProofOfWork) prepareData(nonce int) []byte {
     data := bytes.Join(
         [][]byte{
@@ -185,11 +185,11 @@ func (pow *ProofOfWork) prepareData(nonce int) []byte {
 
     return data
 }
-```
+{% endhighlight %}
 
 替换掉 **pow.block.Data**, 我们现在用 **pow.block.HashTransactions()**：
 
-```go
+{% highlight golang %}
 func (b *Block) HashTransactions() []byte {
     var txHashes [][]byte
     var txHash [32]byte
@@ -201,7 +201,7 @@ func (b *Block) HashTransactions() []byte {
 
     return txHash[:]
 }
-```
+{% endhighlight %}
 
 再次声明：我们使用哈希算法作为生成独一无二的数据身份的机制。我们想要区块上的所有交易都可以通过单个哈希而有独一无二的身份。为了达成这个目标。我们从每笔交易中生成哈希。把它们连接起来，然后从这个已连接的数据中生成哈希。
 
@@ -209,12 +209,12 @@ func (b *Block) HashTransactions() []byte {
 
 现在来确认一下是不是都弄对了：
 
-```text
+{% highlight text %}
 $ blockchain_go createblockchain -address Ivan
 00000093450837f8b52b78c25f8163bb6137caf43ff4d9a01d1b731fa8ddcc8a
 
 Done!
-```
+{% endhighlight %}
 
 好！我们接收到了第一笔挖坑奖励。但是怎么确认余额呢？
 
@@ -229,7 +229,7 @@ Done!
 
 当然啦，当我们确认余额的时候，我们并不需要所有的这些，只要找能被我们的 key 所解锁的那些就可以了(现在我们并没有实现 keys，暂时会用用户自定义地址来代替)。首先来在入账出账上定义一下加锁和解锁的方法：
 
-```go
+{% highlight golang %}
 func (in *TXInput) CanUnlockOutputWith(unlockingData string) bool {
     return in.ScriptSig == unlockingData
 }
@@ -237,13 +237,13 @@ func (in *TXInput) CanUnlockOutputWith(unlockingData string) bool {
 func (out *TXOutput) CanBeUnlockedWith(unlockingData string) bool {
     return out.ScriptPubKey == unlockingData
 }
-```
+{% endhighlight %}
 
 这里我们只是用**unlockingData**比较一下 script 字段。未来的文章中，这一块会升级一下，大概会在实现了基于用户私钥的地址之后。
 
 下一步 —— 找到包含有未花费出账的交易 —— 其实比较难：
 
-```go
+{% highlight golang %}
 func (bc *Blockchain) FindUnspentTransactions(address string) []Transaction {
   var unspentTXs []Transaction
   spentTXOs := make(map[string][]int)
@@ -288,19 +288,19 @@ func (bc *Blockchain) FindUnspentTransactions(address string) []Transaction {
 
   return unspentTXs
 }
-```
+{% endhighlight %}
 
 由于交易信息被存储在区块中，我们只能确认区块链上的每个区块。从先从出账开始：
 
-```go
+{% highlight golang %}
 if out.CanBeUnlockedWith(address) {
     unspentTXs = append(unspentTXs, tx)
 }
-```
+{% endhighlight %}
 
 如果一笔出账被我们所搜索的未花费交易出账的相同地址锁住了。那么这就是我们想要的出账。不过在获取之前，我们还得确认这个出账是否已经被入账所引用了：
 
-```go
+{% highlight golang %}
 if spentTXOs[txID] != nil {
     for _, spentOut := range spentTXOs[txID] {
         if spentOut == outIdx {
@@ -308,11 +308,11 @@ if spentTXOs[txID] != nil {
         }
     }
 }
-```
+{% endhighlight %}
 
 我们跳过了这些被引用的入账(这些值被移动到了其他的出账中，所以我们不能把它们算上)。在确认了所有获取到的由提供的地址(这不会波及到币基交易，因为它们不会解锁这个出账)可以解锁的出账之后：
 
-```go
+{% highlight golang %}
 if tx.IsCoinbase() == false {
     for _, in := range tx.Vin {
         if in.CanUnlockOutputWith(address) {
@@ -321,11 +321,11 @@ if tx.IsCoinbase() == false {
         }
     }
 }
-```
+{% endhighlight %}
 
 这个函数返回一个包含着未花费的交易列表。为了计算余额，我们还需要另一个函数，交易信息是输入，只返回出账信息。
 
-```go
+{% highlight golang %}
 func (bc *Blockchain) FindUTXO(address string) []TXOutput {
        var UTXOs []TXOutput
        unspentTransactions := bc.FindUnspentTransactions(address)
@@ -340,11 +340,11 @@ func (bc *Blockchain) FindUTXO(address string) []TXOutput {
 
        return UTXOs
 }
-```
+{% endhighlight %}
 
 现在，我们可以实现 **getbalance** 命令啦：
 
-```go
+{% highlight golang %}
 func (cli *CLI) getBalance(address string) {
     bc := NewBlockchain(address)
     defer bc.db.Close()
@@ -358,16 +358,16 @@ func (cli *CLI) getBalance(address string) {
 
     fmt.Printf("Balance of '%s': %d\n", address, balance)
 }
-```
+{% endhighlight %}
 
 账户余额就是所有的由账户地址锁定的未花费交易出账的值得总和。
 
 在挖掘了创始区块之后，来确认一下余额：
 
-```go
+{% highlight golang %}
 $ blockchain_go getbalance -address Ivan
 Balance of 'Ivan': 10
-```
+{% endhighlight %}
 
 哇， 我们有了第一桶金。
 
@@ -375,7 +375,7 @@ Balance of 'Ivan': 10
 
 现在我们想发送一些币给其他人。为了实现这一目标，我们要创建一笔新的交易，把它放到区块里面，然后挖掘区块。到现在为止我们只是实现了币基交易(这是交易中的一种特殊类型)，现在我们需要普通交易了：
 
-```go
+{% highlight golang %}
 func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transaction {
     var inputs []TXInput
     var outputs []TXOutput
@@ -407,7 +407,7 @@ func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transactio
 
     return &tx
 }
-```
+{% endhighlight %}
 
 在创建新的输出之前，我们要先找到所有的未花费出账并确认它们存了足够的币。这就是 **FindSpendableOutputs** 方法要干的事情。之后，入账所引用的每个找到的出账就这么被创建了出来。接下来，我们得创建两个出账：
 
@@ -416,7 +416,7 @@ func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transactio
 
 **FindSpendableOutputs** 方法是基于我们之前定义的 **FindUnspentTransactions**方法的：
 
-```go
+{% highlight golang %}
 func (bc *Blockchain) FindSpendableOutputs(address string, amount int) (int, map[string][]int) {
     unspentOutputs := make(map[string][]int)
     unspentTXs := bc.FindUnspentTransactions(address)
@@ -440,23 +440,23 @@ Work:
 
     return accumulated, unspentOutputs
 }
-```
+{% endhighlight %}
 
 这个方法迭代了所有的未花费交易并累计了这些值。当累计值大于或等于我们想要交易的额度，它就会停下并返回累计值和由交易 ID 所聚合的出账索引。我们不想要那比我们要花的更多的钱。
 
 现在，我们可以改造一下 **Blockchain.MineBlock** 方法：
 
-```go
+{% highlight golang %}
 func (bc *Blockchain) MineBlock(transactions []*Transaction) {
     ...
     newBlock := NewBlock(transactions, lastHash)
     ...
 }
-```
+{% endhighlight %}
 
 最后，实现一下 **send** 命令：
 
-```go
+{% highlight golang %}
 func (cli *CLI) send(from, to string, amount int) {
     bc := NewBlockchain(from)
     defer bc.db.Close()
@@ -465,13 +465,13 @@ func (cli *CLI) send(from, to string, amount int) {
     bc.MineBlock([]*Transaction{tx})
     fmt.Println("Success!")
 }
-```
+{% endhighlight %}
 
 发送币意味着创建了一个交易，而且添加到了区块链中，并发掘出了一个新的区块。但比特币不会立即做(我们也不会)。作为替换，我们把所有新的交易信息推送到内存池中，当矿工准备好了要去挖新的区块，它就会带着所有来自于内存池中的交易信息并创建一个候选区块。交易只会被确认一次，当区块被发觉并包住它添加到区块链的时候。
 
 来确认一下发送币是不是可以用:
 
-```text
+{% highlight text %}
 $ blockchain_go send -from Ivan -to Pedro -amount 6
 00000001b56d60f86f72ab2a59fadb197d767b97d4873732be505e0a65cc1e37
 
@@ -482,11 +482,11 @@ Balance of 'Ivan': 4
 
 $ blockchain_go getbalance -address Pedro
 Balance of 'Pedro': 6
-```
+{% endhighlight %}
 
 棒棒的，现在我们创建了更多的交易，并确认了从多个出账发送也是没有问题的：
 
-```text
+{% highlight text %}
 $ blockchain_go send -from Pedro -to Helen -amount 2
 00000099938725eb2c7730844b3cd40209d46bce2c2af9d87c2b7611fe9d5bdf
 
@@ -496,11 +496,11 @@ $ blockchain_go send -from Ivan -to Helen -amount 2
 000000a2edf94334b1d94f98d22d7e4c973261660397dc7340464f7959a7a9aa
 
 Success!
-```
+{% endhighlight %}
 
 现在 Helen 的币被锁在了两笔出账志宏，一个来自于 Pedro，另一个来自于 lvan，现在来把它发给其他人吧：
 
-```text
+{% highlight text %}
 $ blockchain_go send -from Helen -to Rachel -amount 3
 000000c58136cffa669e767b8f881d16e2ede3974d71df43058baaf8c069f1a0
 
@@ -517,11 +517,11 @@ Balance of 'Helen': 1
 
 $ blockchain_go getbalance -address Rachel
 Balance of 'Rachel': 3
-```
+{% endhighlight %}
 
 很好，现在来看看会不会失败：
 
-```text
+{% highlight text %}
 $ blockchain_go send -from Pedro -to Ivan -amount 5
 panic: ERROR: Not enough funds
 
@@ -530,7 +530,7 @@ Balance of 'Pedro': 4
 
 $ blockchain_go getbalance -address Ivan
 Balance of 'Ivan': 2
-```
+{% endhighlight %}
 
 ## 最后
 
@@ -541,6 +541,11 @@ Balance of 'Ivan': 2
 3. UTXO 集。获取账户余额需要检查整个区块链，在有大量区块的情况下这会花费相当长的时间。而且，如果我们之后想要验证交易信息的话，会花费很长的时间。UTXO 集希望去解决这些问题，而且让交易操作更快。
 4. 内存池。这是交易信息在打包进区块链之前交易信息所待的地方。在我们当前的实现中，一个区块只包含一条交易，这样效率太低了。
 
-*其他的文章请返回首页查看.*
+* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
+* [工作量证明](% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %)
+* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
+* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
+* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
+* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
+* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
 
-*TODO: 添加文章链接*

@@ -8,7 +8,7 @@ tags: blockchain code
 
 ## 介绍
 
-在 [上篇文章](/) 中，我们已经着手实现了交易信息。你也已经了解到了交易的中立性：比特币没有用户账户，私人数据(像是名字，护照或者身份证号)也并非必需的，更不会保存。但仍要有一些东西可以用来识别是你，作为交易的出账(就像出账的时候，币的拥有者被锁定在了上面)。这就是为什么会需要比特币的地址。到现在为止，我们用了用户随意定制的字符串作为地址，那么是时候去实现一个真正的地址了，就像他们在比特币上做的那样。
+在 [上篇文章]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %}) 中，我们已经着手实现了交易信息。你也已经了解到了交易的中立性：比特币没有用户账户，私人数据(像是名字，护照或者身份证号)也并非必需的，更不会保存。但仍要有一些东西可以用来识别是你，作为交易的出账(就像出账的时候，币的拥有者被锁定在了上面)。这就是为什么会需要比特币的地址。到现在为止，我们用了用户随意定制的字符串作为地址，那么是时候去实现一个真正的地址了，就像他们在比特币上做的那样。
 
 > 这个部分的介绍有重大的代码变化，所以没必要全都解释清楚，请参考 [这个页面](https://github.com/Jeiwan/blockchain_go/compare/part_4...part_5#files_bucket) 了解自上篇文章以来的变化
 
@@ -85,9 +85,9 @@ tags: blockchain code
 
 现在来看一下上面提到的比特币地址：1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa。现在我们已经知道了这是一个人类可读的公钥摘要。如果我们解码一下，这个公钥看起来就像是这样(一个在十六进制系统中的字节序列)：
 
-```text
+{% highlight text %}
 0062E907B15CBF27D5425399EBF6F0FB50EBB88F18C29B7D93
-```
+{% endhighlight %}
 
 比特币使用 Base58 算法去转换公钥到人类可读的格式。这个算法很像注明的 Base64，不过它使用较短的字母。一些字母表中的字符被移除了，为了避免相似字符的攻击。这样，这样，里面就没了这些字符：`0(零)`, `O(大写的 o)`，`I(大写的 i)`，`l(小写的 L)`，因为它们很像，也没有 `+`, `/`这两个符号
 
@@ -97,10 +97,10 @@ tags: blockchain code
 
 上面提到的解码公钥由三个部分组成:
 
-```text
+{% highlight text %}
 Version  Public key hash                           Checksum
 00       62E907B15CBF27D5425399EBF6F0FB50EBB88F18  C29B7D93
-```
+{% endhighlight %}
 
 由于哈希算法是单向的(它们不能被反向解码出源数据)。这也就不可能从哈希中提取出公钥。但我们可以通过运行存下来的哈希算法来获得哈希，然后与之比较检查。
 
@@ -110,7 +110,7 @@ Version  Public key hash                           Checksum
 
 我们从 **Wallet** 结构开始：
 
-```go
+{% highlight golang %}
 type Wallet struct {
     PrivateKey ecdsa.PrivateKey
     PublicKey  []byte
@@ -134,13 +134,13 @@ func newKeyPair() (ecdsa.PrivateKey, []byte) {
 
     return *private, pubKey
 }
-```
+{% endhighlight %}
 
 一个钱包只是秘钥对。我们也需要一个 **Wallets** 类型来保有一个钱包的集合，把它们保存到文件里，然后加载读取。在 **Wallet** 的构造方法里，一对新的秘钥被生成了出来。 **newKeyPair** 方法很直接： ECDSA 是基于椭圆曲线算法的，所以我们需要一个。下一步，一个私钥被通过椭圆曲线算法生成出来了。而公钥被通过私钥算出来了。有个要注意的点：在基于椭圆曲线算法的算法中。公钥是曲线上的一个点，所以公钥是 X,Y 坐标的结合。在比特币中，这些坐标连接，形成公钥。
 
 现在，我们来生成一个地址：
 
-```go
+{% highlight golang %}
 func (w Wallet) GetAddress() []byte {
     pubKeyHash := HashPubKey(w.PublicKey)
 
@@ -169,7 +169,7 @@ func checksum(payload []byte) []byte {
 
     return secondSHA[:addressChecksumLen]
 }
-```
+{% endhighlight %}
 
 这是转换公钥地址到 Base58 的步骤：
 
@@ -185,7 +185,7 @@ func checksum(payload []byte) []byte {
 
 现在你得用地址改一下入账出账：
 
-```go
+{% highlight golang %}
 type TXInput struct {
     Txid      []byte
     Vout      int
@@ -213,7 +213,7 @@ func (out *TXOutput) Lock(address []byte) {
 func (out *TXOutput) IsLockedWithKey(pubKeyHash []byte) bool {
     return bytes.Compare(out.PubKeyHash, pubKeyHash) == 0
 }
-```
+{% endhighlight %}
 
 我们不再使用 **ScriptPubKey** 和 **ScriptSig** 字段了，因为我们并不会去实现一个脚本语言。作为替代，**ScriptSig** 被分成了 **Signature** 和 **PubKey** 两个字段，**ScriptPubKey** 也改名成了 **PubKeyHash**. 好啦，我们实现了和比特币一样的出账锁/解锁，还有入账的签名逻辑。不过还没在方法中修改。
 
@@ -223,7 +223,7 @@ func (out *TXOutput) IsLockedWithKey(pubKeyHash []byte) bool {
 
 现在，来确认一下是不是都对了：
 
-```text
+{% highlight text %}
 $ blockchain_go createwallet
 Your new address: 13Uu7B1vDP4ViXqHFsWtbraM3EfQ3UkWXt
 
@@ -257,7 +257,7 @@ Balance of '15pUhCbtrGh3JUx5iHnXjfpyHyTgawvG5h': 6
 
 $ blockchain_go getbalance -address 1Lhqun1E9zZZhodiTqxfPQBcwr1CVDV2sy
 Balance of '1Lhqun1E9zZZhodiTqxfPQBcwr1CVDV2sy': 0
-```
+{% endhighlight %}
 
 Nice！来实现一下交易签名吧。
 
@@ -281,7 +281,7 @@ Nice！来实现一下交易签名吧。
 
 好吧，看起来蛮复杂的，开始写点儿代码好了。我们会从 **Sign** 方法开始：
 
-```go
+{% highlight golang %}
 func (tx *Transaction) Sign(privKey ecdsa.PrivateKey, prevTXs map[string]Transaction) {
     if tx.IsCoinbase() {
         return
@@ -302,27 +302,27 @@ func (tx *Transaction) Sign(privKey ecdsa.PrivateKey, prevTXs map[string]Transac
         tx.Vin[inID].Signature = signature
     }
 }
-```
+{% endhighlight %}
 
 这个方法获取了一个私钥，还有上个交易信息的 map。像上面提到的那样，为了给交易签名，我们需要去访问被入账交易引用的出账，所以我们需要交易保存着这些输出。
 
 来一步步看这段代码吧：
 
-```go
+{% highlight golang %}
 if tx.IsCoinbase() {
     return
 }
-```
+{% endhighlight %}
 
 币基交易不会被签名，因为它并没有真正的入账。
 
-```go
+{% highlight golang %}
 txCopy := tx.TrimmedCopy()
-```
+{% endhighlight %}
 
 一个精简的版本会被签名，并不是整个交易：
 
-```go
+{% highlight golang %}
 func (tx *Transaction) TrimmedCopy() Transaction {
     var inputs []TXInput
     var outputs []TXOutput
@@ -339,42 +339,42 @@ func (tx *Transaction) TrimmedCopy() Transaction {
 
     return txCopy
 }
-```
+{% endhighlight %}
 
 这个精简版会包含完整的入账和出账。不过 **XInput.Signature** 和 **TXInput.PubKey** 会被设为 nil。
 
 下一步，我们队这个精简版的入账进行遍历:
 
-```go
+{% highlight golang %}
 for inID, vin := range txCopy.Vin {
     prevTx := prevTXs[hex.EncodeToString(vin.Txid)]
     txCopy.Vin[inID].Signature = nil
     txCopy.Vin[inID].PubKey = prevTx.Vout[vin.Vout].PubKeyHash
-```
+{% endhighlight %}
 
 在每个入账中，**Signature** 被设为 **nil**(只是再检查一次)，**PubKey** 被设为被引用的出账的 **PubKeyHash**。在这个时候，除了现有交易外，其他所有交易都是空的。它们的 **Signature** 和 **PubKey** 字段都被设成了 nil。这样，入账就分别被签名了，尽管对于我们的应用来说是没必要的，但比特币允许交易包含不同地址的入账。
 
-```go
+{% highlight golang %}
     txCopy.ID = txCopy.Hash()
     txCopy.Vin[inID].PubKey = nil
-```
+{% endhighlight %}
 
 **Hash** 方法会序列化交易，并用 SHA-256 算法其散列哈希。这个结果就是我们要去签名的数据。在获取到哈希值之后我们得把 **PubKey** 重置一下，这样它就不会在未来的迭代中产生影响。
 
 现在，中间这块长这样：
 
-```go
+{% highlight golang %}
     r, s, err := ecdsa.Sign(rand.Reader, &privKey, txCopy.ID)
     signature := append(r.Bytes(), s.Bytes()...)
 
     tx.Vin[inID].Signature = signature
-```
+{% endhighlight %}
 
 我们用 **privKey** 对 **txCopy.ID** 进行签名。一个 ECDSA 签名是一对数字，我们会把它们连接并存储到入账的 **Signature** 字段中。
 
 现在，这是验证函数：
 
-```go
+{% highlight golang %}
 func (tx *Transaction) Verify(prevTXs map[string]Transaction) bool {
     txCopy := tx.TrimmedCopy()
     curve := elliptic.P256()
@@ -406,34 +406,34 @@ func (tx *Transaction) Verify(prevTXs map[string]Transaction) bool {
 
     return true
 }
-```
+{% endhighlight %}
 
 这个方法相当直接。首先，我们需要相同的简易版交易信息：
 
-```go
+{% highlight golang %}
 txCopy := tx.TrimmedCopy()
-```
+{% endhighlight %}
 
 现在我们需要和产生秘钥对一样的曲线：
 
-```go
+{% highlight golang %}
 curve := elliptic.P256()
-```
+{% endhighlight %}
 
 现在要来确认一下每个入账都会被签名：
 
-```go
+{% highlight golang %}
 for inID, vin := range tx.Vin {
     prevTx := prevTXs[hex.EncodeToString(vin.Txid)]
     txCopy.Vin[inID].Signature = nil
     txCopy.Vin[inID].PubKey = prevTx.Vout[vin.Vout].PubKeyHash
     txCopy.ID = txCopy.Hash()
     txCopy.Vin[inID].PubKey = nil
-```
+{% endhighlight %}
 
 这一块和**Sign** 方法中的一样，因为在验证过程中，我们需要签名的相同的数据。
 
-```go
+{% highlight golang %}
     r := big.Int{}
     s := big.Int{}
     sigLen := len(vin.Signature)
@@ -445,11 +445,11 @@ for inID, vin := range tx.Vin {
     keyLen := len(vin.PubKey)
     x.SetBytes(vin.PubKey[:(keyLen / 2)])
     y.SetBytes(vin.PubKey[(keyLen / 2):])
-```
+{% endhighlight %}
 
 这里，我们把存在 **TXInput.Signature** 和 **TXInput.PubKey** 里的值拿出来，由于签名就是数字对，而公钥是一对坐标。我们之前为了存储就把它们连在了一块，现在要用 **crypto/ecdsa** 方法去取出来。
 
-```go
+{% highlight golang %}
     rawPubKey := ecdsa.PublicKey{curve, &x, &y}
     if ecdsa.Verify(&rawPubKey, txCopy.ID, &r, &s) == false {
         return false
@@ -457,13 +457,13 @@ for inID, vin := range tx.Vin {
 }
 
 return true
-```
+{% endhighlight %}
 
 这里，我们使用了从入账中提取出了公钥创建了**ecdsa.PublicKey** 并执行了 **ecdsa.Verify** ，参数是从入账提取出的签名。如果所有的入账都验证过了，就返回 true, 如果在输入的验证中有一个出错了，就返回 false。
 
 现在我们得要一个可以获取上笔交易的方法。由于需要和区块链交互，所以把这个方法挂在 **Blockchain** 上：
 
-```go
+{% highlight golang %}
 func (bc *Blockchain) FindTransaction(ID []byte) (Transaction, error) {
     bci := bc.Iterator()
 
@@ -505,13 +505,13 @@ func (bc *Blockchain) VerifyTransaction(tx *Transaction) bool {
 
     return tx.Verify(prevTXs)
 }
-```
+{% endhighlight %}
 
 这个函数很简单: **FindTransaction** 通过 ID 找到一笔交易(这需要遍历区块链上的所有区块)；**SignTransaction** 拿到交易，找到它所引用的交易，对其进行签名; **VerifyTransaction** 做的也一样，不过是验证交易。
 
 现在，我们得真的签名并验证交易，在 **NewUTXOTransaction** 中去做：
 
-```go
+{% highlight golang %}
 func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transaction {
     ...
 
@@ -521,11 +521,11 @@ func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transactio
 
     return &tx
 }
-```
+{% endhighlight %}
 
 在交易被放到区块前验证：
 
-```go
+{% highlight golang %}
 func (bc *Blockchain) MineBlock(transactions []*Transaction) {
     var lastHash []byte
 
@@ -536,11 +536,11 @@ func (bc *Blockchain) MineBlock(transactions []*Transaction) {
     }
     ...
 }
-```
+{% endhighlight %}
 
 搞定！检查一下是不是都对了：
 
-```text
+{% highlight text %}
 $ blockchain_go createwallet
 Your new address: 1AmVdDvvQ977oVCpUqz7zAPUEiXKrX5avR
 
@@ -562,13 +562,13 @@ Balance of '1AmVdDvvQ977oVCpUqz7zAPUEiXKrX5avR': 4
 
 $ blockchain_go getbalance -address 1NE86r4Esjf53EL7fR86CsfTZpNN42Sfab
 Balance of '1NE86r4Esjf53EL7fR86CsfTZpNN42Sfab': 6
-```
+{% endhighlight %}
 
 完美！
 
 现在试一下把 **NewUTXOTransaction** 里的 **bc.SignTransaction(&tx, wallet.PrivateKey)** 注释掉，以此来保证未被签名的交易无法被挖矿。
 
-```go
+{% highlight golang %}
 func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transaction {
    ...
     tx := Transaction{nil, inputs, outputs}
@@ -577,13 +577,13 @@ func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transactio
 
     return &tx
 }
-```
+{% endhighlight %}
 
-```text
+{% highlight text %}
 $ go install
 $ blockchain_go send -from 1AmVdDvvQ977oVCpUqz7zAPUEiXKrX5avR -to 1NE86r4Esjf53EL7fR86CsfTZpNN42Sfab -amount 1
 2017/09/12 16:28:15 ERROR: Invalid transaction
-```
+{% endhighlight %}
 
 ## 结论
 
@@ -602,6 +602,11 @@ $ blockchain_go send -from 1AmVdDvvQ977oVCpUqz7zAPUEiXKrX5avR -to 1NE86r4Esjf53E
 9. [Base58](https://en.bitcoin.it/wiki/Base58Check_encoding)
 10. [椭圆曲线加密简单入门](http://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/)
 
-*其他的文章请返回首页查看.*
+* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
+* [工作量证明](% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %)
+* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
+* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
+* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
+* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
+* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
 
-*TODO: 添加文章链接*
