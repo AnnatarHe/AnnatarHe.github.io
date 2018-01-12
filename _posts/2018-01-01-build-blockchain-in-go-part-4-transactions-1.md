@@ -65,7 +65,7 @@ type TXOutput struct {
 
 由于我们并没有实现地址这个功能，我们暂时会避免整个 scripting 相关的逻辑。 **ScriptPubKey** 将会存储一个任意字符串(用户称之为钱包地址).
 
-> 顺便说一下，哦呦这种脚本化语言同时意味着比特币也可以成为智能合约平台
+> 顺便说一下，拥有这种脚本化语言同时意味着比特币也可以成为智能合约平台
 
 关于出账的一个非常重要事情是他们不可再分，这就意味着你不能用它的一部分。当一个出账被新的交易所引用，它用的其实是整个。而且如果这个值比所要求的要大，会生成一个退费，并发回给发送者。这和现实生活中的情况很相似。当你付款的时候，你买一个 1 块钱的东西，给了老板 5 块钱，那么你会收到 4 块钱的找零。
 
@@ -542,7 +542,7 @@ Balance of 'Ivan': 2
 4. 内存池。这是交易信息在打包进区块链之前交易信息所待的地方。在我们当前的实现中，一个区块只包含一条交易，这样效率太低了。
 
 * [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-* [工作量证明](% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %)
+* [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
 * [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
 * [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
 * [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})

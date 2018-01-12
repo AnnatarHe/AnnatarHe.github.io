@@ -10,7 +10,7 @@ exclude: ['node_modules', '_site']
 host: 0.0.0.0
 incremental: true
 timezone: Asia/Shanghai
-gems:
+plugins:
   - jekyll-sitemap
   - jekyll-paginate
   - jekyll-feed

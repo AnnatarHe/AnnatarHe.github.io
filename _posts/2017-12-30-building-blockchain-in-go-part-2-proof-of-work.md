@@ -273,7 +273,7 @@ PoW: true
 我们的区块链离真实的架构更近了一步：现在添加区块需要困难的工作了，这就让挖坑成为了可能。但仍旧缺少一些至关重要的功能：区块链数据库并未持久化，也没有钱包，地址，交易，也没有一致化机制。所有的这些我们都要在未来的文章中实现，现在，祝挖矿快乐~
 
 * [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-* [工作量证明](% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %)
+* [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
 * [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
 * [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
 * [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})

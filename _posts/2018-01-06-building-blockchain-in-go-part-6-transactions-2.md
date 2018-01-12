@@ -503,7 +503,7 @@ func (b *Block) HashTransactions() []byte {
 8. [为何每个比特币用户都应该理解"SPV安全"](https://medium.com/@jonaldfyookball/why-every-bitcoin-user-should-understand-spv-security-520d1d45e0b9)
 
 * [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-* [工作量证明](% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %)
+* [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
 * [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
 * [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
 * [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
