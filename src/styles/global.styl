@@ -3,20 +3,21 @@
 body
     background-color #dda
     font-family $font1
-    scroll-behavior: smooth;
+    scroll-behavior smooth
     
-    &::-webkit-scrollbar {
-        width: 0.72rem;
-    }
-    &::-webkit-scrollbar-button {
-        display: none;
-    }
-    &::-webkit-scrollbar-thumb {
-        width: 0.72rem;
+    &::-webkit-scrollbar
+        width 0.72rem
+    
+    &::-webkit-scrollbar-button
+        display none
+    
+    &::-webkit-scrollbar-thumb
+        width 0.72rem
         // background-color: #e4e4e4;
-        background-color: #444;
-        border-radius: 1rem;
-    }
+        background-color #444
+        border-radius 1rem
+    .hidden
+        display none
     
     @media (max-width: 768px)
         margin 0
