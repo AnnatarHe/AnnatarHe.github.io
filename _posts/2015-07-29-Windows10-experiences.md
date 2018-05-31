@@ -37,21 +37,21 @@ tags: windows life
 
 桌面变化不大，只是一些图标的小变化
 
-![desktop]({{ site.cdn }}/desktop.png)
+![desktop]({{ site.cdn }}/desktop.png-copyrightDB)
 
 开始菜单倒是变化蛮大的：
 
-![start]({{ site.cdn }}/start.png)
+![start]({{ site.cdn }}/start.png-copyrightDB)
 
 这里的开始菜单过渡效果做的不错。赏心悦目。
 
 下面的任务栏
 
-![missions]({{ site.cdn }}/missions.png)
+![missions]({{ site.cdn }}/missions.png-copyrightDB)
 
 我的电脑翻译改了，变成了`此电脑`
 
-![thisComputer]({{ site.cdn }}/thisComputer.png)
+![thisComputer]({{ site.cdn }}/thisComputer.png-copyrightDB)
 
 里面图标改的比较多，就不一一截图了。
 
@@ -61,7 +61,7 @@ tags: windows life
 
 看得出还很稚嫩，却有着强大的表现，现在作为主力浏览器应该还不到时候，但是我相信可以撼动一下`Chrome`和`Firefox`阵营，哪天微软周围的生态圈做起来了，体验一定非常棒。
 
-![Edge]({{ site.cdn }}/edge.png)
+![Edge]({{ site.cdn }}/edge.png-copyrightDB)
 
 优点还是非常明显的，速度很快，过渡的animate做的也挺不错，界面简洁。
 
@@ -82,7 +82,7 @@ Web笔记也是不错，就是那种随便在网页上画，最后保存下来�
 
 我又想起来高中时候听力播放里的萌妹子了，那个声音真是又软又酥。TUT
 
-![cortana]({{ site.cdn }}/cortana.png)
+![cortana]({{ site.cdn }}/cortana.png-copyrightDB)
 
 中文的准确识别还可以再进一步提升，理解人的语言之中的意思也有待提高(我知道`Machine Learning`很难)
 
@@ -92,7 +92,7 @@ Web笔记也是不错，就是那种随便在网页上画，最后保存下来�
 
 照片应用有了大的升级。界面大变样
 
-![picture]({{ site.cdn }}/picture.png)
+![picture]({{ site.cdn }}/picture.png-copyrightDB)
 
 比原先的更加简洁
 
@@ -102,7 +102,7 @@ Web笔记也是不错，就是那种随便在网页上画，最后保存下来�
 
 全新的设置界面：
 
-![settings]({{ site.cdn }}/settings.png)
+![settings]({{ site.cdn }}/settings.png-copyrightDB)
 
 其实只是颜值有了一些提升而已，其他的没什么
 
@@ -124,7 +124,7 @@ Web笔记也是不错，就是那种随便在网页上画，最后保存下来�
 
 是的，非常nice的一个功能，按下`Win + G`即可调出，录制的效果还行，详细的设置可以自己调整。相信我，你会喜欢的。
 
-![Xbox]({{ site.cdn }}/Xbox.png)
+![Xbox]({{ site.cdn }}/Xbox.png-copyrightDB)
 
 ## Bugs
 

@@ -21,7 +21,7 @@ $ npm install
 
 现在看到目录结构如下
 
-![dirctory]({{ site.cdn }}/dirctory.png)
+![dirctory]({{ site.cdn }}/dirctory.png-copyrightDB)
 
 下面来稍微介绍下
 
