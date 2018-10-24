@@ -24,7 +24,7 @@ flutter 强吹的 hot reload 其实对我来说没有很强烈的感觉，毕竟
 
 所以虽然 hot reload 可能是一个很大的 feature，但是对我这样经常用的人来说并没有很大的吸引力。事情本该如此。
 
-### package manager
+* package manager
 
 flutter 自带有 pub 做依赖管理。 和隔壁 golang 相比，dart pub 好用得不像是 Google 家做的产品。 pub 甚至为国内用户以半官方的形式提供了镜像！
 
@@ -32,21 +32,21 @@ flutter 自带有 pub 做依赖管理。 和隔壁 golang 相比，dart pub 好�
 
 而且只要安装上了某个依赖， vscode 是可以直接导需要的包，做得和 IDE 一摸一样，非常的贴心了。
 
-### IDE support
+* IDE support
 
-除了上面说的直接导入需要的包，还可以在依赖改变的时候直接运行 **flutter packages get**，自动拉新的包。
+除了上面说的直接导入需要的包，还可以在依赖改变的时候直接运行 flutter packages get，自动拉新的包。
 
-而且 refactor 功能做得特别好，有 **StatelessWidget** 和 **StatefulWidget** 的互转，甚至还有直接包一层新的 view 在当前选中的 view 上这种贴心简单的功能。
+而且 refactor 功能做得特别好，有 StatelessWidget 和 StatefulWidget 的互转，甚至还有直接包一层新的 view 在当前选中的 view 上这种贴心简单的功能。
 
 很多时候我都是手写一个 StatelessWidget 然后用 vscode 提供的 refactor 转成 StatefulWidget，过程非常的友好舒爽。 dartlang 也确实是一门相当不错的语言。
 
-### Marketing
+* Marketing
 
 Google 的营销做得还是比较到位的。从今年开始各种大大小小的 Google 开发者场合上，flutter 都有自己的身影。话题上也是偏重于它的优势 —— single code base, hot reload, performance 这三个话题。而且 Google 是一家国际公司，所以影响范围还是比较广的。 更是由于国内开发者对于 Google 有一种比较特殊的感情，所以听 flutter 团队的表述来看，似乎中国开发者是最活跃热情的。
 
 其实仔细想了想，技术营销上比 Google 强的可能只有 mongoDB 了。
 
-### Performance
+* Performance
 
 性能一直是 Flutter 团队强吹的一点。当然他们也确实有实力这么吹。
 
@@ -54,15 +54,15 @@ Flutter 的底层实现不是靠所谓的多线程(微信小程序)，也不是�
 
 而且从演讲的内容来看， Flutter 团队中应该是有很多是从 Skia 团队转过来的。 那么这帮人凑一起，性能差点儿会很丢人的吧。 在很多 benchmark 中也确实显示说 Flutter 性能不错。
 
-### 学习成本
+* 学习成本
 
 和很多人的认知不太一样的是： 我认为 Flutter 可能是所有跨平台框架中，学习成本最低的那个。
 
 初学可能看到 dartlang 头皮发麻，毕竟要学新语言，但是其实仔细想想看，Dartlang 和 java 算是比较相似的，而且和绝大多数 OOP 语言类似。 大多类型，接口，静态，声明的概念对于有编程经验的工程师，看看文档花不了几天就学会了。
 
-flutter 的一大优势在于： 写 flutter 可以完全不用理解 native 那套东西(目前至少是 UI 层面)。 如果读者有尝试写过 react native 就会理解我说的是什么意思： 如果一个完全没有接触过 native 开发的有经验的 web 开发者上手 react-native 是要难于 flutter 的。
+flutter 的一大优势在于： 写 flutter 可以完全不用理解 native 那套东西(目前至少是 UI 层面)。 如果读者有尝试写过 react native 就会理解我说的是什么意思： 一个完全没有接触过 native 开发的有经验的 web 开发者上手 react-native 是要难于 flutter 的。
 
-举一个例子：长列表渲染。 react native 的 api 比较繁琐，需要 dataSource, delegate 等概念，因为它是做映射所以需要开发者知道 UITableView ，并且理解其设计思想。 但是没有学过 iOS 开发碰到 react native 的 ListView 会很懵逼。 但是在 flutter 里则全都是 `ListView.build`，丝毫没有 native 开发的概念所在，除了学习 API 定义不需要再去理解 native 的实现。
+举一个例子：长列表渲染。 react native 的 api 比较繁琐，需要 dataSource, delegate 等概念，因为它是做映射所以需要开发者知道 UITableView ，并且理解其设计思想。 所以没有学过 iOS 开发碰到 react native 的 ListView 会很懵逼。 但是在 flutter 里则全都是 `ListView.build`，丝毫没有 native 开发的概念所在，除了学习 API 定义不需要再去理解 native 的实现。
 
 ## 放弃
 
@@ -80,7 +80,7 @@ flutter 的一大优势在于： 写 flutter 可以完全不用理解 native 那
 
 * native 成本比较低
 
-换用 native 以后，我再也不纠结数据管理方案了，也不用管 http client 实现，也不用在乎怎么去桥接代码。 直接在两个小时内写完了用 flutter 六个小时的工作量。 这我还是用 Android 要写写 xml，如果是 iOS 就是单纯地画 Storyboard，然后把 action 指到代码就结束了，应该会更快。
+换用 native 以后，我再也不纠结数据管理方案了，也不用管 http client 实现，也不用在乎怎么去桥接代码。 直接在两个小时内写完了用 flutter 一天的工作量。 这我还是用 Android 要写写 xml，如果是 iOS 就是单纯地画 Storyboard，然后把 action 指到代码就结束了，应该会更快。
 
 而且 native 的语言 kotlin, swift 丝毫不比 dart 差, 甚至 swift 的类型更加严格。对于应用安全性来说是个好事。
 
