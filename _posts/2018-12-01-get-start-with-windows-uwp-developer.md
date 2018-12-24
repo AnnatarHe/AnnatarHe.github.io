@@ -28,7 +28,7 @@ xaml 不同的一点是它带来了`绑定`，类似于 Angular, vue 中的绑�
 
 uwp 中的每个 xaml 都和一个 `.cs` 文件是绑定关系。在 xaml 中可以访问到 .cs 中的 public 属性，也可以调用其中的 event handler， `.cs` 中也可以访问对应的 xaml 结构，进行取值等操作。
 
-```xaml
+```html
 <TextBlock
     Text="{x:Bind authViewModel.PageH1Title, Mode=OneWay}"
     FontSize="32"
@@ -97,7 +97,7 @@ Fluent Design 的设计不得不说非常漂亮，如果真的能在 Windows 上
 
 在 mac 上实现 fluent design 非常简单：自带！
 
-```xaml
+```html
 <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}">
 ```
 
