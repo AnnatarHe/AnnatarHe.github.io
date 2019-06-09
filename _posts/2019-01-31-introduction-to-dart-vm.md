@@ -141,7 +141,107 @@ Hello, World!
 
 这个阶段没有优化操作。非优化编译器的主要任务只是尽快生成可执行代码。
 
-这也意味着非优化编译器并不会去试图静态化解析任何未被内核二进制解析的部分。
+这也意味着非优化编译器并不会去试图静态化解析任何未被内核二进制解析的部分。所以如果调用是完全异步的，那么它会被编译(MethodInvocation 或者 PropertyGet AST 节点)。VM 在当前阶段并没有使用任何基于派发(dispatch)的 virtual table 或者 interface table 形式而是用 [inline caching](https://en.wikipedia.org/wiki/Inline_caching) 实现异步调用。
+
+inline caching 背后的核心思想是缓存方法的结果在一个特殊调用缓存的区域。inline caching 机制被用于 VM 常量。
+
+> 最初的 inline caching 实现只是在原生代码的方法中加段代码 —— 所以被命名为 **inline** caching. inline caching 的思想可以追溯到 Smalltalk - 80, 详情查看： [Efficient implementation of the Smalltalk-80 system](https://dl.acm.org/citation.cfm?id=800542)
+
+* 一个特殊调用缓存(RawICData 对象)会映射 class 到一个方法上, 如果接收者匹配到了一个 class 它就会被调用。这个缓存保存了一些辅助信息，例如调用次数，它会追踪给出的 class 在缓存站中有多常用。
+
+* 一个实现了方法调用快速通道的公用检索桩。这个桩会搜索给出的缓存，去查看其中是否匹配保存了一个接受 class 的入口。如果入口被找到了，那么这个桩就会增加调用次数，然后尾调用缓存方法。否则，这个桩会触发一个实现了方法内容的逻辑的运行时系统辅助。如果方法成功调用，那么缓存会被更新，那么随后的调用就不需要再进入运行时了
+
+下面的图片展示了和 `animal.toFace()` 关联的内联缓存的结构和状态的调用。它被作为 `Dog` 实例调用两次，一次作为 `Cat`.
+
+![inline caching](https://mrale.ph/dartvm/images/inline-cache-1.png)
+
+无优化编译器自身会充分执行任何可能存在的 Dart 代码。然后代码产出地相当慢，这就是为什么 VM 还实现了一个 *adaptive optimizing* 编译流程. 适应优化背后的思想是使用运行中程序的执行信息去决定优化方向。
+
+作为为优化代码会运行并收集以下信息：
+
+* 关联每个异步调用的调用站，收集关于监视接收者的类型的信息
+* 方法的执行次数和方法内部追踪热区代码的基础块
+
+当一个执行次数和方法做关联就找到了准确的入口，这个方法会被提交到 **后台优化编译器(background optimizing compiler)**去优化。
+
+优化编译器一开始用和未优化编译器同样的方式：遍历内部 AST 构建未优化方法的 IL 然后优化。然而不会直接低到把 IL 转成机器码，优化编译器去翻译未编译 IL 到 static single assignment(SSA) 形式的优化 IL. 基于 IL 的 SSA 随后的主题是到基于收集类型反馈的专业预测并通过一系列经典流程与 Dart 特殊优化：例如，内联(inline)，范围分析(range analysis)，类型预测(type propagation)，代表挑选(representation selection)，保存加载和加载加载的方向(store-to-load and load-to-load forwaring)，全局数字量(global value numbering)，调用下沉(allocation sinking) 等。在 IL 优化的最后是低到机器码. 使用线性检测注册调用器(allocator)和简单的一对多低级 IL 指令。
+
+一旦编译完成了后台编译器会去请求变更线程进入到安全点接入方法的优化代码，下一步就是方法被调用 —— 它会使用优化代码。
+
+> 有些方法包含了非常长的循环，所以在方法运行中在优化和未优化代码间切换执行是有意义的，这个过程叫做 *on stack replacement(OSR)*，它之所以有这个名字是由于方法的一个版本的栈会显示地用同样方法的不同版本替换
+
+![](https://mrale.ph/dartvm/images/optimizing-compilation.png)
+
+> 源码阅读：编译器源码在 [runtime/vm/compiler](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/compiler)，编译流程的入口是 [CompileParsedFunctionHelper::Compile](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/compiler/jit/compiler.cc#L701), IL 被定义在 [runtime/vm/compiler/backend/il.h](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/compiler/backend/il.h). 内核到 IL 的翻译开始于 [kernel::StreamingFlowGraphBuilder::BuildGraph](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/compiler/frontend/kernel_binary_flowgraph.cc#L1929)，这个方法同样也掌握着 IL 的构造方法去产出不同的生成函数. [StubCode::GenerateNArgsCheckInlineCacheStub](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/stub_code_x64.cc#L1795) 为内联桩生成机器码，同时 [InlineCacheMissHandler](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/runtime_entry.cc#L1073) 处理 IC 丢失的情况. [runtime/vm/compiler/compiler_pass.cc](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/compiler/compiler_pass.cc) 定义了优化编译器流程和顺序. [JitCallSpecializer](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/compiler/jit/jit_call_specializer.h#L12) 处理大多数基于类型反馈的预测
+
+> 试一试：VM 也有很多参数可以用来控制 JIT 让它输出 IL 并生成被 JIT 编译出的函数的机器码.
+> --print-flow-graph[-optimized] 打印所有的 (或者只有优化的) 编译产物
+> --disassemble[-optimized] 拆解所有的 (或只有优化的) 编译完成的函数
+> --print-flow-graph-filter=xyz,abc,... 限制前一个参数的输出，只包含一个或者逗号分隔的字符串的名字
+> --compiler-passes=... 通过编译器步骤控制流程：强制 IL 在某个阶段 之前/之后 打印. 禁用某个步骤. 传入 *help* 获取更多信息
+> --no-background-compilation 禁用后台编译, 并在主线程编译所有的热点函数. 实验中会很有用，不然在一些短的程序中，可能主线程会在后台编译热点函数之前就退出了。
+> 例如：
+
+{% highlight bash %}
+# 运行 test.dart 并输出优化后的 IL 和机器码，其中只包含 "myFunction".
+# 禁用后台编译预测
+$ dart --print-flow-graph-optimized         \
+       --disassemble-optimized              \
+       --print-flow-graph-filter=myFunction \
+       --no-background-compilation          \
+       test.dart
+{% endhighlight %}
+
+在基于应用的执行数据中做出专业预测的代码被优化编译器高亮是非常重要的。例如，一个只包含单个实例 C 的异步调用站作为接收者讲会被转为直接调用产出，这个产出是接受街有没有预期类 C 的合法认证的产出。然而，这些判定可能会违反后面的程序执行：
+
+{% highlight dart %}
+void printAnimal(obj) {
+  print('Animal {');
+  print('  ${obj.toString()}');
+  print('}');
+}
+
+// 用 Cat 实例调用 printAnimal(...) 非常多次
+// printAnimal(...) 的结果会被预测器优化，那么 obj 会总是 Cat
+for (var i = 0; i < 50000; i++)
+  printAnimal(Cat());
+
+// 现在用 Dog 调用 printAnimal(...) —— 优化后的版本不能处理这种情况，因为预测后的编译代码的 obj 总是 Cat. 它会导致负优化.
+printAnimal(Dog());
+{% endhighlight %}
+
+无论优化代码做了什么预测，它都不能从静态不可变信息中产出，它需要和违反这些预测做斗争，并可能会从这种违反情况发生时从中恢复.
+
+这个恢复的过程广为人知地叫做 *负优化 deoptimization*： 当优化的版本碰到了一种不能处理的情况，它简单地把执行权转移到相匹配的未被优化函数入口，然后继续执行。一个函数的未优化版本并不做任何预测，这样就可以处理所有可能的输入情况。
+
+> 进入未优化函数的时机是至关重要的，因为代码有副作用(上面的函数中，未优化情况发生在我们已经执行了第一个 `print` 之后). 匹配到负优化指令到负优化代码的点在 VM 中通过使用 *deopt ids* 来实现
+
+VM 通常会在负优化之后丢弃掉函数的优化版本，然后使用更新后的类型反馈重新优化它.
+
+VM 保障编译器的专业预测用以下两种方式：
+
+* 内联检查(例如 CheckSmi, CheckClass 的 IL 指令) 它们会验证编译器定下的预测是否 `使用` 了预测。例如：当把异步调用转为同步调用，编译器会在直接调用前添加一些检查。发生这种检查的负优化被称为 `eager deoptimzation`, 因为它发生在检查被触发之前。
+
+* 指导运行时的全局检查会在优化代码的依赖发生变化的时候进行负优化， 例如，优化编译器会监视 C 这个类从未被集成，那么它会在类型衍生的时候使用这个信息。然而之后的异步代码加载或者类的冻结衍生出了 C 的子类 —— 它破坏了之前的判定。在这个时刻，运行时需要去找到并且销毁所有的基于 C 没有子类此项预测所作出的优化代码。运行时也很可能会在执行栈找到一些新的不合适的优化代码。在这些边界情况下会被标记为需要负优化，并会在执行需要返回的时候执行负优化。这种系列的负优化被称为 `lazy deoptimization`: 因为它会被延迟到控制权回到优化代码之后。
+
+> 源码导读：负优化机制部署在 [runtime/vm/deopt_instructions.cc](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/deopt_instructions.cc). 它本质上是一个针对负优化指示的小型解释器，它介绍了如何重新构建所需的从优化代码到负优化代码的所有状态。负优化指示被 [CompilerDeoptInfo::CreateDeoptInfo](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/compiler/backend/flow_graph_compiler_x64.cc#L68) 生成。它会在编译期的优化代码中每个可能负优化的地方被生成。
+
+> 试一试：参数 --trace-deoptimization 可以让 VM 打印出每个负优化出现的位置及原因的信息. --trace-deoptimization-verbose 在负优化发生的时候在每个负优化指示的地方让 VM 打印出一条线
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
