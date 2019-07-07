@@ -228,19 +228,125 @@ VM 保障编译器的专业预测用以下两种方式：
 
 > 试一试：参数 --trace-deoptimization 可以让 VM 打印出每个负优化出现的位置及原因的信息. --trace-deoptimization-verbose 在负优化发生的时候在每个负优化指示的地方让 VM 打印出一条线
 
+### 从快照中运行
 
+VM 可以序列化 isolate 的堆或驻留在堆中更加精确的对象图到一个二进制的 *快照(snapshot)* 中。快照随后可以被用来在启动 VM 独立域的时候重新创建相同的状态。
 
+![snapshot](https://mrale.ph/dartvm/images/snapshot.png)
 
+快照的格式是为快速启动而实现的很底层的，优化后的格式 —— 它实际上是一个要创建的对象的列表，以及如果将它们连在一起的说明。快照背后的冤死思想是：VM 可以只是带着从快照中快速解压出所需的所有数据结构启动一个独立域，而不是解析 Dart 源码，逐步创建内部数据结构。
 
+最初的快照并不包含机器码，然而这个能力随后在 AOT 编译器被开发出之后被加入进来了。开发 AOT 编译器和代码快照的动机是为了使 VM 在不同平台上运行, 因为平台级限制不能运行 JIT。
 
+代码快照和普通快照几乎是一样的，只是有一点点不同：它们包含一个代码部分，与快照的其余部分不同，它不需要反序列化。这段代码按照允许它在映射到内存之后直接变成堆的一部分来放置。
 
+![](https://mrale.ph/dartvm/images/snapshot-with-code.png)
 
+> 源码导读：[runtime/vm/clustered_snapshot.cc](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/clustered_snapshot.cc)处理快照的序列化和反序列化。*Dart_CreateXyzSnapshot[AsAssembly]* API 家族负责写出堆快照 (例如： [Dart_CreateAppJITSnapshotAsBlobs](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/dart_api_impl.cc#L6238) 和 [Dart_CreateAppAOTSnapshotAsAssembly](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/dart_api_impl.cc#L5986))。另一方面 [Dart_CreateIsolate](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/dart_api_impl.cc#L1166) 可以从快照中拿取数据启动独立域(isolate)
 
+### 从 AppJIT 中启动
 
+AppJIT 快照 是用来缓解大型 Dart 项目的 JIT 启动时间的问题，像是 *dartanalyzer* 或者 *dart2js*. 当这些工具在小型项目中使用时，它的真正执行时间和 VM 编译 JIT 的时间是一样长的。
 
+AppJIT 快照可以处理这些问题：应用可以在 VM 中使用假的训练数据，后续生成的代码和 VM 内部数据结构被序列化到 AppJIT 快照中。这个快照可以分发出去，而不用分发应用代码(内核二进制也行)。从快照中启动的 VM 仍然可以 JIT —— 可以和使用真实数据的执行配置对比，是否匹配训练数据中的配置。
 
+![](https://mrale.ph/dartvm/images/snapshot-with-code.png)
 
+> 试一试：如果你传入参数 *--snapshot-kind=app-jit --snapshot=path-to-snapshot* 那么在执行应用之后 dart 二进制文件将会生成 AppJIT 快照。下面是个 dart2js 生成并使用 AppJIT 快照的例子
 
+{% highlight bash %}
+# JIT 模式从源码中运行
+$ dart pkg/compiler/lib/src/dart2js.dart -o hello.js hello.dartCompiled 7,359,592 characters Dart to 10,620 characters JavaScript in 2.07 seconds
+Dart file (hello.dart) compiled to JavaScript: hello.js
+
+# 训练运行去生成 app-jit 快照
+$ dart --snapshot-kind=app-jit --snapshot=dart2js.snapshot \
+       pkg/compiler/lib/src/dart2js.dart -o hello.js hello.dart
+Compiled 7,359,592 characters Dart to 10,620 characters JavaScript in 2.05 seconds
+Dart file (hello.dart) compiled to JavaScript: hello.js
+
+# 从 app jit 快照中启动
+$ dart dart2js.snapshot -o hello.js hello.dart
+Compiled 7,359,592 characters Dart to 10,620 characters JavaScript in 0.73 seconds
+Dart file (hello.dart) compiled to JavaScript: hello.js
+{% endhighlight %}
+
+### 从 AppAOT 快照中启动
+
+AOT 快照最初的设计是因为平台上实现 JIT 编译是不可能的，但是它可以用在那些情况中 —— 快速启动并且能够忍受潜在的性能惩罚锁带来的性能一致性。
+
+> 通常关于 JIT 和 AOT 的性能比较上有大量的困惑。JIT 可以访问到精确的本地类型信息和运行中程序的执行信息， 但是它必须要付出预热的代价. AOT 可以在全局上推导和证明出各种属性(它需要付出编译期作为代价)，只是没有程序真正运行时的各种信息 —— 另一方面来说， AOT 编译出的代码几乎无需预热即可达到最好的性能。目前， Dart VM JIT 有最佳的峰值性能，而 Dart VM AOT 有最好的启动性能。
+
+不能 JIT 意味着：
+
+1. AOT 快照 **必须** 包含在程序执行中会被调用的每个方法的可执行代码；
+2. 可执行代码 **绝不能** 依赖于执行期间任何可能会违反推理假设的代码；
+
+为了满足这些需求，AOT 编译进程进行全局静态检查(type flow analysis or TFA) 去确定应用入口集合中的哪个部分是可到达的，哪些类被实例化了，类型如何在程序中流转。所有的这些检查都是保守型的：这意味着它们在正确性上存在错误，这与 JIT 形成鲜明对比，JIT 会造成性能方面的失误，因为他总会把负优化未经优化的代码以实现正确的行为。
+
+所有潜在的可被检测道德函数随后被编译成没有任何预测优化的原生代码。不过，类型流转信息仍旧被用来专业校正代码(例如，虚拟调用)
+
+一旦所有的函数都被编译到堆快照就可以被使用了。
+
+结果快照可以随后被 *预编译运行时(precompiled runtime)* 使用，Dart VM 其中一个种类不包含 JIT 和异步代码加载功能。
+
+![](https://mrale.ph/dartvm/images/aot.png)
+
+> 源码导读： [package:vm/transformations/type_flow/transformer.dart](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/pkg/vm/lib/transformations/type_flow/transformer.dart) 是基于 TFA 结果的类型流转检测和变形。 [Precompiler::DoCompileAll](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/compiler/aot/precompiler.cc#L190) 是 VM 中 AOT 编译循环的入口。
+
+> 试一试：AOT 编译流程尚未被包括在 Dart SDK 中，依赖于它的项目(比如 Flutter)需要自行构建 SDK 自带提供之外的东西。 [pkg/vm/tool/precompiler2](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/pkg/vm/tool/precompiler2) 脚本是个很好的参考 —— 流程是如何构建的，哪些二进制产物是构建所必需的。
+
+{% highlight bash %}
+# Need to build normal dart executable and runtime for running AOT code.
+$ tool/build.py -m release -a x64 runtime dart_precompiled_runtime
+
+# Now compile an application using AOT compiler
+$ pkg/vm/tool/precompiler2 hello.dart hello.aot
+
+# Execute AOT snapshot using runtime for AOT code
+$ out/ReleaseX64/dart_precompiled_runtime hello.aot
+Hello, World!
+{% endhighlight %}
+
+> 注意，如果你想要深入查看生成的 AOT 代码，可以给 *precompiler2* 脚本传入 *--print-flow-graph-optimized* 和 *--disassemble-optimized*
+
+### 可被切换的调用
+
+即使有全局和本地分析的 AOT 预编译代码仍然可能包含一些未被静态虚拟化的调用栈。为了弥补这部分问题，AOT 编译后的代码和运行时需要使用一个内联缓存技术的拓展。 这个拓展的版本被称为 *可切换调用(switchable calls)*
+
+JIT 部分已经解释了每个内联缓存都带有两个部分的一个 call site: 一个缓存对象(由 [RawICData](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/raw_object.h#L1853) 实例表示)和要调用的一块原生代码(例如： [InlineCacheStub](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/stub_code_x64.cc#L1795))。在 JIT 模式下，运行时只会更新缓存自身。然而 AOT 运行时会根据内敛缓存的状态选择是否同时替换所依赖的缓存和原生代码。
+
+![](https://mrale.ph/dartvm/images/aot-ic-unlinked.png)
+
+起初，所有的异步调用都开始于 *unlinked* 状态，当这样的调用栈首次被触发，那么 [UnlinkedCallStub](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/stub_code_x64.cc#L3068) 就被触发了, 它简单地调用运行时的方法 [DRT_UnlinkedCall](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/runtime_entry.cc#L1361) 去链接到调用栈。
+
+如果 [DRT_UnlinkedCall](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/runtime_entry.cc#L1361) 尝试把调用栈转换为 *monomorphic* 状态是可行的。这个调用栈转为一个直接调用, 它会通过一个特殊的入口进入方法，这个入口会验证接收者是一个正确的类型。
+
+![](https://mrale.ph/dartvm/images/aot-ic-monomorphic.png)
+
+上面的例子中，我们假设当 `obj.method()` 初次被执行的时候，obj 是 C 的实例，obj.method 被解释为 C.method。
+
+下次我们执行同样的调用站的时候，它会直接触发 C.method，跳过所有的方法查找的过程。 然而它也会通过一个特殊的入口进入的 C.method 中，他会验证 obj 仍然是 C 的实例。 如果不是，那么 [DRT_MonomorphicMiss](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/runtime_entry.cc#L1429) 条件会被触发，然后将会试着去选择到下一个调用站的状态。
+
+C.method 可能仍然是一个合法的调用目标，比如 obj 是继承了 C 的 D 类的实例，而且没有重写方法 C.method。 这种情况下，我们检查调用站能否转化为 *single target* 状态，它被实现于 [SingleTargetCallStub](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/stub_code_x64.cc#L3094) (也可以看 [RawSingleTargetCache](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/raw_object.h#L1834))
+
+![](https://mrale.ph/dartvm/images/aot-ic-singletarget.png)
+
+这个桩是基于 AOT 编译了大部分类，并通过深度优先继承结构遍历赋予了数字 id 的情况。 如果 C 是一个有着 D0 ... Dn 多个子类的父类，而且这些子类都没有重写 C 类的 C.method, `:cid <= classId(obj) <= max(D0.:cid, ..., Dn.:cid)` 意味着 obj.method 可以被解析为 C.method。 这个情况下，不再是与单个类进行比较(*monomorphic* 状态)， 我们可以使用类 id 的范围(class id range) 去检测(*single target* 状态)它是否能够在 C 的所有子类中正常运行。
+
+否则调用站会转化为在内联缓存中使用线性搜索，类似于 JIT 模式下使用的一种。(参考 [ICCallThroughCodeStub](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/stub_code_x64.cc#L3028) [RawICData](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/raw_object.h#L1853) 和 [DRT_MegamorphicCacheMissHandler](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/runtime_entry.cc#L1526))
+
+![](https://mrale.ph/dartvm/images/aot-ic-linear.png)
+
+最终，如果线性检查数量的增长超过阈值，那么调用站会切换到使用一种字典类似的数据结构。(参考 [MegamorphicCallStub](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/stub_code_x64.cc#L2913), [RawMegamorphicCache](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/raw_object.h#L1891) and [DRT_MegamorphicCacheMissHandler](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/runtime_entry.cc#L1526))
+
+![](https://mrale.ph/dartvm/images/aot-ic-dictionary.png)
+
+# 运行时系统
+
+> 这部分下次会写
+
+# 对象模型
 
 
 
