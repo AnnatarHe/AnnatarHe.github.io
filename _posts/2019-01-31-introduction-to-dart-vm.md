@@ -47,7 +47,7 @@ Dart VM 有多种执行你的代码的方式，例如：
 * 一条一同线程在同一时刻只能进入一块分区。如果想要进入其他分区，需要先从当前分区退出。
 * 独立分区在同一时刻只能和一条 *mutator* 线程产生联系。 Mutator 线程是一个执行 Dart 代码和使用虚拟机开放的 C 接口的线程。
 
-然而同样的一条操作系统线程可以先进入一个分区，执行 Dart 代码，离开当前分区再进入另一个分区。通过不同的操作系统线程进入分区，执行 Dart 代码来替代掉。而不是同时。 // TODO
+然而同样的一条操作系统线程可以先进入一个分区，执行 Dart 代码，离开当前分区再进入另一个分区。另外不同的操作系统线程可以进入分区，在其中执行 Dart 代码, 而不是同步的。
 
 在分区中的一条 mutator 线程可以连接到多个辅助线程上，例如：
 
@@ -55,7 +55,7 @@ Dart VM 有多种执行你的代码的方式，例如：
 * GC 清理线程
 * 并发的 GC 标记线程
 
-虚拟机内部使用线程池([ThreadPool](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/thread_pool.h#L14))去管理系统线程, 代码被 [ThreadPool::Task](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/thread_pool.h#L17) 这样的概念所结构化，而不是一条系统线程。例如：并不是从一条线程中 spawn 出一条去执行后台清理工作， 而是在 GC VM 发布一条 [SweeperTask](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/heap/sweeper.cc#L100) 任务到全局 VM 线程池，然后线程池选一个空闲线程，或者是 spawn 一条新的线程。 相似的是对独立消息处理的事件循环的默认实现并没有真的 spawn 一条新的事件循环，而是发一条 [MessageHandlerTask](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/message_handler.cc#L19) 到线程池，无论新消息什么时候到达 // TODO
+虚拟机内部使用线程池([ThreadPool](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/thread_pool.h#L14))去管理系统线程, 代码被 [ThreadPool::Task](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/thread_pool.h#L17) 这样的概念所结构化，而不是一条系统线程。例如：并不是从一条线程中 spawn 出一条去执行后台清理工作， 而是在 GC VM 发布一条 [SweeperTask](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/heap/sweeper.cc#L100) 任务到全局 VM 线程池，然后线程池选一个空闲线程，或者是 spawn 一条新的线程。 相似的是对独立消息处理的事件循环的默认实现并没有真的 spawn 一条新的事件循环，而是发一条 [MessageHandlerTask](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/message_handler.cc#L19) 到线程池，无论新消息什么时候到达
 
 > 源码导读： Class [Isolate](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/isolate.h#L151) 代表一个单独做用户，Class [Heap](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/heap/heap.h#L28) —— 作用域的堆. Class [Thread](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/thread.h#L204) 解释了线程挂载到独立作用域中它们的状态联系。需要注意的是 **Thread** 这个名字有时候可能会有些困惑，由于所有的系统线程都是作为 mutator 挂载到同一个作用域中的，它会重复使用同一个线程实例。 可以查看 [Dart_RunLoop](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/dart_api_impl.cc#L1586) 和 [MessageHandler](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/message_handler.h#L17) 了解独立作用于消息传递的默认实现
 
