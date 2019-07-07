@@ -27,7 +27,7 @@ Dart VM 是一个可以原生执行 Dart 代码的组件集合。主要包括以
 
 "Dart VM" 这个名字有些历史。从某种意义上来说, Dart VM 是一个虚拟机, 它提供一个高级语言的运行环境, 然而这并不意味着在执行 Dart 代码时 Dart 总是被解释或者 JIT 编译过的。例如，Dart 代码可以在 Dart VM AOT 过程中直接被编译成机器码，然后被放到简化版的 Dart VM 中执行，这被称为 *编译前运行时*, 这也就不包含任何编译器组件， 这也使得它有能力异步加载 Dart 源码。
 
-## Dart VM 是如何运行你的代码？
+# Dart VM 是如何运行你的代码？
 
 Dart VM 有多种执行你的代码的方式，例如：
 
@@ -59,7 +59,7 @@ Dart VM 有多种执行你的代码的方式，例如：
 
 > 源码导读： Class [Isolate](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/isolate.h#L151) 代表一个单独做用户，Class [Heap](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/heap/heap.h#L28) —— 作用域的堆. Class [Thread](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/thread.h#L204) 解释了线程挂载到独立作用域中它们的状态联系。需要注意的是 **Thread** 这个名字有时候可能会有些困惑，由于所有的系统线程都是作为 mutator 挂载到同一个作用域中的，它会重复使用同一个线程实例。 可以查看 [Dart_RunLoop](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/dart_api_impl.cc#L1586) 和 [MessageHandler](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/message_handler.h#L17) 了解独立作用于消息传递的默认实现
 
-## 1. 源码 JIT 运行
+## 源码 JIT 运行
 
 这个部分会试着解释当你试着从命令行执行 Dart 代码发生的全过程：
 
@@ -228,7 +228,7 @@ VM 保障编译器的专业预测用以下两种方式：
 
 > 试一试：参数 --trace-deoptimization 可以让 VM 打印出每个负优化出现的位置及原因的信息. --trace-deoptimization-verbose 在负优化发生的时候在每个负优化指示的地方让 VM 打印出一条线
 
-### 从快照中运行
+## 从快照中运行
 
 VM 可以序列化 isolate 的堆或驻留在堆中更加精确的对象图到一个二进制的 *快照(snapshot)* 中。快照随后可以被用来在启动 VM 独立域的时候重新创建相同的状态。
 
@@ -244,7 +244,7 @@ VM 可以序列化 isolate 的堆或驻留在堆中更加精确的对象图到�
 
 > 源码导读：[runtime/vm/clustered_snapshot.cc](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/clustered_snapshot.cc)处理快照的序列化和反序列化。*Dart_CreateXyzSnapshot[AsAssembly]* API 家族负责写出堆快照 (例如： [Dart_CreateAppJITSnapshotAsBlobs](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/dart_api_impl.cc#L6238) 和 [Dart_CreateAppAOTSnapshotAsAssembly](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/dart_api_impl.cc#L5986))。另一方面 [Dart_CreateIsolate](https://github.com/dart-lang/sdk/blob/cb6127570889bed147cbe6292cb2c0ba35271d58/runtime/vm/dart_api_impl.cc#L1166) 可以从快照中拿取数据启动独立域(isolate)
 
-### 从 AppJIT 中启动
+## 从 AppJIT 中启动
 
 AppJIT 快照 是用来缓解大型 Dart 项目的 JIT 启动时间的问题，像是 *dartanalyzer* 或者 *dart2js*. 当这些工具在小型项目中使用时，它的真正执行时间和 VM 编译 JIT 的时间是一样长的。
 
@@ -271,7 +271,7 @@ Compiled 7,359,592 characters Dart to 10,620 characters JavaScript in 0.73 secon
 Dart file (hello.dart) compiled to JavaScript: hello.js
 {% endhighlight %}
 
-### 从 AppAOT 快照中启动
+## 从 AppAOT 快照中启动
 
 AOT 快照最初的设计是因为平台上实现 JIT 编译是不可能的，但是它可以用在那些情况中 —— 快速启动并且能够忍受潜在的性能惩罚锁带来的性能一致性。
 
