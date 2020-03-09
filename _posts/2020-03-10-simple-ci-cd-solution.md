@@ -16,13 +16,7 @@ tags: code cd devops travis
 
 以下是一个穷人版的方案，如果你能理解下图，那么可以关闭这篇文章了。
 
-```mermaid
-sequenceDiagram
-  github ->> travis: push event
-  travis ->> server: call deploy
-  note over travis: test, build, push
-  server ->> server: restart
-```
+[![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIGdpdGh1YiAtPj4gdHJhdmlzOiBwdXNoIGV2ZW50XG4gIHRyYXZpcyAtPj4gc2VydmVyOiBjYWxsIGRlcGxveVxuICBub3RlIG92ZXIgdHJhdmlzOiB0ZXN0LCBidWlsZCwgcHVzaFxuICBzZXJ2ZXIgLT4-IHNlcnZlcjogcmVzdGFydCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIGdpdGh1YiAtPj4gdHJhdmlzOiBwdXNoIGV2ZW50XG4gIHRyYXZpcyAtPj4gc2VydmVyOiBjYWxsIGRlcGxveVxuICBub3RlIG92ZXIgdHJhdmlzOiB0ZXN0LCBidWlsZCwgcHVzaFxuICBzZXJ2ZXIgLT4-IHNlcnZlcjogcmVzdGFydCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
 
 原理上是通过两个关键的免费服务：[travis ci](http://travis-ci.org) 和 [aliyun 容器镜像](https://www.aliyun.com/product/acr) 来实现。
 
@@ -106,6 +100,8 @@ deploy:
 ## Server
 
 目标服务器需要创建一个 ci 账户用以给打包机登陆，还需要提供一个有内容的执行脚本完成服务的重启。
+
+![carbon2.png](https://i.loli.net/2020/03/10/8BjZt6lTL1UaeyX.png)
 
 ```fish
 #!/usr/bin/fish
