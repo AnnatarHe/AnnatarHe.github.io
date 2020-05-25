@@ -3,7 +3,7 @@ layout: post
 title: About
 ---
 
-## Introduce
+## Hello
 
 写JS的Vim教徒。
 
@@ -13,9 +13,9 @@ title: About
 
 现在在上海搬砖，欢迎来找我玩。
 
-## Contact me
+## 联系方式
 
-联系方式：
+全网统一 `AnnatarHe`(除了 P 站)
 
 * Email： iamhele1994@gmail.com
 * Github: [AnnatarHe](https://github.com/AnnatarHe)
