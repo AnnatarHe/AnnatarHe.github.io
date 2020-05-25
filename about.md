@@ -7,9 +7,9 @@ title: About
 
 写JS的Vim教徒。
 
-偶尔写点儿东西装个逼。
+有时候也写点儿 Golang。nodejs 坚定反对者。
 
-最骄傲的就是19岁的时候开始学写代码。
+最骄傲的就是 19 岁的时候开始学写代码。
 
 现在在上海搬砖，欢迎来找我玩。
 
@@ -20,9 +20,7 @@ title: About
 * Email： iamhele1994@gmail.com
 * Github: [AnnatarHe](https://github.com/AnnatarHe)
 * Weibo: [AnnatarHe](http://weibo.com/AnnatarHe/home)
-* 知乎: [AnnatarHe](https://www.zhihu.com/people/AnnatarHe)
+* BiliBili: [AnnatarHe](https://space.bilibili.com/173440264)
 
 ## 谢谢
-
-*2017年01月21日*
 
