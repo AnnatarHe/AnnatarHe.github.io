@@ -5,11 +5,11 @@ title: About
 
 ## Hello
 
-写JS的Vim教徒。
+写 JavaScript/Golang 的 Vim 教徒。
 
-有时候也写点儿 Golang。nodejs 坚定反对者。
+nodejs 坚定反对者。
 
-最骄傲的就是 19 岁的时候开始学写代码。
+最骄傲的就是 19 岁的时候开始写代码。
 
 现在在上海搬砖，欢迎来找我玩。
 
@@ -24,3 +24,6 @@ title: About
 
 ## 谢谢
 
+<div style="display: hidden;">
+  [5L2g5aSn5qaC5Lya5b+Y6K6w5oiR5ZCn](aHR0cHM6Ly9pLmZhbnlpamluZy5sb3Zl)
+</div>
