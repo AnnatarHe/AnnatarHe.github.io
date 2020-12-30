@@ -23,7 +23,3 @@ nodejs 坚定反对者。
 * BiliBili: [AnnatarHe](https://space.bilibili.com/173440264)
 
 ## 谢谢
-
-<div style="display: hidden;">
-  [5L2g5aSn5qaC5Lya5b+Y6K6w5oiR5ZCn](aHR0cHM6Ly9pLmZhbnlpamluZy5sb3Zl)
-</div>
