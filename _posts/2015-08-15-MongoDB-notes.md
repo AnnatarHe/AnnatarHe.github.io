@@ -82,7 +82,7 @@ db.collection.insert(
 )
 {% endhighlight %}
 
-![crud-insert-stages]({{ site.cdn }}/crud-insert-stages.png-copyrightDB)
+![crud-insert-stages]({{ site.cdn }}/crud-insert-stages.png)
 
 这里的执行环境是`JavaScript`哦，所以呢，可以使用`For`循环，那么，做点儿什么吧！
 
@@ -119,7 +119,7 @@ db.users.find(
 .limit(5)
 {% endhighlight %}
 
-![crud-query-stages]({{ site.cdn }}/crud-query-stages.png-copyrightDB)
+![crud-query-stages]({{ site.cdn }}/crud-query-stages.png)
 
 ### 全文查询
 
@@ -213,7 +213,7 @@ db.users.remove(
 )
 {% endhighlight %}
 
-![crud-annotated-mongodb-remove]({{ site.cdn }}/crud-annotated-mongodb-remove.png-copyrightDB)
+![crud-annotated-mongodb-remove]({{ site.cdn }}/crud-annotated-mongodb-remove.png)
 
 ## Drop
 

@@ -52,7 +52,7 @@ tags: Athena full-stack code
 
 爬虫模块目前来说已经基本搞定了, 短期内应该不会做大的改变了。
 
-![crawler]({{ site.cdn }}/athena-crawler.png-copyrightDB)
+![crawler]({{ site.cdn }}/athena-crawler.png)
 
 ## Server
 
@@ -149,7 +149,7 @@ ios 是通过写 build script 来生成最新的 graphql 请求文件。而 Andr
 
 由于我对之前组里的项目管理特别的崇拜，所以觉得应该控制一下时间，更好地规划项目，更合理地排期。所以用 Teambition 来给自己排了一些计划。
 
-![tasks]({{ site.cdn }}/athena-tasks.png-copyrightDB)
+![tasks]({{ site.cdn }}/athena-tasks.png)
 
 ## 文档
 

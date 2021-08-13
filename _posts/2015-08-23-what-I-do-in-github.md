@@ -84,7 +84,7 @@ tags: life tools
 
 ## And then
 
-![Contributions]({{ site.cdn }}/Contributions.png-copyrightDB)
+![Contributions]({{ site.cdn }}/Contributions.png)
 
 以后会一直这么坚持下去。
 

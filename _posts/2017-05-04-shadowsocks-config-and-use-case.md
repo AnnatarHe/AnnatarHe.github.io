@@ -14,7 +14,7 @@ tags: gfw life shadowsocks socks
 
 ## 架构
 
-![shadow-socks-use-arch]({{ site.cdn }}/shadowsocks-use-1.jpg-copyrightDB)
+![shadow-socks-use-arch]({{ site.cdn }}/shadowsocks-use-1.jpg)
 
 我想了一段时间才想通整个流程是怎么走的。
 

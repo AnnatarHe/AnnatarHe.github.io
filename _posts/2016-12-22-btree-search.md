@@ -24,7 +24,7 @@ nodeA := Node{data: "a", left: &nodeB, right: &nodeC}
 
 图例如下:
 
-![btree]({{ site.cdn }}/btree-02.png-copyrightDB)
+![btree]({{ site.cdn }}/btree-02.png)
 
 结果应该是分别是：
 
