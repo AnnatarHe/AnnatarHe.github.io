@@ -3,8 +3,6 @@ layout: post
 title: 2023 年度阅读部分
 tags: review 2023 reading
 ---
-# 2023 - the reading part of this year
-
 作为一个阅读博主，今年不得不整理一下一年的阅读轨迹，做一些推荐啊什么的。
 
 今年实际上只看了 10 本，其中一本还在艰难进行中，一个一个说吧：
