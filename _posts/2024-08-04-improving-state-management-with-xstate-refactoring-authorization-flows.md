@@ -8,7 +8,7 @@ Hi folks,
 
 I haven’t written any tech articles for a long time, but this time, I think I have a valuable design that should be shared.
 
-Recently, I refactored the authorization page of ClippingKK. It has become more elegant and maintainable.
+Recently, I refactored the authorization page of [ClippingKK](https://clippingkk.annatarhe.com/auth/auth-v4). It has become more elegant and maintainable.
 
 Let's show how to design a small but complex state handling system.
 
@@ -16,7 +16,7 @@ TL;DR:
 
 [https://stately.ai/registry/editor/5a0bce07-7238-4761-8553-d6be523d9ef1?machineId=7bdb6037-ff88-4b06-9bdb-c1cbd090e897](https://stately.ai/registry/editor/5a0bce07-7238-4761-8553-d6be523d9ef1?machineId=7bdb6037-ff88-4b06-9bdb-c1cbd090e897)
 
-<iframe src="https://stately.ai/registry/editor/5a0bce07-7238-4761-8553-d6be523d9ef1?machineId=7bdb6037-ff88-4b06-9bdb-c1cbd090e897" width="100%" height="315px">
+<iframe src="https://stately.ai/registry/editor/5a0bce07-7238-4761-8553-d6be523d9ef1?machineId=7bdb6037-ff88-4b06-9bdb-c1cbd090e897" width="100%" height="515px">
 </iframe>
 
 Let's break it down step by step:
@@ -74,6 +74,8 @@ If the user fills in the password or one-time passcode and the Turnstile code is
 After this refactoring, Xstate shows its power. It can split a complex question into several maintainable diagrams and split states into individual steps.
 
 Xstate itself might be complex enough, but I would say it’s worth it. It can solve really complex state conflicts in an easy way.
+
+[https://github.com/clippingkk/web/blob/master/src/app/auth/auth-v4/auth.state.ts](https://github.com/clippingkk/web/blob/master/src/app/auth/auth-v4/auth.state.ts)
 
 ## Suggestions for Xstate
 
