@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Improving State Management with Xstate: Refactoring Authorization Flows
+title: Improving State Management with Xstate\: Refactoring Authorization Flows
 tags: fe xstate
 ---
 
