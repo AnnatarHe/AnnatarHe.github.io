@@ -1,0 +1,81 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 backdrop-blur-md bg-black/80 border-b border-gray-800">
+  <nav class="max-w-6xl mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-8">
+        <a href="/" class="text-xl font-bold text-white hover:text-primary transition-colors">
+          AnnatarHe
+        </a>
+        <div class="hidden md:flex space-x-6">
+          <a 
+            href="/" 
+            class={`text-gray-300 hover:text-white transition-colors ${currentPath === '/' ? 'text-primary' : ''}`}
+          >
+            Home
+          </a>
+          <a 
+            href="/posts" 
+            class={`text-gray-300 hover:text-white transition-colors ${currentPath.startsWith('/posts') ? 'text-primary' : ''}`}
+          >
+            Posts
+          </a>
+          <a 
+            href="/about" 
+            class={`text-gray-300 hover:text-white transition-colors ${currentPath === '/about' ? 'text-primary' : ''}`}
+          >
+            About
+          </a>
+        </div>
+      </div>
+      
+      <!-- Search button -->
+      <button 
+        id="search-button"
+        class="p-2 text-gray-300 hover:text-white transition-colors"
+        aria-label="Search"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </button>
+      
+      <!-- Mobile menu button -->
+      <button 
+        id="mobile-menu-button"
+        class="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
+        aria-label="Toggle menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden mt-4 space-y-2">
+      <a href="/" class="block py-2 text-gray-300 hover:text-white transition-colors">Home</a>
+      <a href="/posts" class="block py-2 text-gray-300 hover:text-white transition-colors">Posts</a>
+      <a href="/about" class="block py-2 text-gray-300 hover:text-white transition-colors">About</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  mobileMenuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+  
+  // Search functionality placeholder
+  const searchButton = document.getElementById('search-button');
+  searchButton?.addEventListener('click', () => {
+    // TODO: Implement search modal
+    console.log('Search clicked');
+  });
+</script>

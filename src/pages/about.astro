@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageLayout from '../components/PageLayout.astro';
+---
+
+<Layout title="About - AnnatarHe's Blog" description="Learn more about AnnatarHe">
+  <PageLayout>
+    <div class="max-w-4xl mx-auto px-4 py-16">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-white bg-clip-text text-transparent">
+          About Me
+        </h1>
+        <p class="text-xl text-gray-300">
+          Software Engineer, Blogger, and Technology Enthusiast
+        </p>
+      </div>
+
+      <div class="prose prose-lg prose-invert max-w-none">
+        <div class="text-center mb-8">
+          <img 
+            src="https://github.com/AnnatarHe.png" 
+            alt="AnnatarHe" 
+            class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-primary"
+          />
+        </div>
+
+        <p class="text-lg leading-relaxed mb-6">
+          Hi there! I'm AnnatarHe, a passionate software engineer and technology enthusiast. 
+          I love exploring new technologies, building meaningful projects, and sharing my knowledge through writing.
+        </p>
+
+        <h2 class="text-2xl font-bold mb-4 text-white">What I Do</h2>
+        
+        <p class="mb-4">
+          I primarily work with modern web technologies, focusing on creating elegant and efficient solutions. 
+          My interests span across various domains including:
+        </p>
+        
+        <ul class="list-disc pl-6 mb-6 space-y-2">
+          <li>Frontend Development (React, Vue, Astro)</li>
+          <li>Backend Development (Node.js, Go, Python)</li>
+          <li>State Management (XState, Redux)</li>
+          <li>DevOps and Infrastructure</li>
+          <li>Blockchain and Cryptocurrency</li>
+          <li>Reading and Literature</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mb-4 text-white">Projects</h2>
+        
+        <p class="mb-4">
+          I maintain several open-source projects and personal tools:
+        </p>
+        
+        <ul class="list-disc pl-6 mb-6 space-y-2">
+          <li><strong>ClippingKK</strong> - A book clipping and reading management platform</li>
+          <li><strong>ShellTime.xyz</strong> - Command line tracking service</li>
+          <li><strong>Various blog posts</strong> - Technical articles and personal reflections</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mb-4 text-white">Contact</h2>
+        
+        <p class="mb-4">
+          Feel free to reach out if you want to discuss technology, collaborate on projects, 
+          or just have a friendly chat:
+        </p>
+        
+        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+          <a 
+            href="https://github.com/AnnatarHe" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+          
+          <a 
+            href="mailto:iamhele1994@gmail.com"
+            class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            Email
+          </a>
+        </div>
+
+        <h2 class="text-2xl font-bold mb-4 text-white mt-8">This Blog</h2>
+        
+        <p class="mb-4">
+          This blog is built with <a href="https://astro.build" class="text-primary hover:text-white">Astro</a> 
+          and styled with <a href="https://tailwindcss.com" class="text-primary hover:text-white">Tailwind CSS</a>. 
+          It's deployed on GitHub Pages and the source code is available on GitHub.
+        </p>
+        
+        <p>
+          I write about technology, programming experiences, book reviews, and personal reflections. 
+          The content is a mix of technical articles and more personal posts about life and learning.
+        </p>
+      </div>
+    </div>
+  </PageLayout>
+</Layout>

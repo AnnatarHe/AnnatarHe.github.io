@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageLayout from '../components/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Get the latest 5 posts for the homepage
+const allPosts = await getCollection('posts');
+const sortedPosts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => {
+    const dateA = a.data.date || new Date(a.slug.slice(0, 10));
+    const dateB = b.data.date || new Date(b.slug.slice(0, 10));
+    return dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, 5);
+---
+
+<Layout title="AnnatarHe's Blog" description="Personal blog by AnnatarHe - thoughts on technology, programming, and life">
+  <PageLayout>
+    <!-- Hero Section -->
+    <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+      <!-- Background with blur effect -->
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
+      <div class="absolute inset-0 backdrop-blur-sm"></div>
+      
+      <!-- Content -->
+      <div class="relative z-10 text-center px-4">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-white bg-clip-text text-transparent animate-fade-in">
+          AnnatarHe's Blog
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 mb-8 animate-slide-in font-chinese">
+          技术、思考与生活的记录
+        </p>
+        <div class="space-x-4 animate-move-up">
+          <a 
+            href="/posts" 
+            class="inline-block bg-primary text-black px-6 py-3 rounded-lg font-semibold hover:bg-white transition-colors transform hover:scale-105"
+          >
+            Browse Posts
+          </a>
+          <a 
+            href="/about" 
+            class="inline-block border border-primary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-primary hover:text-black transition-all transform hover:scale-105"
+          >
+            About Me
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Posts Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+      <h2 class="text-3xl font-bold mb-8 text-center">Recent Posts</h2>
+      <div class="grid gap-6 md:gap-8">
+        {sortedPosts.map((post) => {
+          const postDate = post.data.date || new Date(post.slug.slice(0, 10));
+          return (
+            <article class="group border border-gray-800 rounded-lg p-6 hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 transform hover:scale-[1.02]">
+              <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-white group-hover:text-primary transition-colors mb-2 md:mb-0">
+                  <a href={`/posts/${post.slug}`} class="hover:underline">
+                    {post.data.title}
+                  </a>
+                </h3>
+                <time class="text-gray-400 text-sm">
+                  {postDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+              </div>
+              {post.data.tags && (
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.split(' ').filter(tag => tag.trim()).map((tag) => (
+                    <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full">
+                      {tag.trim()}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <a 
+                href={`/posts/${post.slug}`}
+                class="inline-flex items-center text-primary hover:text-white transition-colors"
+              >
+                Read more
+                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </a>
+            </article>
+          );
+        })}
+      </div>
+      
+      {sortedPosts.length >= 5 && (
+        <div class="text-center mt-12">
+          <a 
+            href="/posts" 
+            class="inline-block bg-gray-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors transform hover:scale-105"
+          >
+            View All Posts
+          </a>
+        </div>
+      )}
+    </section>
+  </PageLayout>
+</Layout>

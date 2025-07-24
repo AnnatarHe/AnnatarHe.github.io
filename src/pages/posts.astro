@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageLayout from '../components/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts');
+const sortedPosts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => {
+    const dateA = a.data.date || new Date(a.slug.slice(0, 10));
+    const dateB = b.data.date || new Date(b.slug.slice(0, 10));
+    return dateB.getTime() - dateA.getTime();
+  });
+
+// Simple pagination (can be enhanced later)
+const postsPerPage = 12;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+const startIndex = (currentPage - 1) * postsPerPage;
+const endIndex = startIndex + postsPerPage;
+const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
+const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+---
+
+<Layout title="All Posts - AnnatarHe's Blog" description="Browse all blog posts by AnnatarHe">
+  <PageLayout>
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-white bg-clip-text text-transparent">
+          All Posts
+        </h1>
+        <p class="text-gray-300 text-lg">
+          {sortedPosts.length} posts about technology, life, and everything in between
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:gap-8">
+        {paginatedPosts.map((post) => {
+          const postDate = post.data.date || new Date(post.slug.slice(0, 10));
+          return (
+            <article class="group border border-gray-800 rounded-lg p-6 hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 transform hover:scale-[1.02]">
+              <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                <h2 class="text-xl font-semibold text-white group-hover:text-primary transition-colors mb-2 md:mb-0">
+                  <a href={`/posts/${post.slug}`} class="hover:underline">
+                    {post.data.title}
+                  </a>
+                </h2>
+                <time class="text-gray-400 text-sm">
+                  {postDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+              </div>
+              
+              {post.data.tags && (
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.split(' ').filter(tag => tag.trim()).map((tag) => (
+                    <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full hover:bg-primary hover:text-black transition-colors">
+                      {tag.trim()}
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              <a 
+                href={`/posts/${post.slug}`}
+                class="inline-flex items-center text-primary hover:text-white transition-colors"
+              >
+                Read more
+                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </a>
+            </article>
+          );
+        })}
+      </div>
+
+      <!-- Pagination -->
+      {totalPages > 1 && (
+        <div class="flex justify-center items-center space-x-4 mt-12">
+          {currentPage > 1 && (
+            <a 
+              href={`/posts?page=${currentPage - 1}`}
+              class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              Previous
+            </a>
+          )}
+          
+          <span class="text-gray-300">
+            Page {currentPage} of {totalPages}
+          </span>
+          
+          {currentPage < totalPages && (
+            <a 
+              href={`/posts?page=${currentPage + 1}`}
+              class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              Next
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </PageLayout>
+</Layout>
