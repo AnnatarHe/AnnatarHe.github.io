@@ -2,6 +2,15 @@
 import Layout from '../../layouts/Layout.astro';
 import PageLayout from '../../components/PageLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import A from '../../components/markdown/A.astro';
+import Heading1 from '../../components/markdown/Heading1.astro';
+import Heading2 from '../../components/markdown/Heading2.astro';
+import Heading3 from '../../components/markdown/Heading3.astro';
+import Heading4 from '../../components/markdown/Heading4.astro';
+import Heading5 from '../../components/markdown/Heading5.astro';
+import Heading6 from '../../components/markdown/Heading6.astro';
+import Hr from '../../components/markdown/Hr.astro';
+import P from '../../components/markdown/P.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -19,8 +28,8 @@ const { Content } = await post.render();
 const postDate = post.data.date || new Date(post.slug.slice(0, 10));
 ---
 
-<Layout 
-  title={`${post.data.title} - AnnatarHe's Blog`} 
+<Layout
+  title={`${post.data.title} - AnnatarHe's Blog`}
   description={`${post.data.title} - A blog post by AnnatarHe`}
   type="article"
 >
@@ -31,7 +40,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
         <h1 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-white bg-clip-text text-transparent">
           {post.data.title}
         </h1>
-        
+
         <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 text-gray-400">
           <time class="flex items-center">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,7 +52,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
               day: 'numeric'
             })}
           </time>
-          
+
           {post.data.tags && (
             <div class="flex flex-wrap gap-2 justify-center">
               {post.data.tags.split(' ').filter(tag => tag.trim()).map((tag) => (
@@ -58,14 +67,24 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
 
       <!-- Post Content -->
       <div class="prose prose-lg prose-invert max-w-none">
-        <Content />
+        <Content components={{
+          a: A,
+          h1: Heading1,
+          h2: Heading2,
+          h3: Heading3,
+          h4: Heading4,
+          h5: Heading5,
+          h6: Heading6,
+          hr: Hr,
+          p: P,
+        }} />
       </div>
 
       <!-- Post Footer -->
       <footer class="mt-16 pt-8 border-t border-gray-800">
         <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <a 
-            href="/posts" 
+          <a
+            href="/posts"
             class="inline-flex items-center text-primary hover:text-white transition-colors"
           >
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,10 +92,10 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
             </svg>
             Back to all posts
           </a>
-          
+
           <!-- Share buttons -->
           <div class="flex space-x-4">
-            <a 
+            <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(Astro.url.href)}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -87,8 +106,8 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
                 <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
               </svg>
             </a>
-            
-            <a 
+
+            <a
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -108,81 +127,145 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
 
 <style>
   .prose {
-    @apply text-gray-100;
+    @apply text-gray-100 leading-loose;
+    text-rendering: optimizeLegibility;
+    word-break: break-word;
   }
-  
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6 {
-    @apply text-white font-bold mt-8 mb-4;
+
+  /* Heading styles handled by components */
+
+  /* Paragraph styles handled by P component */
+
+  /* Link styles handled by A component */
+
+  .prose strong {
+    @apply font-bold text-white;
   }
-  
-  .prose h1 {
-    @apply text-3xl;
+
+  .prose em {
+    @apply italic text-gray-200;
   }
-  
-  .prose h2 {
-    @apply text-2xl;
-  }
-  
-  .prose h3 {
-    @apply text-xl;
-  }
-  
-  .prose p {
-    @apply mb-4 leading-relaxed;
-  }
-  
-  .prose a {
-    @apply text-primary hover:text-white transition-colors underline;
-  }
-  
+
   .prose code {
-    @apply bg-gray-800 text-primary px-2 py-1 rounded text-sm font-mono;
+    @apply bg-gray-800/50 text-primary px-2 py-0.5 rounded text-sm font-mono border border-gray-700/50;
   }
-  
+
   .prose pre {
-    @apply bg-gray-900 border border-gray-700 rounded-lg p-4 overflow-x-auto;
+    @apply bg-gray-900/50 border border-gray-700 rounded-lg p-4 overflow-x-auto my-6 backdrop-blur-sm;
   }
-  
+
   .prose pre code {
-    @apply bg-transparent p-0 text-gray-100;
+    @apply bg-transparent p-0 text-gray-100 border-0;
   }
-  
+
   .prose blockquote {
-    @apply border-l-4 border-primary bg-gray-900 pl-6 py-4 my-6 italic;
+    @apply border-l-4 border-primary bg-gray-900/50 pl-6 pr-4 py-4 my-6 italic text-gray-200 backdrop-blur-sm;
   }
-  
+
+  .prose blockquote p:last-child {
+    @apply mb-0;
+  }
+
   .prose ul,
   .prose ol {
-    @apply mb-4 pl-6;
+    @apply mb-6 pl-6 space-y-2;
   }
-  
+
+  .prose ul {
+    @apply list-disc;
+  }
+
+  .prose ol {
+    @apply list-decimal;
+  }
+
   .prose li {
+    @apply mb-2 pl-2;
+  }
+
+  .prose li > p {
     @apply mb-2;
   }
-  
+
+  .prose li > ul,
+  .prose li > ol {
+    @apply mt-2 mb-2;
+  }
+
   .prose img {
-    @apply rounded-lg shadow-lg mx-auto;
+    @apply rounded-lg shadow-2xl mx-auto my-8 max-w-full h-auto;
   }
-  
+
+  .prose figure {
+    @apply my-8;
+  }
+
+  .prose figcaption {
+    @apply text-center text-sm text-gray-400 mt-2;
+  }
+
   .prose table {
-    @apply border-collapse border border-gray-700 w-full my-6;
+    @apply border-collapse w-full my-6 overflow-x-auto block;
   }
-  
+
+  .prose table-wrapper {
+    @apply overflow-x-auto;
+  }
+
   .prose th,
   .prose td {
-    @apply border border-gray-700 px-4 py-2;
+    @apply border border-gray-700 px-4 py-2 text-left;
   }
-  
+
   .prose th {
-    @apply bg-gray-800 font-semibold;
+    @apply bg-gray-800/50 font-semibold text-white;
   }
-  
+
+  .prose tr:nth-child(even) {
+    @apply bg-gray-900/30;
+  }
+
+  /* HR styles handled by Hr component */
+
   .prose iframe {
-    @apply rounded-lg my-6;
+    @apply rounded-lg my-6 w-full;
+  }
+
+  .prose video {
+    @apply rounded-lg my-8 max-w-full h-auto;
+  }
+
+  .prose kbd {
+    @apply bg-gray-800 border border-gray-700 rounded px-2 py-1 text-sm font-mono text-gray-200;
+  }
+
+  .prose mark {
+    @apply bg-primary/20 text-white px-1 rounded;
+  }
+
+  .prose del {
+    @apply line-through text-gray-500;
+  }
+
+  .prose details {
+    @apply my-4 p-4 bg-gray-900/50 rounded-lg border border-gray-700;
+  }
+
+  .prose summary {
+    @apply cursor-pointer font-semibold text-white hover:text-primary transition-colors;
+  }
+
+  .prose details[open] summary {
+    @apply mb-2;
+  }
+
+  @media (max-width: 640px) {
+    .prose {
+      @apply text-base;
+    }
+
+    .prose pre {
+      @apply p-3 text-sm;
+    }
   }
 </style>
