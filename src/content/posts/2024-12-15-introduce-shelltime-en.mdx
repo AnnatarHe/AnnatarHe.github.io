@@ -1,0 +1,63 @@
+---
+title: "ShellTime.xyz: The Command Line Tracking Service You Need"
+tags: shelltime cli productivity
+date: 2024-12-15
+draft: false
+---
+
+Have you ever wondered how many commands you've typed in your terminal? How many times you've run `npm`? What commands you used last week? Or if there's room for improvement?
+
+ShellTime.xyz is here!
+
+By injecting hooks into your shell, ShellTime.xyz records and collects your command history. You can easily review your recent commands on our website, analyze your productivity patterns, and dive into comprehensive statistics.
+
+## Weekly Report
+
+Every Monday, we'll send you a report summarizing your activity from the past week, including your most-used commands, peak productivity times, supported devices, most frequently used shells, and more.
+
+Of course, we'll continue adding new reports and insights in the future.
+
+## Multi-Device Support
+
+If you're like me, managing multiple devices—say, two Macs and ten servers—it's easy to lose track of what was done on each machine. With ShellTime.xyz, you can quickly view what you've done on any specific device over time.
+
+## Privacy
+
+We understand that command execution is private, especially when it involves sensitive data like cookies or authorization tokens in `curl` commands. Don't worry—ShellTime.xyz anonymizes your data on the client side before sending it to the server. Your sensitive information never leaves your machine.
+
+If you're still concerned or have better ideas for data masking, feel free to review our code or submit a pull request:
+
+[View Code on GitHub](https://github.com/malamtime/cli/blob/188619d610a1d29939f42d88700ef9a170f159a3/model/string.go#L9)
+
+## Leaderboard
+
+For those who love competition, we have a "Leaderboard" section updated daily. It shows the top command users over the past 30 days.
+
+We're not saying using more commands is better—in fact, it might indicate worse productivity—but who doesn't love stats?
+
+## Universal Account
+
+We know you're tired of remembering countless passwords and dealing with endless two-factor authentication. Don't worry—ShellTime.xyz keeps it simple. All you need is a GitHub account to log in, grab your openToken, and integrate it into your local machine. Smooth!
+
+## Tech Stack
+
+ShellTime.xyz is built with simplicity and reliability in mind:
+- **Backend**: Go + Postgres  
+- **Client**: Go + Shell hooks  
+- **Frontend**: Svelte
+
+We believe in a lean, focused stack that delivers a great experience.
+
+## Docs
+
+[Comprehensive documentation](https://shelltime.xyz/docs) is available, covering setup for Bash, Zsh, and Fish, as well as configuration options and troubleshooting.
+
+## Want to Try It?
+
+Head over to [ShellTime.xyz](https://shelltime.xyz) and start tracking your command-line productivity today!
+
+## Behind the Scenes
+
+One fun fact: Our landing page took just **30 minutes** to write, yet our client and analytics took **30 days**. The 80/20 rule in action!
+
+If you love command-line tools as much as we do, give ShellTime.xyz a try. We'd love your feedback and contributions to make it even better.
