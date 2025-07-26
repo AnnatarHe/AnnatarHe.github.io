@@ -1,0 +1,55 @@
+---
+import logo from "../../images/logo.png";
+
+export enum TwitterCardType {
+  summary = "summary",
+  summaryLargeImage = "summary_large_image",
+}
+
+type Props = {
+  title: string;
+  desc: string;
+  urlPath: string;
+  keywords?: readonly string[];
+  imageUrl?: string;
+};
+
+const { title, desc, imageUrl, urlPath, keywords = [] } = Astro.props;
+
+const url = `https://asynctalk.com${urlPath}`;
+
+const metaTitle = title + " | AsyncTalk podcast";
+
+const logoLink = imageUrl ?? logo.src;
+
+const metaKeywords = ["AsyncTalk", "podcast", "web", "frontend", ...keywords];
+---
+
+<meta property="og:url" content={url} />
+<meta property="og:type" content="article" />
+<meta property="og:title" content={metaTitle} />
+<meta property="og:image" content={logoLink} />
+<meta property="og:description" content={desc} />
+<meta property="og:site_name" content="AsyncTalk" />
+<meta
+  property="article:author"
+  content="AsyncTalk, AnnatarHe, Sleaf, Tinko, 小鹿"
+/>
+
+<meta name="description" content={desc} />
+<meta name="keyword" content={metaKeywords.join(", ")} />
+<title>{title}</title>
+
+<meta name="twitter:card" content={TwitterCardType.summaryLargeImage} />
+<meta name="twitter:site" content={"@asynctalk"} />
+<meta name="twitter:creator" content={`@asynctalk`} />
+<meta name="twitter:url" content={url} />
+<meta name="twitter:title" content={metaTitle} />
+<meta name="twitter:description" content={desc} />
+<meta name="twitter:image" content={logoLink} />
+<meta name="twitter:image:alt" content={metaTitle} />
+
+<!-- <meta property="article:published_time" content="2024-03-05T00:00:00.000Z"> -->
+<!-- <meta property="article:author" content="https://github.com/GoodBoyDigital"> -->
+<meta property="article:tag" content={metaKeywords.join(", ")} />
+<slot name="jsonld" />
