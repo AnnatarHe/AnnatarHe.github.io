@@ -37,7 +37,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
     <article class="max-w-4xl mx-auto px-4 py-16">
       <!-- Post Header -->
       <header class="mb-12 text-center">
-        <h1 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-white bg-clip-text text-transparent">
+        <h1 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-teal-400 to-white bg-clip-text text-transparent">
           {post.data.title}
         </h1>
 
@@ -56,7 +56,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
           {post.data.tags && (
             <div class="flex flex-wrap gap-2 justify-center">
               {post.data.tags.split(' ').filter(tag => tag.trim()).map((tag) => (
-                <span class="text-xs bg-gray-800 text-gray-300 px-3 py-1 rounded-full hover:bg-primary hover:text-black transition-colors">
+                <span class="text-xs bg-gray-800 text-gray-300 px-3 py-1 rounded-full hover:bg-teal-400 hover:text-black transition-colors">
                   {tag.trim()}
                 </span>
               ))}
@@ -85,7 +85,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
         <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <a
             href="/posts"
-            class="inline-flex items-center text-primary hover:text-white transition-colors"
+            class="inline-flex items-center text-teal-400 hover:text-white transition-colors"
           >
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
@@ -99,7 +99,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(Astro.url.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-gray-400 hover:text-primary transition-colors"
+              class="text-gray-400 hover:text-teal-400 transition-colors"
               aria-label="Share on Twitter"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -111,7 +111,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-gray-400 hover:text-primary transition-colors"
+              class="text-gray-400 hover:text-teal-400 transition-colors"
               aria-label="Share on LinkedIn"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -126,6 +126,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
 </Layout>
 
 <style>
+  @reference '../../styles/global.css';
   .prose {
     @apply text-gray-100 leading-loose;
     text-rendering: optimizeLegibility;
@@ -147,7 +148,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
   }
 
   .prose code {
-    @apply bg-gray-800/50 text-primary px-2 py-0.5 rounded text-sm font-mono border border-gray-700/50;
+    @apply bg-gray-800/50 text-teal-400 px-2 py-0.5 rounded text-sm font-mono border border-gray-700/50;
   }
 
   .prose pre {
@@ -159,7 +160,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
   }
 
   .prose blockquote {
-    @apply border-l-4 border-primary bg-gray-900/50 pl-6 pr-4 py-4 my-6 italic text-gray-200 backdrop-blur-sm;
+    @apply border-l-4 border-teal-400 bg-gray-900/50 pl-6 pr-4 py-4 my-6 italic text-gray-200 backdrop-blur-sm;
   }
 
   .prose blockquote p:last-child {
@@ -240,7 +241,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
   }
 
   .prose mark {
-    @apply bg-primary/20 text-white px-1 rounded;
+    @apply bg-teal-400/20 text-white px-1 rounded;
   }
 
   .prose del {
@@ -252,7 +253,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
   }
 
   .prose summary {
-    @apply cursor-pointer font-semibold text-white hover:text-primary transition-colors;
+    @apply cursor-pointer font-semibold text-white hover:text-teal-400 transition-colors;
   }
 
   .prose details[open] summary {

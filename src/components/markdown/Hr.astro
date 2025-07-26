@@ -6,18 +6,4 @@ interface Props {
 const { className } = Astro.props;
 ---
 
-<hr class={`my-8 hr rounded ${className ?? ""}`} />
-
-<style>
-  .hr {
-    height: 1px;
-    width: 100%;
-    border-top-width: 0;
-    background-image: linear-gradient(
-      to right,
-      var(--at-primary-color-light) 0%,
-      var(--at-primary-color) 50%,
-      var(--at-primary-color-light) 100%
-    );
-  }
-</style>
+<hr class={`my-8 h-px w-full border-0 bg-gradient-to-r from-teal-200 via-teal-400 to-teal-200 rounded ${className ?? ""}`} />

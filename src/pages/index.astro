@@ -34,13 +34,13 @@ const sortedPosts = allPosts
         <div class="space-x-4 animate-move-up">
           <a
             href="/posts"
-            class="inline-block bg-primary text-black px-6 py-3 rounded-lg font-semibold hover:bg-white transition-colors transform hover:scale-105"
+            class="inline-block bg-teal-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-white transition-colors transform hover:scale-105"
           >
             Browse Posts
           </a>
           <a
             href="/about"
-            class="inline-block border border-primary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-primary hover:text-black transition-all transform hover:scale-105"
+            class="inline-block border border-teal-400 text-teal-400 px-6 py-3 rounded-lg font-semibold hover:bg-teal-400 hover:text-black transition-all transform hover:scale-105"
           >
             About Me
           </a>
@@ -55,9 +55,9 @@ const sortedPosts = allPosts
         {sortedPosts.map((post) => {
           const postDate = post.data.date || new Date(post.slug.slice(0, 10));
           return (
-            <article class="group border border-gray-800 rounded-lg p-6 hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/20 transform hover:scale-[1.02]">
+            <article class="group border border-gray-800 rounded-lg p-6 hover:border-teal-400 transition-all hover:shadow-lg hover:shadow-teal-400/20 transform hover:scale-[1.02]">
               <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                <h3 class="text-xl font-semibold text-white group-hover:text-primary transition-colors mb-2 md:mb-0">
+                <h3 class="text-xl font-semibold text-white group-hover:text-teal-400 transition-colors mb-2 md:mb-0">
                   <a href={`/posts/${post.slug}`} class="hover:underline">
                     {post.data.title}
                   </a>
@@ -81,7 +81,7 @@ const sortedPosts = allPosts
               )}
               <a
                 href={`/posts/${post.slug}`}
-                class="inline-flex items-center text-primary hover:text-white transition-colors"
+                class="inline-flex items-center text-teal-400 hover:text-white transition-colors"
               >
                 Read more
                 <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,13 +1,1 @@
 @import "tailwindcss";
-
-@utility text-primary {
-    color: oklch(71.33% 0.112 194.94);
-}
-
-@utility border-primary {
-    border-color: oklch(71.33% 0.112 194.94);
-}
-
-@utility bg-primary {
-    background-color: oklch(71.33% 0.112 194.94);
-}
