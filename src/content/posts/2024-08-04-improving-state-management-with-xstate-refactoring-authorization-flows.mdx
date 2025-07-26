@@ -1,0 +1,31 @@
+---
+title: Improving State Management with Xstate Refactoring Authorization Flows
+tags: fe xstate
+date: 2024-08-04
+draft: false
+---
+
+Hi folks,
+
+I haven't written any tech articles for a long time, but this time, I think I have a valuable design that should be shared.
+
+Recently, I refactored the authorization page of [ClippingKK](https://clippingkk.annatarhe.com/auth/auth-v4). It has become more elegant and maintainable.
+
+Let's show how to design a small but complex state handling system.
+
+TL;DR:
+
+[https://stately.ai/registry/editor/5a0bce07-7238-4761-8553-d6be523d9ef1?machineId=7bdb6037-ff88-4b06-9bdb-c1cbd090e897](https://stately.ai/registry/editor/5a0bce07-7238-4761-8553-d6be523d9ef1?machineId=7bdb6037-ff88-4b06-9bdb-c1cbd090e897)
+
+<iframe src="https://stately.ai/registry/editor/5a0bce07-7238-4761-8553-d6be523d9ef1?machineId=7bdb6037-ff88-4b06-9bdb-c1cbd090e897" width="100%" height="515px">
+</iframe>
+
+Let's break it down step by step:
+
+## Third-Party Authentication
+
+Let's start with the simple part, third-party auth flow:
+
+### Sign in with Apple
+
+There is a button. If the user clicks it, the SDK will pop up a modal asking the user to log into Apple services and grant permission. On the frontend side, we can do nothing during this process; we will receive an event once the user grants permission, and we trigger an Xstate event immediately.
