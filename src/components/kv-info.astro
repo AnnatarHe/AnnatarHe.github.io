@@ -1,0 +1,12 @@
+---
+type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
+---
+
+<div class="flex items-start justify-start mt-2">
+  <span class="mr-1 whitespace-nowrap">{title}:</span>
+  <slot />
+</div>
