@@ -23,9 +23,9 @@ draft: false
 
 那么就先安装依赖：
 
-{% highlight console %}
+```console
 $ npm install 6to5ify gulp gulp-autoprefixer gulp-babel gulp-browserify2 gulp-concat gulp-minify-css gulp-notify gulp-sass gulp-sourcemaps gulp-uglify gulp-hash --save-dev
-{% endhighlight %}
+```
 
 这一块定义一个我适用的基本的模板。
 
@@ -34,7 +34,7 @@ $ npm install 6to5ify gulp gulp-autoprefixer gulp-babel gulp-browserify2 gulp-co
 可以编译`sass`和`ES6`的语法到正常浏览器能解析的样子。
 
 运行`production`则生成生产环境下的文件在`productions`目录
-{% highlight js %}
+```js
 /**
  * 引入依赖
  */
@@ -155,7 +155,7 @@ gulp.task('watch', function() {
 gulp.task('production', function() {
   gulp.start('production-sass', 'production-js');
 });
-{% endhighlight %}
+```
 
 ## React
 
@@ -165,13 +165,13 @@ gulp.task('production', function() {
 
 注意：这里没有写其他的部分。需要`css`部分的，参考上面的部分
 
-{% highlight console %}
+```console
 npm install --save-dev gulp browserify vinyl-source-stream babelify
-{% endhighlight %}
+```
 
 然后是任务编写：
 
-{% highlight js %}
+```js
 /**
  * 引入gulp依赖神马的
  * @type {object}
@@ -192,4 +192,4 @@ gulp.task('jsx', function(){
          .pipe(source('bundle.js'))
          .pipe(gulp.dest('js'));
 });
-{% endhighlight %}
+```

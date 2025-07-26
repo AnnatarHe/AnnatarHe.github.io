@@ -60,15 +60,15 @@ Hashing 是一个针对特定数据计算哈希的过程。一个哈希是数据
 
 好了，学术部分说完了，来开始写代码吧！首先，我们定义一个挖坑困难度：
 
-{% highlight golang %}
+```golang
 const targetBits = 24
-{% endhighlight %}
+```
 
 在比特币种，“目标比特”是在每个被挖出来的区块头上存储的困难度。我们暂时并不会实现这个动态调整目标值的算法，所以，我们可以以全局常量的形式定义这个困难度。
 
 24 是一个隔断值，我们的目标是在内存中找到一个少于 256 比特的目标值，而且我们想要使它有足够的不同，还不能太大。因为差别越大，越难找到合适的 hash 值
 
-{% highlight golang %}
+```golang
 type ProofOfWork struct {
     block  *Block
     target *big.Int
@@ -82,23 +82,23 @@ func NewProofOfWork(b *Block) *ProofOfWork {
 
     return pow
 }
-{% endhighlight %}
+```
 
 这里我们搞了个 **ProofOfWork** 的结构，它有区块指针和一个目标指针。 “target(目标)”是上一段中条件描述的另一个名字。我们使用一个 [big](https://golang.org/pkg/math/big/) 整型，因为这是我们对比哈希和目标值的方式：我们转换哈希成一个 big integer，然后和目标值对比是不是比它小。
 
 在 **NewProofOfWork** 函数中，我们用 1 初始化了一个 **big.int** ，并且获取它 ** 256 - targetBits ** 左边的值。256 是 SHA-256 哈希算法的比特长度，并且这个 SHA-256 哈希算法就是我们要用的，**target** 的十六进制表示是：
 
-{% highlight text %}
+```text
 0x10000000000000000000000000000000000000000000000000000000000
-{% endhighlight %}
+```
 
 它在内存中生成了 29 比特。这里是上个例子中生成的哈希的可视化对比：
 
-{% highlight text %}
+```text
 0fac49161af82ed938add1d8725835cc123a1a87b1b196488360e58d4bfb51e3
 0000010000000000000000000000000000000000000000000000000000000000
 0000008b0f41ec78bab747864db66bcb9fb89920ee75f43fdaaeb5544f7f76ca
-{% endhighlight %}
+```
 
 第一个哈希("I like donuts" 算出来的)要比目标值大，所以这并不是一个通过校验的工作证明。第二个哈希("I like donutsca07ca"算出来的)要比目标值药效，所以它是一个合理的证明。
 
@@ -106,7 +106,7 @@ func NewProofOfWork(b *Block) *ProofOfWork {
 
 现在，我们需要数据区计算 hash，先准备一下：
 
-{% highlight golang %}
+```golang
 func (pow *ProofOfWork) prepareData(nonce int) []byte {
     data := bytes.Join(
         [][]byte{
@@ -121,13 +121,13 @@ func (pow *ProofOfWork) prepareData(nonce int) []byte {
 
     return data
 }
-{% endhighlight %}
+```
 
 这一块很简单：我们只是合并区块的值带着目标值和 nonce。 这里的 **nonce** 是来自于上面 Hashcash 的描述的计数器，这是一个密码学术语。
 
 好了，所有的准备工作都做完了，我们来实现 PoW 的核心算法吧：
 
-{% highlight golang %}
+```golang
 func (pow *ProofOfWork) Run() (int, []byte) {
     var hashInt big.Int
     var hash [32]byte
@@ -150,7 +150,7 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 
     return nonce, hash[:]
 }
-{% endhighlight %}
+```
 
 首先，我们初始化数据： **hashInt** 是一个代表 **hash** 的值； **nonce** 是计数器。下一步，我们跑了一个“死”循环：它被 **maxNonce** 所限制，它等于 **math.MaxInt64**；这么做是为了避免可能存在的 **nonce** 溢出。虽然我们的 PoW 实现很慢以至于很难让计数器溢出，但仍旧应该做这个检查。
 
@@ -163,7 +163,7 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 
 就像我们之前所解释的那样简单。现在我们可以删掉 **Block** 里的 **SetHash** 函数了，然后顺便改造一下 **NewBlock** 函数：
 
-{% highlight golang %}
+```golang
 func NewBlock(data string, prevBlockHash []byte) *Block {
     block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}, 0}
     pow := NewProofOfWork(block)
@@ -174,11 +174,11 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 
     return block
 }
-{% endhighlight %}
+```
 
 这里你可以看到 **nonce** 被存在 **Block**属性中。这是很有必要的，因为需要 **nonce** 去验证证据。现在 **Block** 看起来像是这样：
 
-{% highlight golang %}
+```golang
 type Block struct {
     Timestamp     int64
     Data          []byte
@@ -186,11 +186,11 @@ type Block struct {
     Hash          []byte
     Nonce         int
 }
-{% endhighlight %}
+```
 
 好啦，现在跑一下程序，看一下都运行地对不对：
 
-{% highlight text %}
+```text
 Mining the block containing "Genesis Block"
 00000041662c5fc2883535dc19ba8a33ac993b535da9899e593ff98e1eda56a1
 
@@ -211,13 +211,13 @@ Hash: 00000077a856e697c69833d9effb6bdad54c730a98d674f73c0b30020cc82804
 Prev. hash: 00000077a856e697c69833d9effb6bdad54c730a98d674f73c0b30020cc82804
 Data: Send 2 more BTC to Ivan
 Hash: 000000b33185e927c9a989cc7d5aaaed739c56dad9fd9361dea558b9bfaf5fbe
-{% endhighlight %}
+```
 
 耶！你现在可以看到每个哈希值都以三个 bytes 为 0 开头，而且它也花了一些时间去获取哈希值。
 
 这里还有一件事要去做。我们得让验证工作量变得可行。
 
-{% highlight golang %}
+```golang
 func (pow *ProofOfWork) Validate() bool {
     var hashInt big.Int
 
@@ -229,13 +229,13 @@ func (pow *ProofOfWork) Validate() bool {
 
     return isValid
 }
-{% endhighlight %}
+```
 
 这就是我们要保存 nonce 的原因。
 
 来再确认一下都没问题了：
 
-{% highlight golang %}
+```golang
 func main() {
     ...
 
@@ -246,11 +246,11 @@ func main() {
         fmt.Println()
     }
 }
-{% endhighlight %}
+```
 
 输出：
 
-{% highlight text %}
+```text
 ...
 
 Prev. hash:
@@ -267,7 +267,7 @@ Prev. hash: 0000003eeb3743ee42020e4a15262fd110a72823d804ce8e49643b5fd9d1062b
 Data: Send 2 more BTC to Ivan
 Hash: 000000e42afddf57a3daa11b43b2e0923f23e894f96d1f24bfd9b8d2d494c57a
 PoW: true
-{% endhighlight %}
+```
 
 ## 最后
 

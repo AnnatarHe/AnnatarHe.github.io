@@ -41,79 +41,79 @@ Windows 的 cmd 应该是这个世界上最丑的命令行了吧？不改造一�
 
 Windows 目前有个叫做 [hyper.js](https://hyper.is/) 作为命令行很不错。下面来安装一下。
 
-{% highlight console %}
+```console
 $ choco install node.js
 $ choco install hyper
-{% endhighlight %}
+```
 
 Mac 里面有 spotlight 这样的神器，可以快速启动应用。其实 Windows 里面现在也有，Windows 键很少有人用到，但是它已经是很强大的了。按下 `Win 键`，然后输入什么内容，它就会搜索内容。然后按下 Enter 就会打开应用了。
 
 Hyper.js 应该已经安装好了。现在到用户目录下找到一个叫做 `.hyper.js` 的文件，在其中找到这个选项，修改一下
 
-{% highlight js %}
+```js
 { shell: 'C:\\Windows\\System32\\bash.exe' }
-{% endhighlight %}
+```
 
 然后进入 bash，先换源
 
-{% highlight console %}
+```console
 $ sudo sed -i 's/archive.ubuntu.com/mirrors.163.com/g' /etc/apt/sources.list
 $ sudo sed -i 's/security.ubuntu.com/mirrors.163.com/g' /etc/apt/sources.list
-{% endhighlight %}
+```
 
-{% highlight console %}
+```console
 $ apt update
 $ apt upgrade
 # 安装 fish shell
 $ sudo apt-add-repository ppa:fish-shell/release-2
 $ sudo apt-get update
 $ sudo apt-get install fish
-{% endhighlight %}
+```
 
-{% highlight console %}
+```console
 # 生成新用户
 $ useradd -m -G sudo username
 $ passwd username
-{% endhighlight %}
+```
 
 这个时候可以在windows那边改变启动的用户
 
-{% highlight console %}
+```console
 LxRun.exe /setdefaultuser username
-{% endhighlight %}
+```
 
 随后进入 Hyper 。
 
-{% highlight console %}
+```console
 # 安装 oh-my-fish
 $ curl -L https://get.oh-my.fish | fish
 # 安装主题
 $ omf install robbyrussell
 # 生成公私钥
 $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-{% endhighlight %}
+```
 
 然后将 `~/.ssh/id_rsa.pub` 中的内容复制到 github 的 ssh 中，然后就可以拉代码了~
 
 这里还有一个步骤，将 fish shell 作为默认 shell。这里不能用之前 linux 的经验靠命令去处理了。而是需要先启动 bash，然后进入 fish。
 
-{% highlight console %}
+```console
 # Launch Fish
 if [ -t 1 ]; then
   cd ~
   exec fish
 fi
-{% endhighlight %}
+```
 
 期间还需要下载 [visual studio](https://www.visualstudio.com/)，有社区版的，免费。记得一定要装上"Windows Universal CRT SDK"
 
 之后需要把`capslock`改键成 `Ctrl`：新建一个 `remap.reg`，拷贝进去。之后双击执行，重启电脑即可。
-{% highlight console %}
+```console
 Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
 "Scancode Map"=hex:00,00,00,00,00,00,00,00,02,00,00,00,1d,00,3a,00,00,00,00,00
-{% endhighlight %}
+```
 
 
 到这里一个 Windows 下的开发环境已经搭建完毕了。是不是很棒！

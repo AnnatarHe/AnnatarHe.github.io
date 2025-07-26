@@ -18,18 +18,18 @@ draft: false
 添加一行代码 去定义我们的第一个集合
 
 在`simple-todos-react.jsx`中的第一行加入这么一段
-{% highlight js %}
+```js
 // 写在第一行
 // 定义一个集合来支撑我们的任务列表
 Tasks = new Mongo.Collection("tasks");
-{% endhighlight %}
+```
 
 ### 使用来自（数据库）集合的数据替换React组件中的数据
 
 使用来自Meteor中的数据来替换React组件中的数据，需要在React组件中包含`ReactMeteorData`的mixin，在你的组件中带着这样的一个Minin你就可以定义一个叫做`getMeteorData`的方法，这个方法定义了如何跟踪数据的改变。这个你从`getMeteorData`中返回的对象可以传递到`render`中的`this.data`。现在来试试。
 
 在App.jsx中修改一些部分
-{% highlight js %}
+```js
 // App component - represents the whole app
 App = React.createClass({
  
@@ -51,7 +51,7 @@ App = React.createClass({
       return <Task key={task._id} task={task} />;
     });
   },
-{% endhighlight %}
+```
 
 当你改变了这些代码的时候，你可能会注意到（浏览器上）那些在todo list上的人物会消失。这是因为我们的数据库到现在是空的 -- 我们得写入一点任务（数据）
 
@@ -59,14 +59,14 @@ App = React.createClass({
 
 在集合中的子项被叫做*文档*(documents), 蓝使用服务端的数据库命令行插入一些文档到我们的集合中吧！在一个新的终端窗口上，进入应用程序的目录并输入这样的命令：
 
-{% highlight console %}
+```console
 meteor mongo
-{% endhighlight %}
+```
 
 这就进入了你的应用程序的本地开发数据库，在提示框中输入这样的命令：
-{% highlight js %}
+```js
 db.tasks.insert({ text: "Hello world!", createdAt: new Date() });
-{% endhighlight %}
+```
 
 现在在你的浏览器中，你将会看到你的应用程序立刻更新了界面并展示了新的任务（数据）。你应该能够明白我们并没有写入任何的连接到服务器端数据库的前端代码 -- 他就是这么自动的进行了！
 

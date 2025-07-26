@@ -76,10 +76,10 @@ docker 是个好东西。
 
 3. 涉及到`墙`的问题，用两个环境变量来设置代理，因为命令行并不执行代理：
 
-{% highlight bash %}
+```bash
 ENV http_proxy http://your.proxy.site:port
 ENV https_proxy http://your.proxy.site:port
-{% endhighlight %}
+```
 
 4. 涉及到端口暴露的，要确定在 container 内部跑的程序的 host 是 `0.0.0.0` 而不是 `127.0.0.1` 或 `localhost`。这是我基础没学好的代价，请看到的同学谨记 😞 [What is the difference between 0.0.0.0, 127.0.0.1 and localhost?](http://stackoverflow.com/questions/20778771/what-is-the-difference-between-0-0-0-0-127-0-0-1-and-localhost)
 

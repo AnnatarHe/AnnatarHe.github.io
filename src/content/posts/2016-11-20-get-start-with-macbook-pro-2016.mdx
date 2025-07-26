@@ -66,9 +66,9 @@ sublime的配置文件地址在`~/Library/Application Support/Sublime Text 3/Pac
 
 sublime配置到命令行需要自己做个软连接：
 
-{% highlight bash %}
+```bash
 $ ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
-{% endhighlight %}
+```
 
 而VSCode要配置到命令行可以直接在VSCode里面打开控制面板，敲`shell command`就能看到安装选项了。
 
@@ -130,12 +130,12 @@ Touch ID集成了。不过只有App Store能用到，其他地方没有调用。
 
 要在自己的`.zshrc`中设置两个环境变量：
 
-{% highlight bash %}
+```bash
 export http_proxy=http://your.agent.site:port
 export https_proxy=$http_proxy
 # 终端中
 $ source .zshrc
-{% endhighlight %}
+```
 
 好了，可以正常得用梯子了。
 

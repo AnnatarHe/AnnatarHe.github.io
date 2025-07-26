@@ -87,13 +87,13 @@ SPV 是简单支付验证。这种节点并不保存区块链的全量副本，�
 
 节点通过消息的方式进行通讯。当一个新的节点运行了，它会从 DNS种子中获得一些节点，然后发送给它们 **版本(version)** 信息，它在我们的实现中看起来像是这样：
 
-{% highlight golang %}
+```golang
 type version struct {
     Version    int
     BestHeight int
     AddrFrom   string
 }
-{% endhighlight %}
+```
 
 我们只有一个区块链版本，所以 **Version**字段并不会保存任何重要信息。 **BastHeight**春粗了区块链的节点长度。**AddFrom**存储着发送者的地址。
 
@@ -101,7 +101,7 @@ type version struct {
 
 为了接收消息，我们需要一个服务器：
 
-{% highlight golang %}
+```golang
 var nodeAddress string
 var knownNodes = []string{"localhost:3000"}
 
@@ -122,19 +122,19 @@ func StartServer(nodeID, minerAddress string) {
         go handleConnection(conn, bc)
     }
 }
-{% endhighlight %}
+```
 
 首先，我们写死了中心节点的地址：每个节点都必须知道从哪里初始化连接。**minerAddress**参数指定接收挖坑奖励的地址。这一块：
 
-{% highlight golang %}
+```golang
 if nodeAddress != knownNodes[0] {
     sendVersion(knownNodes[0], bc)
 }
-{% endhighlight %}
+```
 
 它的意思是如果当前节点并非中心节点，它必须发送 **version** 信息给中心节点去找寻确认区块链是否已经失效。
 
-{% highlight golang %}
+```golang
 func sendVersion(addr string, bc *Blockchain) {
     bestHeight := bc.GetBestHeight()
     payload := gobEncode(version{nodeVersion, bestHeight, nodeAddress})
@@ -143,11 +143,11 @@ func sendVersion(addr string, bc *Blockchain) {
 
     sendData(addr, request)
 }
-{% endhighlight %}
+```
 
 我们的消息，在底层，是字节序列。头 12 个字节表明了命令名(我们的场景下是 "version")，之后的字节会包含 **gob** 编码过的消息结构。**commandToBytes** 看起来像是这样：
 
-{% highlight golang %}
+```golang
 func commandToBytes(command string) []byte {
     var bytes [commandLength]byte
 
@@ -157,11 +157,11 @@ func commandToBytes(command string) []byte {
 
     return bytes[:]
 }
-{% endhighlight %}
+```
 
 它创建了一个 12 字节的 buffer 然后用命令名填满，剩余字节是空的。这是一个对立的函数：
 
-{% highlight golang %}
+```golang
 func bytesToCommand(bytes []byte) string {
     var command []byte
 
@@ -173,11 +173,11 @@ func bytesToCommand(bytes []byte) string {
 
     return fmt.Sprintf("%s", command)
 }
-{% endhighlight %}
+```
 
 当一个节点收到了一条命令，它会执行 **bytesToCommand** 去解析命令名然后用正确地句柄执行命令体：
 
-{% highlight golang %}
+```golang
 func handleConnection(conn net.Conn, bc *Blockchain) {
     request, err := ioutil.ReadAll(conn)
     command := bytesToCommand(request[:commandLength])
@@ -193,11 +193,11 @@ func handleConnection(conn net.Conn, bc *Blockchain) {
 
     conn.Close()
 }
-{% endhighlight %}
+```
 
 好了，这是 **version**命令处理函数，看起来大概是这样：
 
-{% highlight golang %}
+```golang
 func handleVersion(request []byte, bc *Blockchain) {
     var buff bytes.Buffer
     var payload verzion
@@ -219,7 +219,7 @@ func handleVersion(request []byte, bc *Blockchain) {
         knownNodes = append(knownNodes, payload.AddrFrom)
     }
 }
-{% endhighlight %}
+```
 
 首先我们得解码请求并且解析负载。这和所有的处理器一样，所以我会在未来的代码片段中省略这一块。
 
@@ -227,41 +227,41 @@ func handleVersion(request []byte, bc *Blockchain) {
 
 ### getblocks
 
-{% highlight golang %}
+```golang
 type getblocks struct {
     AddrFrom string
 }
-{% endhighlight %}
+```
 
 **getblocks** 意味着 “告诉我你的区块”(在比特币中，它会更复杂一些)。注意一下，它不会说 “给我你的所有区块”，它会请求一个区块哈希的列表。这会降低网络负载，因为区块可以被从其他节点下载，而且我们也不想从单一节点下载几十 Gb 的数据。
 
 处理命令很简单：
 
-{% highlight golang %}
+```golang
 func handleGetBlocks(request []byte, bc *Blockchain) {
     ...
     blocks := bc.GetBlockHashes()
     sendInv(payload.AddrFrom, "block", blocks)
 }
-{% endhighlight %}
+```
 
 在我们的简版实现中，它会返回**所有区块哈希**
 
 ### inv
 
-{% highlight golang %}
+```golang
 type inv struct {
     AddrFrom string
     Type     string
     Items    [][]byte
 }
-{% endhighlight %}
+```
 
 比特币使用 **inv** 来向其他节点展示当前区块拥有的区块或者交易。再次声明，它并不包含整个区块或交易，有的只有它们的哈希。**Type**字段会说哪里有区块或者交易。
 
 处理 **inv** 比较困难：
 
-{% highlight golang %}
+```golang
 func handleInv(request []byte, bc *Blockchain) {
     ...
     fmt.Printf("Recevied inventory with %d %s\n", len(payload.Items), payload.Type)
@@ -289,7 +289,7 @@ func handleInv(request []byte, bc *Blockchain) {
         }
     }
 }
-{% endhighlight %}
+```
 
 如果区块哈希被转移了，我们希望把它们存在 **blocksInTransit** 变量中去追踪已下载的区块。这允许我们去从不同的节点中使用已下载的区块。刚好在把区块转成迁移状态后，我们发送 **getdata** 命令到 **inv** 消息的发送者那里，然后更新 **blocksInTransit**。在真实的 P2P 网络中，我们会想要从不同的节点中转移区块。
 
@@ -297,17 +297,17 @@ func handleInv(request []byte, bc *Blockchain) {
 
 ### getdata
 
-{% highlight golang %}
+```golang
 type getdata struct {
     AddrFrom string
     Type     string
     ID       []byte
 }
-{% endhighlight %}
+```
 
 **getdata** 是一个队确定的区块或交易的请求，而且它可以包含且只能包含一个 区块/交易 的 ID。
 
-{% highlight golang %}
+```golang
 func handleGetData(request []byte, bc *Blockchain) {
     ...
     if payload.Type == "block" {
@@ -323,13 +323,13 @@ func handleGetData(request []byte, bc *Blockchain) {
         sendTx(payload.AddrFrom, &tx)
     }
 }
-{% endhighlight %}
+```
 
 处理方式很直接：如果它们请求一个区块，就返回一个区块；如果请求一笔交易，就返回一笔交易。注意，我们并不确认我们是否真的有这个区块或交易。这是一个瑕疵 :)
 
 ### block 和 tx
 
-{% highlight golang %}
+```golang
 type block struct {
     AddrFrom string
     Block    []byte
@@ -339,13 +339,13 @@ type tx struct {
     AddFrom     string
     Transaction []byte
 }
-{% endhighlight %}
+```
 
 这些是真正的转移数据的消息。
 
 处理 **block** 消息很简单：
 
-{% highlight golang %}
+```golang
 func handleBlock(request []byte, bc *Blockchain) {
     ...
 
@@ -367,7 +367,7 @@ func handleBlock(request []byte, bc *Blockchain) {
         UTXOSet.Reindex()
     }
 }
-{% endhighlight %}
+```
 
 当我们收到一个新的区块，我们把它塞进我们的区块链中。如果有更多的区块被下载，我们从前一个下载的区块的相同的节点中请求。当我们最终下载了所有的区块，UTXO 集就会被重新索引。
 
@@ -377,7 +377,7 @@ func handleBlock(request []byte, bc *Blockchain) {
 
 处理 **tx** 消息是比较难的部分：
 
-{% highlight golang %}
+```golang
 func handleTx(request []byte, bc *Blockchain) {
     ...
     txData := payload.Transaction
@@ -433,11 +433,11 @@ func handleTx(request []byte, bc *Blockchain) {
         }
     }
 }
-{% endhighlight %}
+```
 
 第一件要做的事情就是往内存池中塞入一条新的交易(再次声明，在被放入到内存池之前，交易必须要先被验证)，下一块：
 
-{% highlight golang %}
+```golang
 if nodeAddress == knownNodes[0] {
     for _, node := range knownNodes {
         if node != nodeAddress && node != payload.AddFrom {
@@ -445,19 +445,19 @@ if nodeAddress == knownNodes[0] {
         }
     }
 }
-{% endhighlight %}
+```
 
 确认当前节点是否为中心节点。在我们的实现中，中心节点并不会挖掘区块。而会在网络中转发新的交易给其余节点。
 
 第二大块只是针对矿工节点。让我们分解成小块吧：
 
-{% highlight golang %}
+```golang
 if len(mempool) >= 2 && len(miningAddress) > 0 {
-{% endhighlight %}
+```
 
 **miningAddress** 是矿工节点唯一的数据集。当当前(矿工)节点的内存池中有两个或者更多交易的时候，挖坑开始。
 
-{% highlight golang %}
+```golang
 for id := range mempool {
     tx := mempool[id]
     if bc.VerifyTransaction(&tx) {
@@ -469,11 +469,11 @@ if len(txs) == 0 {
     fmt.Println("All transactions are invalid! Waiting for new ones...")
     return
 }
-{% endhighlight %}
+```
 
 首先，内存池中的所有交易会被验证，非法交易会被忽略掉，如果没有合法交易，挖坑会被中止。
 
-{% highlight golang %}
+```golang
 cbTx := NewCoinbaseTX(miningAddress, "")
 txs = append(txs, cbTx)
 
@@ -482,13 +482,13 @@ UTXOSet := UTXOSet{bc}
 UTXOSet.Reindex()
 
 fmt.Println("New block is mined!")
-{% endhighlight %}
+```
 
 验证过的交易会被塞进区块中，同时还有一笔带着奖励的币基交易。挖矿结束后， UTXO 集被重新索引。
 
 > TODO: 再次声明，UTXOSet.Update 应该替换掉 UTXOSet.Reindex
 
-{% highlight golang %}
+```golang
 for _, tx := range txs {
     txID := hex.EncodeToString(tx.ID)
     delete(mempool, txID)
@@ -503,7 +503,7 @@ for _, node := range knownNodes {
 if len(mempool) > 0 {
     goto MineTransactions
 }
-{% endhighlight %}
+```
 
 一笔交易被挖掘之后，它会在内存池中被删掉。当前节点知道的其他节点，收到带有新区块哈希的 **inv** 消息。在处理了这条消息后，它们可以请求这个区块。
 
@@ -517,17 +517,17 @@ if len(mempool) > 0 {
 
 创建一个钱包和一条区块链:
 
-{% highlight text %}
+```text
 $ blockchain_go createblockchain -address CENTREAL_NODE
-{% endhighlight %}
+```
 
 *(为了简单清楚地表示，我用了假地址)*
 
 之后，区块链会包含一个创世区块。我们需要保存这个区块并在其他节点中使用。创世区块作为区块链的标识(比特币核心中，创始区块是写死的)。
 
-{% highlight text %}
+```text
 $ cp blockchain_3000.db blockchain_genesis.db 
-{% endhighlight %}
+```
 
 ### NODE 3001
 
@@ -537,18 +537,18 @@ $ cp blockchain_3000.db blockchain_genesis.db
 
 发送一些币到钱包地址上:
 
-{% highlight text %}
+```text
 $ blockchain_go send -from CENTREAL_NODE -to WALLET_1 -amount 10 -mine
 $ blockchain_go send -from CENTREAL_NODE -to WALLET_2 -amount 10 -mine
-{% endhighlight %}
+```
 
 **-mine** 标识意味着节点会立刻用相同的节点挖坑。我们必须要有这个标识，因为在初始化阶段，网络中并没有矿工节点。
 
 启动这个节点：
 
-{% highlight text %}
+```text
 $ blockchain_go startnode
-{% endhighlight %}
+```
 
 这个节点必须被一直运行，直到场景结束。
 
@@ -556,55 +556,55 @@ $ blockchain_go startnode
 
 用上面保存的创始区块启动节点的区块链：
 
-{% highlight text %}
+```text
 $ cp blockchain_genesis.db blockchain_3001.db
-{% endhighlight %}
+```
 
 运行节点：
 
-{% highlight text %}
+```text
 $ blockchain_go startnode
-{% endhighlight %}
+```
 
 它会从中心节点下载所有的区块。为了确认所有事情都对了，停止节点确认一下余额：
 
-{% highlight text %}
+```text
 $ blockchain_go getbalance -address WALLET_1
 Balance of 'WALLET_1': 10
 
 $ blockchain_go getbalance -address WALLET_2
 Balance of 'WALLET_2': 10
-{% endhighlight %}
+```
 
 你可以在**中心节点**的地址中查看账户余额，因为节点 3001 现在也有区块链：
 
-{% highlight text %}
+```text
 $ blockchain_go getbalance -address CENTRAL_NODE
 Balance of 'CENTRAL_NODE': 10
-{% endhighlight %}
+```
 
 ### NODE 3002
 
 打开一个新的窗口并把 ID 设为 3002，生成一个钱包，这将会是一个矿工节点。初始化区块链：
 
-{% highlight text %}
+```text
 $ cp blockchain_genesis.db blockchain_3002.db
-{% endhighlight %}
+```
 
 启动节点：
 
-{% highlight text %}
+```text
 $ blockchain_go startnode -miner MINER_WALLET
-{% endhighlight %}
+```
 
 ### NODE 3001
 
 发一些币：
 
-{% highlight text %}
+```text
 $ blockchain_go send -from WALLET_1 -to WALLET_3 -amount 1
 $ blockchain_go send -from WALLET_2 -to WALLET_4 -amount 1
-{% endhighlight %}
+```
 
 ### NODE 3002
 
@@ -614,15 +614,15 @@ $ blockchain_go send -from WALLET_2 -to WALLET_4 -amount 1
 
 切换到钱包节点并启动它：
 
-{% highlight text %}
+```text
 $ blockchain_go startnode
-{% endhighlight %}
+```
 
 它下载了新的被挖出的区块！
 
 停下，检查一下余额：
 
-{% highlight text %}
+```text
 $ blockchain_go getbalance -address WALLET_1
 Balance of 'WALLET_1': 9
 
@@ -637,7 +637,7 @@ Balance of 'WALLET_4': 1
 
 $ blockchain_go getbalance -address MINER_WALLET
 Balance of 'MINER_WALLET': 10
-{% endhighlight %}
+```
 
 搞定！
 

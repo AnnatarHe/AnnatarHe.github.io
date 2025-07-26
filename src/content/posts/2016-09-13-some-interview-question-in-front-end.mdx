@@ -19,13 +19,13 @@ draft: false
 
 比如:
 
-{% highlight js %}
+```js
 for(var index = 0; index < 100; index++) {
     (function(_i) {
         // do something
     })(index)
 }
-{% endhighlight %}
+```
 
 我自己明白是怎么回事，却是说不出口。
 
@@ -119,7 +119,7 @@ Ukulele弹得差，说了一点儿。
 
 > 如果 n 是一个素数，a 是小于 n 的任意正整数，那么 a 的 n 次方与 a 模 n 同余
 
-{% highlight scheme %}
+```scheme
 (define (expmod base exp m)
     (cond ((= exp 0) 1)
     ((even? exp)
@@ -138,7 +138,7 @@ Ukulele弹得差，说了一点儿。
     (cond ((= times 0) true)
           ((fermat-test n) (fast-prime? n (- times 1)))
           (else false)))
-{% endhighlight %}
+```
 
 ## 总结
 

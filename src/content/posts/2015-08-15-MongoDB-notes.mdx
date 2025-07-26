@@ -15,13 +15,13 @@ draft: false
 
 原来这货长这样：
 
-{% highlight html %}
+```html
 <div onclick="function()"> foo </div>
-{% endhighlight %}
+```
 
 现在这货长这样：
 
-{% highlight javascript %}
+```javascript
 var http = require('http');
 
 http.createServer(function (req, res) {
@@ -30,7 +30,7 @@ http.createServer(function (req, res) {
 }).listen(1337, '127.0.0.1');
 
 console.log('Server running at http://127.0.0.1:1337/');
-{% endhighlight %}
+```
 
 听说下个版本要从`0.12.7`直接跳到`4.0`
 
@@ -38,11 +38,11 @@ console.log('Server running at http://127.0.0.1:1337/');
 
 这货长这样：
 
-{% highlight json %}
+```json
 {
 	"key":"value"
 }
-{% endhighlight %}
+```
 
 这是一种数据传输的*新*形式，好吧，其实他也老大不小了。
 
@@ -74,30 +74,30 @@ console.log('Server running at http://127.0.0.1:1337/');
 
 ## Insert
 
-{% highlight js %}
+```js
 db.collection.insert(
 	{
 		name:'Annatar',
 		age:20
 	}
 )
-{% endhighlight %}
+```
 
 ![crud-insert-stages]({{ site.cdn }}/crud-insert-stages.png)
 
 这里的执行环境是`JavaScript`哦，所以呢，可以使用`For`循环，那么，做点儿什么吧！
 
-{% highlight js %}
+```js
 for (i = 0; i < 100; i++)
 	db.collection.insert({x:1})
-{% endhighlight %}
+```
 
 ## Select
 
-{% highlight js %}
+```js
 // 相当于 SELECT * FROM `collection`
 db.collection.find()
-{% endhighlight %}
+```
 
 `find()`中，可以添加条件
 
@@ -105,7 +105,7 @@ db.collection.find()
 
 从`users`里面找数据，`age`大于18的，找`name`和`address`这两个字段，找五条
 
-{% highlight js %}
+```js
 db.users.find(
 	{
 		age:{
@@ -118,19 +118,19 @@ db.users.find(
 	}
 )
 .limit(5)
-{% endhighlight %}
+```
 
 ![crud-query-stages]({{ site.cdn }}/crud-query-stages.png)
 
 ### 全文查询
 
-{% highlight js %}
+```js
 db.collection.find({
 	$text: {
 		$search: "coffee"
 	}
 })
-{% endhighlight %}
+```
 
 > `-` 表示没有，例如 'aa bb -cc' 有aa,有bb，但是没有cc
 > 
@@ -138,7 +138,7 @@ db.collection.find({
 
 ### 相似度查询
 
-{% highlight js %}
+```js
 db.collection.find({
 	$text: {$search: "aa bb"}
 	},
@@ -148,7 +148,7 @@ db.collection.find({
 	.sort({
 		score: {$meta: "text Score"}
 	})
-{% endhighlight %}
+```
 
 
 ## update
@@ -156,7 +156,7 @@ db.collection.find({
 ### 完全更新：
 
 把`x`等于1的都更新成999，如果不存在就创建(insert)
-{% highlight js %}
+```js
 db.collection.update(
 	{
 		x:1
@@ -166,13 +166,13 @@ db.collection.update(
 	},
 	true
 )
-{% endhighlight %}
+```
 
 ### 部分更新：
 
 把`x`等于1的字段，只更新`y`到222，其他不变
 
-{% highlight js %}
+```js
 db.collection.update(
 	{
 		x:1
@@ -183,11 +183,11 @@ db.collection.update(
 		}
 	}
 )
-{% endhighlight %}
+```
 
 ### 多表更新：
 
-{% highlight js %}
+```js
 db.collection.update(
 	{
 		c:1
@@ -200,19 +200,19 @@ db.collection.update(
 	false,
 	true
 )
-{% endhighlight %}
+```
 
 ## Remove
 
 删除掉`status`为`D`的字段
 
-{% highlight js %}
+```js
 db.users.remove(
 	{
 		status: "D"
 	}
 )
-{% endhighlight %}
+```
 
 ![crud-annotated-mongodb-remove]({{ site.cdn }}/crud-annotated-mongodb-remove.png)
 
@@ -220,9 +220,9 @@ db.users.remove(
 
 删除掉`collection`吧，看他不顺眼了。
 
-{% highlight js %}
+```js
 db.collection.drop()
-{% endhighlight %}
+```
 
 ## limit...
 
@@ -230,12 +230,12 @@ db.collection.drop()
 
 其实英文稍微好一些，这都能看懂
 
-{% highlight js %}
+```js
 db.collection.find()
 	.skip(20)
 	.limit(2)
 	.sort({ x:1 })
-{% endhighlight %}
+```
 
 ### <span style="color:red">Notice</span>
 
@@ -247,23 +247,23 @@ db.collection.find()
 
 ### 查看索引
 
-{% highlight js %}
+```js
 db.collection.getIndex()
-{% endhighlight %}
+```
 
 ### 创建索引
 
 按照`x`正向排序
 
-{% highlight js %}
+```js
 db.collection.ensureIndex({
 	x:1
 })
-{% endhighlight %}
+```
 
 ### 全文索引：
 
-{% highlight js %}
+```js
 //key 是变量，而text是不变的
 db.collection.ensureIndex({ key: "text" })
 // 多关键字查询
@@ -273,13 +273,13 @@ db.collection.ensureIndex({
 })
 // 所有词均为关键字的索引
 db.collection.ensureIndex({ "$**": "text" })
-{% endhighlight %}
+```
 
 ### 命名索引
 
-{% highlight js %}
+```js
 db.collection.ensureIndex({ x:1, y:1 }, {name: "foo" }, {unique: true})
-{% endhighlight %}
+```
 
 ## Reference
 

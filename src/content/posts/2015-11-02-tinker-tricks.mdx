@@ -28,18 +28,18 @@ Tinker只是在laravel中的名字，其实人家真名叫做[psysh](https://git
 
 laravel项目在安装完依赖以后可以输入命令进入：
 
-{% highlight console %}
+```console
 $ php artisan tinker
-{% endhighlight %}
+```
 
 ## Basic
 
 很简单的，先写上几行简单的：
 
-{% highlight console %}
+```console
 $foo = 'bar';
 echo $foo
-{% endhighlight %}
+```
 
 很简单的，就像是在chrome的console里面写代码一样。
 
@@ -50,7 +50,7 @@ echo $foo
 一定记得，和在工程中写代码是一样的
 
 获取某个集合
-{% highlight php %}
+```php
 <?php 
 App\User::all()
 # << 会返回所有users的collections，可以清楚的看到
@@ -59,17 +59,17 @@ App\User::find(1)
 App\User::find(1)->articles()->get()
 # << 关联查询，获取这个用户的所有文章
  ?>
-{% endhighlight %}
+```
 
 命名空间也是一样的
-{% highlight php %}
+```php
 <?php 
 use App\User;
 # << 会返回false，别担心，已经成功了
 User::all();
 # << 好了，成功了
  ?>
-{% endhighlight %}
+```
 
 ## Factory
 
@@ -85,7 +85,7 @@ factory就很容易解决喽~
 
 在路径为 **projectName / database /factories /ModelFactory.php**里写入下面的
 
-{% highlight php %}
+```php
 <?php 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
   return [
@@ -98,11 +98,11 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
   ];
 });
  ?>
-{% endhighlight %}
+```
 
 然后就可以在tinker里面这么写：
 
-{% highlight php %}
+```php
 <?php 
 // 创建5个用户放到数据库里
 factory('App\User', 5)->create();
@@ -110,6 +110,6 @@ factory('App\User', 5)->create();
 // 创建数据，只是展示，并不存数据库
 factory('App\User', 5)->make();
  ?>
-{% endhighlight %}
+```
 
 是不是很方便呢？

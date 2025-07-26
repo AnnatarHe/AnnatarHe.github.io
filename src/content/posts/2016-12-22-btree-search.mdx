@@ -8,7 +8,7 @@ draft: false
 
 ## 生成二叉树
 
-{% highlight go %}
+```go
 type Node struct {
 	data  string
 	left  *Node
@@ -22,7 +22,7 @@ nodeD := Node{data: "d", left: &nodeE, right: nil}
 nodeC := Node{data: "c", left: nil, right: nil}
 nodeB := Node{data: "b", left: &nodeD, right: &nodeF}
 nodeA := Node{data: "a", left: &nodeB, right: &nodeC}
-{% endhighlight %}
+```
 
 图例如下:
 
@@ -42,7 +42,7 @@ nodeA := Node{data: "a", left: &nodeB, right: &nodeC}
 
 结果存在result里面，如果不存可以少一层变量
 
-{% highlight go %}
+```go
 func breadthFirstSearch(node Node) []string {
 	var result []string
 	var nodes []Node = []Node{node}
@@ -60,11 +60,11 @@ func breadthFirstSearch(node Node) []string {
 	}
 	return result
 }
-{% endhighlight %}
+```
 
 ## 递归版前中后序遍历
 
-{% highlight go %}
+```go
 func preOrderRecursive(node Node) {
 	fmt.Println(node.data)
 	if node.left != nil {
@@ -75,7 +75,7 @@ func preOrderRecursive(node Node) {
 		preOrderRecursive(*node.right)
 	}
     // 在这里输出是后序
-{% endhighlight %}
+```
 
 ## 非递归版遍历
 
@@ -85,17 +85,17 @@ func preOrderRecursive(node Node) {
 
 首先定义一个数据结构，用来存储一些Node的信息。
 
-{% highlight go %}
+```go
 type seqStack struct {
 	data [100]*Node
 	tag [100]int // 后续遍历准备
 	top int // 数组下标
 }
-{% endhighlight %}
+```
 
 ### preOrder
 
-{% highlight go %}
+```go
 func preOrderLoop(node *Node) (result []string) {
 	var s seqStack
 	s.top = -1 // 空
@@ -116,11 +116,11 @@ func preOrderLoop(node *Node) (result []string) {
 	}
 	return
 }
-{% endhighlight %}
+```
 
 ## midOrder
 
-{% highlight go %}
+```go
 func midOrderLoop(node *Node) (result []string) {
 	var s seqStack
 	s.top = -1
@@ -141,13 +141,13 @@ func midOrderLoop(node *Node) (result []string) {
 	}
 	return
 }
-{% endhighlight %}
+```
 
 ### postOrder
 
 这里是可以运行的，但是总会抛出一个数组越界的错误，我看了半天也没看出来哪里有问题，Mac版的devel我这边又有bug，没用起来。至少思路对了，我后面再看一下哪里的问题。(感谢 @RiXu 指正)
 
-{% highlight go %}
+```go
 func postOrderLoop(node *Node) (result []string)  {
 	var s seqStack
 	s.top = -1
@@ -183,7 +183,7 @@ func postOrderLoop(node *Node) (result []string)  {
 	}
 	return
 }
-{% endhighlight %}
+```
 
 ## References
 

@@ -53,15 +53,15 @@ SPA带来了非常棒的用户体验，前端响应速度可以非常的快，lo
 
 这个还是比较好解决的。低版本浏览器用Hash跟在URL后面
 
-{% highlight js %}
+```js
 window.addEventListener('hashchange', e => {
     // 正则判断，或者就直接字符串
     // 分发各个函数
 }, false)
-{% endhighlight %}
+```
 
 新版本HTML5浏览器还有很棒的history API
-{% highlight js %}
+```js
 window.addEventListener('popstate', e => {
     // do something
 }, false)
@@ -70,7 +70,7 @@ let state = {
     page_id: 1
 }
 history.pushState(state, 'hello world', '/new-url')
-{% endhighlight %}
+```
 
 这个问题只要调用这些API就可以了，没什么太大的问题。然而，问题确是开始于这里。
 
@@ -84,12 +84,12 @@ history.pushState(state, 'hello world', '/new-url')
 
 好在ES2015规范出来，终于有了一个最终的规范。
 
-{% highlight js %}
+```js
 import React from 'react'
 
 class Index extends React.Component { render() {} }
 export default Index
-{% endhighlight %}
+```
 
 然而，然而，然而。我觉得实现这个标准挺难的。
 
@@ -169,7 +169,7 @@ export default Index
 
 简单的。如何控制这个显示隐藏状态？
 
-{% highlight js %}
+```js
 let current_state = true // true: show.   false:hide
 const nav = document.querySelector('#nav')
 nav.addEventListener('click', e => {
@@ -183,7 +183,7 @@ nav.addEventListener('click', e => {
     }
 }, false)
 // 其他事件同上
-{% endhighlight %}
+```
 
 看起来没什么问题？试着重复几十次，再看看这个状态还算清楚？到底是哪个事件修改的状态？
 

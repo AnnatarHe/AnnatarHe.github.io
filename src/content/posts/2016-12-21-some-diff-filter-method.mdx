@@ -12,8 +12,7 @@ draft: false
 
 测试用例如下
 
-{% highlight js %}
-
+```js
 import test from 'ava'
 import unique from '../src/unique'
 
@@ -47,20 +46,19 @@ test('deep unique', t => {
     const result = unique(src)
     t.is(result.length, 7)
 })
-
-{% endhighlight %}
+```
 
 ## 简单去重的几种方法
 
 暂时先只看数组中存number的去重方法：
 
 最粗暴的是这种，利用Set不能有重复数据的特性做
-{% highlight js %}
+```js
 const unique = arr => Array.from(new Set(arr))
-{% endhighlight %}
+```
 
 正常思路如下，维护一个暂存数组，将数据存进去
-{% highlight js %}
+```js
 function unique(arr) {
     let temp = []
     for (let i = 0; i < arr.length; i++) {
@@ -70,10 +68,10 @@ function unique(arr) {
     }
     return temp
 }
-{% endhighlight %}
+```
 
 reduce做去重(下面有参考链接)，意思是每次往前一个数组中塞数据，其实就是上面正常思路的去中间变量版
-{% highlight js %}
+```js
 function uniqueByReduce(arr) {
     return arr.reduce((prev, next) => {
         if (prev.indexOf(next) === -1) {
@@ -82,7 +80,7 @@ function uniqueByReduce(arr) {
         return prev
     }, [])
 }
-{% endhighlight %}
+```
 
 这个时候基本int型数据都没什么问题了。
 
@@ -92,7 +90,7 @@ function uniqueByReduce(arr) {
 
 先贴代码:
 
-{% highlight js %}
+```js
 function unique(arr) {
     let temp = []
     for (let i = 0; i < arr.length; i++) {
@@ -112,13 +110,13 @@ function unique(arr) {
     }
     return temp
 }
-{% endhighlight %}
+```
 
 意思是在推进去的时候多做一些判断，主要是对Object和Array的判定。
 
 其中有`objects.contains`和`arrays.contains`两个方法做判定工作。其实现分别如下
 
-{% highlight js %}
+```js
 // array.js
 export function equals(src, dist) {
     if ((! Array.isArray(src)) || (! Array.isArray(dist))) {
@@ -155,9 +153,9 @@ export function contains(father, child) {
 
     return flags.indexOf(true) !== -1
 }
-{% endhighlight %}
+```
 
-{% highlight js %}
+```js
 // objects.js
 function isPlainObj(obj) {
     return typeof obj === 'object' && (! Array.isArray(obj)) && obj !== null
@@ -202,8 +200,7 @@ export function contains(father, child) {
     }
     return false
 }
-
-{% endhighlight %}
+```
 
 关于array.js和objects.js的测试用例我就不给出了。
 

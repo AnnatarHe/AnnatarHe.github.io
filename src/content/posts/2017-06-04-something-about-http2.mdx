@@ -18,7 +18,7 @@ draft: false
 ## Golang
 
 golang 获取当前路径
-{% highlight go %}
+```go
 _, filename, _, _ := runtime.Caller(1)
 p := path.Join(path.Dir(filename), "../config.yml")
-{% endhighlight %}
+```

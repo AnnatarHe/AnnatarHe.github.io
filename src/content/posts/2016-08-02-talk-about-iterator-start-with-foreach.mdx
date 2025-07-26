@@ -15,20 +15,20 @@ forEach 作为一个比较出众的遍历操作，之前有很多库都对其进
 
 往常都习惯这么做：
 
-{% highlight js %}
+```js
 const self = this
 arr.forEach(function(item) {
     // do something with this
 })
-{% endhighlight %}
+```
 
 然而如果使用第二个参数就可以这样：
 
-{% highlight js %}
+```js
 arr.forEach(function(item) {
     // do something with this
 }, this)
-{% endhighlight %}
+```
 
 省去了一个中间的self，看起来更优美了
 
@@ -36,11 +36,11 @@ arr.forEach(function(item) {
 
 有的：
 
-{% highlight js %}
+```js
 arr.forEach(item => {
     // do something
 })
-{% endhighlight %}
+```
 
 由于 arrow function 的特性，自动绑定父 scope 的 this， 会更加简洁，而且少了个`function`关键字，可读性更好。
 
@@ -50,31 +50,31 @@ arr.forEach(item => {
 
 C 系列 for 循环：
 
-{% highlight js %}
+```js
 for (let index = 0; index < arr.length; index++) {
     // do something
 }
-{% endhighlight %}
+```
 
 index 是 arr 的索引，在循环体中通过 `arr[index]` 调用当前的元素，我非常不喜欢这种方式，因为要写两个分号！
 
 还有另一种比较简单的方式：
 
-{% highlight js %}
+```js
 for (let key in obj) {
     // do something
 }
-{% endhighlight %}
+```
 
 不过这个方式一般用来遍历对象，下文有说。
 
 关于 for 循环还有 ES2015 规定的一种
 
-{% highlight js %}
+```js
 for (let item of arr) {
     // do something
 }
-{% endhighlight %}
+```
 
 这种遍历方式和之前的最大区别在于`item`，它是**value**而非**key**，可以直接迭代出内容。
 
@@ -88,20 +88,20 @@ for (let item of arr) {
 
 它会遍历arr下的所有内容，做操作之后返回数据，形成一个新的数组：
 
-{% highlight js %}
+```js
 const arr = [1, 2, 3]
 arr.map(current => current * 5)
-{% endhighlight %}
+```
 
 在 react 最常用。经常用来遍历数据，形成dom：
 
-{% highlight js %}
+```js
 someRender() {
     return this.state.data.map((current, index) => {
         return <li key={index}>{ current }</li>
     })
 }
-{% endhighlight %}
+```
 
 不过 map 有一点不好的地方在于不能控制循环的流程，如果不能完成，就返回**undefined**继续下一次迭代。所以遇到可能会返回undefined的情况应该用forEach或者for循环遍历
 
@@ -113,20 +113,20 @@ someRender() {
 
 一般需要转成数组：
 
-{% highlight js %}
+```js
 function foo() {
     const args = Array.prototype.slice.call(arguments)
     return Array.isArray(args)
 }
-{% endhighlight %}
+```
 
 但是我个人并不认同这样的方法，有了新的 ES2015 就不要用这么丑的语法了
 
-{% highlight js %}
+```js
 function foo(...args) {
     // args 是数组
 }
-{% endhighlight %}
+```
 
 ES2015 的 rest 语法使得剩余参数都传入args里面，比之前的还要调Array的方法要轻松不少。
 
@@ -136,20 +136,20 @@ ES2015 的 rest 语法使得剩余参数都传入args里面，比之前的还要
 
 我个人更喜欢用`for...in`语法，但是有一点需要注意：
 
-{% highlight js %}
+```js
 for (let index in obj) {
     if(obj.hasOwnProperty(index)) {
         // do something
     }
 }
-{% endhighlight %}
+```
 
 因为除非强制指定，否则对象都是不纯净的。都会有`__proto__`属性，也会被迭代出来。需要过滤一下。
 
 好了，如何创建纯净的对象？
 
-{% highlight js %}
+```js
 const plainObj = Object.create(null)
-{% endhighlight %}
+```
 
 最轻的obj结构，内部没有任何多余的属性。

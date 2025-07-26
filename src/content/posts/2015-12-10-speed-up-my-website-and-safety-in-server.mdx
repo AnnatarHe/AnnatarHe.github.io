@@ -54,7 +54,7 @@ draft: false
 
 开OPC是这样的：
 
-{% highlight console %}
+```console
 zend_extension=opcache.so
 opcache.memory_consumption=128
 opcache.interned_strings_buffer=8
@@ -62,7 +62,7 @@ opcache.max_accelerated_files=4000
 opcache.revalidate_freq=60
 opcache.fast_shutdown=1
 opcache.enable_cli=1
-{% endhighlight %}
+```
 
 ## SSL
 
@@ -88,18 +88,18 @@ https在防XSS方面还是很给力的。
 
 Ubuntu 官方的源里面的版本太低了，不给力，只能自己下载编译。
 
-{% highlight console %}
+```console
 $ wget http://nginx.org/download/nginx-1.9.10.tar.gz
 $ tar -zxvf nginx-1.9.10.tar.gz
 $ cd nginx-1.9.10
 $ ./configure --user=nginx --group=nginx --prefix=/opt/nginx --with-http_gzip_static_module --with-http_ssl_module --sbin-path=/usr/sbin/nginx --conf-path=/opt/nginx/nginx.conf --pid-path=/var/run/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-http_v2_module
 $ make
 $ sudo make install
-{% endhighlight %}
+```
 
 新建文件：`/etc/init.d/nginx`
 
-{% highlight bash %}
+```bash
 #!/bin/sh
 
 ### BEGIN INIT INFO
@@ -309,20 +309,20 @@ case "$1" in
 esac
 
 :
-{% endhighlight %}
+```
 
 粘贴进去了，然后赋权，执行
 
-{% highlight console %}
+```console
 $ sudo chmod 755 /etc/init.d/nginx
 $ sudo service nginx start
-{% endhighlight %}
+```
 
 这个时候贴上证书吧，顺便记得https监听的是443端口
 
 就像这样：
 
-{% highlight console %}
+```console
 server {
      listen       443 ssl default_server;
      server_name  domain.com;
@@ -335,17 +335,17 @@ server {
          index  index.html index.htm;
      }
 }
-{% endhighlight %}
+```
 
 这个时候因为监听的是443，80端口还要做一个301重定向
 
-{% highlight console %}
+```console
 server {
         listen       80;
         server_name  *.domain.com;
         return 301 https://www.domain.com$request_uri;
 }
-{% endhighlight %}
+```
 
 好了，差不多都好了。
 
@@ -365,11 +365,11 @@ server {
 
 通过TCP的多路复用有效的提升了速度。在Nginx中开启这个很简单。只要在ssl后面加一个http2就好了
 
-{% highlight console %}
+```console
 server {
      listen       443 ssl http2 default_server;
      server_name  domain.com;
-{% endhighlight %}
+```
 
 现在只要支持http2的浏览器就会用http2协议了，而不支持的也会自动退回到http1.1
 
@@ -381,11 +381,11 @@ server {
 
 开启的方法也很简单，加上一个http header就可以了，默认为你是Nginx的web server
 
-{% highlight console %}
+```console
 server {
     add_header "Strict-Transport-Security: max-age=31536000; includeSubdomains; preload";
 }
-{% endhighlight %}
+```
 
 ## gzip压缩
 
@@ -397,7 +397,7 @@ server {
 
 只要在nginx的配置文件中这么写上就可了
 
-{% highlight console %}
+```console
 gzip  on;
 gzip_types
       text/css
@@ -418,7 +418,7 @@ gzip_types
       application/atom_xml;
 gzip_comp_level 5;
 gzip_vary on;
-{% endhighlight %}
+```
 
 我的260kb的js文件经过gzip压缩，只有60kb大小了，又是相当不错的提升。
 
@@ -434,11 +434,11 @@ gzip_vary on;
 
 在nginx的配置文件中这么写一点儿吧，注意要是`server{}`中
 
-{% highlight console %}
+```console
 location ~*  \.(jpg|jpeg|png|gif|ico|css|js)$ {
    expires 365d;
 }
-{% endhighlight %}
+```
 
 ## 移除信息
 
@@ -446,24 +446,24 @@ location ~*  \.(jpg|jpeg|png|gif|ico|css|js)$ {
 
 在php.ini中设置这样一行就可以了。
 
-{% highlight console %}
+```console
 expose_php = Off;
-{% endhighlight %}
+```
 
 Nginx的版本号最好也能隐藏一下啊
 
 在nginx.conf中设置下
 
-{% highlight console %}
+```console
 server_token off;
-{% endhighlight %}
+```
 
 ## 完毕
 
-{% highlight console %}
+```console
 $ sudo service php7-fpm restart
 $ sudo service nginx restart
-{% endhighlight %}
+```
 
 这个阶段我所能了解到的关于web服务器的性能提升差不多就是这样了。剩下的大概是代码层面，和数据库部分的提升了。
 

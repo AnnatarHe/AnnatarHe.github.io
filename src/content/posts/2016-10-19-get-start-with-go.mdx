@@ -17,27 +17,27 @@ SICP 暂时看不下去，那么多题静不下心。
 
 现在的新语言似乎都不大愿意写冗长的变量声明了。
 
-{% highlight go %}
+```go
 // 显示声明一个变量的类型
 var foo int = 1
 // 自动推导
 foo := 1
-{% endhighlight %}
+```
 
 大部分情况下`foo := 1`的这种短语法就挺好用的
 
 不过我个人对于这个语法还是不喜欢，因为。。。`:`和`=`在键盘上离得好远啊！
 
 js 因为是弱类型的，不需要声明类型。好像会舒服一些。
-{% highlight js %}
+```js
 let a = 1
-{% endhighlight %}
+```
 
 ## 循环
 
 循环贼灵活，全程都是`for`来做的。
 
-{% highlight go %}
+```go
 for {
     // do some stuff
 }
@@ -49,11 +49,11 @@ for variable < 1 {
 for i := 0; i < 1 ; i++ {
     // do some stuff
 }
-{% endhighlight %}
+```
 
 上面的分别是死循环，条件判定，完整循环。语法就这个样子，对应的js类似于下面的：
 
-{% highlight js %}
+```js
 while(1) {
     // 第一个 for
 }
@@ -65,54 +65,54 @@ while (variable < 1) {
 for (let i = 0; i < 1; i++) {
     // 第三个 for
 }
-{% endhighlight %}
+```
 
 现在就好理解很多了。
 
 还有遍历map, slice什么的：
 
-{% highlight go %}
+```go
 for key, value := range someMap {
     // do some stuff
 }
-{% endhighlight %}
+```
 
 对应的 js 是这个样子
 
-{% highlight js %}
+```js
 for (let key in someMap) {
     let value = someMap[key]
     // do some stuff
 }
-{% endhighlight %}
+```
 
 ## 结构体
 
 结构体和 C 语言很像
 
-{% highlight go %}
+```go
 type Foo struct {
     x int
     y int
 }
-{% endhighlight %}
+```
 
 结构体可以挂在方法。
 
-{% highlight go %}
+```go
 func (foo *Foo) Print() {
     fmt.Println("foo")
 }
-{% endhighlight %}
+```
 
 常写js的你肯定想到了什么对吧，这和原型链好像啊！
 
-{% highlight js %}
+```js
 let Foo = function() {}
 Foo.prototype.Print = function() {
     console.log('foo')
 }
-{% endhighlight %}
+```
 
 简直不要太亲切！
 
@@ -120,21 +120,21 @@ Foo.prototype.Print = function() {
 
 键值对这样的数据在Go中怎么实现是我初学的时候想问的。
 
-{% highlight go %}
+```go
 foo := map[string]bool{
     "hello": true,
     "world": false
 }
-{% endhighlight %}
+```
 
 类似于js中的：
 
-{% highlight js %}
+```js
 let foo = {
     "hello": true,
     "world": false
 }
-{% endhighlight %}
+```
 
 是不是特别的亲切~
 
@@ -144,15 +144,15 @@ let foo = {
 
 反正有用就是了。
 
-{% highlight go %}
+```go
 foo := []string{"hello", "world"}
-{% endhighlight %}
+```
 
 类似于 js 中的
 
-{% highlight js %}
+```js
 let foo = ['hello', 'world']
-{% endhighlight %}
+```
 
 ## defer
 
@@ -160,10 +160,10 @@ let foo = ['hello', 'world']
 
 比如打开一个文件，可以立即写一个 defer 以防后面忘记
 
-{% highlight go %}
+```go
 file, err := os.Open("file.txt")
 defer file.Close()
-{% endhighlight %}
+```
 
 js里似乎没有这么牛逼的功能。有点儿叼的。
 
@@ -175,7 +175,7 @@ js里似乎没有这么牛逼的功能。有点儿叼的。
 
 比如：
 
-{% highlight go %}
+```go
 someFunc := func() (func() int) {
     // do some stuff
     return func() {
@@ -183,13 +183,13 @@ someFunc := func() (func() int) {
         return 1
     }
 }
-{% endhighlight %}
+```
 
 相似的是
 
-{% highlight js %}
+```js
 let someFunc = () => () => 1
-{% endhighlight %}
+```
 
 只是 Go 语言是强类型的，所以要在函数声明的时候加上参数列表
 
@@ -197,36 +197,36 @@ let someFunc = () => () => 1
 
 那么，自执行函数呢，Go 也有！
 
-{% highlight go %}
+```go
 foo := func() int {
     return 1
 }()
-{% endhighlight %}
+```
 
 对应的 js 是这样的：
 
-{% highlight js %}
+```js
 let foo = (function() {
     return 1
 })()
-{% endhighlight %}
+```
 
 Go 还有叼叼的多返回值，到这里我就特别想Node也有。
 
-{% highlight go %}
+```go
 func Hello() (result string, status int) {
     return "hello world", 0
 }
 
 res, status := Hello()
-{% endhighlight %}
+```
 
 相信我，你会爱上它的
 
 
 还有 Go 的独有的，牛逼的 `go` 关键字：
 
-{% highlight go %}
+```go
 names := []string{"Keyle", "Tom", "AnnatarHe"}
 
 for _, v := range names {
@@ -234,27 +234,27 @@ for _, v := range names {
         fmt.Printf("Hello, %s", v)
     }
 }
-{% endhighlight %}
+```
 
 `go`会放到另一个Goroutine中执行，就算不明白什么意思，但是我也觉得一名合格的前端也应该立刻觉得哪里不对。
 
 哈哈，是的。和一些著名的js面试题一样，因为进行的很快，所以最后只会输出“AnnatarHe”，我猜你看到这里应该会改了哦~
 
-{% highlight go %}
+```go
 go func(name) {
     fmt.Printf("Hello, %s", name)
 }(v)
-{% endhighlight %}
+```
 
 附上烂大街的js面试题：
 
-{% highlight js %}
+```js
 for (var index = 0; index < 5; index++) {
     setTimeout(function() {
         console.log(index)
     }, 500)
 }
-{% endhighlight %}
+```
 
 ## End
 

@@ -37,13 +37,13 @@ Node的安装推荐用[nvm](https://github.com/creationix/nvm)，我在上一篇
 
 主要是在项目里得加入编译jsx到正常的js
 
-{% highlight console %}
+```console
 $ npm install --save gulp browserify babelify vinyl-source-stream babel-core
-{% endhighlight %}
+```
 
 在`gulpfile.babel.js`里加上任务
 
-{% highlight js %}
+```js
 import gulp from 'gulp';
 import browserify from 'browserify';
 import babelify from 'babelify';
@@ -58,7 +58,7 @@ gulp.task('jsx', () => {
     .pipe(source('bundle.js'))
     .pipe(gulp.dest('dist/'));
 });
-{% endhighlight %}
+```
 
 这样，开发环境就大功告成了。
 
@@ -72,7 +72,7 @@ gulp.task('jsx', () => {
 
 这里写我的Live template吧，直接复制粘贴到WebStorm就可以啦
 
-{% highlight js %}
+```js
 import React from 'react';
 
 class $className$ extends React.Component {
@@ -85,7 +85,7 @@ class $className$ extends React.Component {
 }
 
 export default $className$;
-{% endhighlight %}
+```
 
 ## ES2015
 
@@ -119,7 +119,7 @@ export default $className$;
 
 这里有些很奇怪的问题。有一些情况下这样写会出错
 
-{% highlight js %}
+```js
 class App extends React.Component {
 
   handleChange(e) {
@@ -132,15 +132,15 @@ class App extends React.Component {
     );
   }
 }
-{% endhighlight %}
+```
 
 对，这个this，有时候不知道为什么this指向就会变。大概是在0.12这个版本左右吧。我最近没有碰到了。
 
 如果你碰到了这样的问题，可能加一个绑定当前this会有效：
 
-{% highlight html %}
+```html
 <input type="text" onChange={this.handleChange.bind(this)} />
-{% endhighlight %}
+```
 
 这个问题并没有深究，留待再碰到再解决吧。
 
@@ -154,7 +154,7 @@ chrome 42 才支持。不能指望其他浏览器跟上了。
 
 言归正传，一般情况下Ajax数据是要传到`state`里面的，所以一般是这样的：
 
-{% highlight js %}
+```js
 class App extends React.Component {
 
   fetchSomething() {
@@ -172,17 +172,17 @@ class App extends React.Component {
     return (...);
   }
 }
-{% endhighlight %}
+```
 
 如果你真的这样写，恭喜你，你会碰到两个坑！
 
 一个是`this`，在success中的this指向可是XMLHttpRequest的对象哦，并不是App 的class。这个时候一般用的是在外面保存this,然后里面调用
 
-{% highlight js %}
+```js
 let that = this;
 
 that.setState({});
-{% endhighlight %}
+```
 
 第二个坑更隐蔽。我当初愣是没想起来。
 
@@ -198,7 +198,7 @@ GG
 
 好了，既然原理知道了，那么解决方法也就呼之欲出了，在Ajax请求的时候改成同步的
 
-{% highlight js %}
+```js
 $.ajax({
   url: '/foo/bar',
   dataType: 'json',
@@ -207,7 +207,7 @@ $.ajax({
     this.setState({res});
   }
 })
-{% endhighlight %}
+```
 
 这里也就造成了一个问题，Ajax请求在了主线程上。网络堵塞就完蛋了。。。额，再说吧。
 
@@ -215,7 +215,7 @@ $.ajax({
 
 constructor是ES6的class的构造函数，在React中用处非常的大
 
-{% highlight js %}
+```js
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -231,7 +231,7 @@ class App extends React.Component {
     return (...);
   }
 }
-{% endhighlight %}
+```
 
 构造函数必须传入props，并且在第一行就得首先调用父类的构造函数。
 
@@ -245,7 +245,7 @@ state的设置在constructor中并不是setState了，而是变成了赋值。�
 
 你要是老老实实跟着官网写props，就像这样
 
-{% highlight js %}
+```js
 class App extends React.Component {
 
   static PropTypes = {
@@ -260,7 +260,7 @@ class App extends React.Component {
     return (...);
   }
 }
-{% endhighlight %}
+```
 
 哈哈，正常情况是会报错的！
 
@@ -280,12 +280,12 @@ class App extends React.Component {
 
 后来升级到0.14.0，要引入react-dom，写成这样也挺好的：
 
-{% highlight js %}
+```js
 import ReactDOM from 'react-dom';
 
 import App from './app';
 ReactDOM(<App />, document.body);
-{% endhighlight %}
+```
 
 嗯，挺好的。看着不错嘛。
 
@@ -297,21 +297,21 @@ ReactDOM(<App />, document.body);
 
 一定记得，多看文档。注意，注意，注意，千万只看官方的文档，其他的谁都不可靠！
 
-{% highlight js %}
+```js
 import ReactDOM from 'react-dom';
 
 import App from './app';
 ReactDOM.render(<App />, document.body);
-{% endhighlight %}
+```
 
 ## react-router
 
 上面讲了react-router的坑爹文档。这里得说说react-router的坑爹版本号
 
 安装的时候千万别懒省事，不然就直接拷贝：
-{% highlight console %}
+```console
 $ npm install --save history react-router@latest
-{% endhighlight %}
+```
 
 我当时就是懒得打最后的`@latest`，导致怎么都没办法显示效果。也是找了大半天的问题。后来才发现Router是undefined
 

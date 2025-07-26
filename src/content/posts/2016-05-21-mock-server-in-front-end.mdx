@@ -37,13 +37,13 @@ draft: false
 
 就像是这样
 
-{% highlight js %}
+```js
 // release前修改
 const prefix = 'http://dev.foo.com/'
 
 // 其他文件中
 fetch(`${prefix}/api/users`).then(res => res.json()).then(data => todo(data))
-{% endhighlight %}
+```
 
 然后我改字符串的时候就哭了&#9785; 如果你愿意读一下[源码](https://github.com/AnnatarHe/daxuedogs-web-client)，你会体会到我当时崩溃的心情，这里还残留着这个方案的痕迹
 
@@ -73,14 +73,14 @@ fetch(`${prefix}/api/users`).then(res => res.json()).then(data => todo(data))
 
 说干就干：
 
-{% highlight console %}
+```console
 $ npm install --save faker
 $ npm install -g json-server
-{% endhighlight %}
+```
 
 在项目目录下创建`mock`目录，然后做路由和数据
 
-{% highlight js %}
+```js
 // mock/db.js
 'use strict'
 const faker = require('faker')
@@ -97,25 +97,25 @@ module.exports = function() {
     }
     return data
 }
-{% endhighlight %}
+```
 
 路由文件，主要把对`/api/*`的请求转到`/*`，主要是简单一些
 
-{% highlight json %}
+```json
 {
     "/api/": "/"
 }
-{% endhighlight %}
+```
 
 然后把这个mock server 起一下吧
 
-{% highlight console %}
+```console
 $ json-server mock/db.js --routes mock/routes.json --port 9999
-{% endhighlight %}
+```
 
 剩下的是webpack那边的配置了。核心是这些：
 
-{% highlight js %}
+```js
 const config = require('./webpack.config')
 config.devServer = {
     hot: true,
@@ -128,21 +128,21 @@ config.devServer = {
     }
 }
 module.exports = config
-{% endhighlight %}
+```
 
 好了，配置也可以了。
 
-{% highlight console %}
+```console
 $ webpack-dev-server --process --colors --hot --inline --devtool eval --config webpack.dev.config.js
-{% endhighlight %}
+```
 
 所有的事情都做完了，只剩下测试了
 
 找个入口文件测试一下：
 
-{% highlight js %}
+```js
 fetch('/api/activity').then(res => res.json()).then(data => console.log(data))
-{% endhighlight %}
+```
 
 ok。把我折腾了这么几个月的前后端总算是彻底分开了
 
@@ -150,12 +150,12 @@ ok。把我折腾了这么几个月的前后端总算是彻底分开了
 
 这套流程的最大问题在于json-server这么个东西，因为是纯粹的**RESTful**的server。同样是上面的配置为例：
 
-{% highlight console %}
+```console
 GET /api/activity
 POST /api/activity {title: 'foo', image: '/foo.jpg'}
 PUT /api/activity/1 {title: 'bar', image: '/bar.jpg'}
 DELETE /api/activity/1
-{% endhighlight %}
+```
 
 对RESTful有了解就明白了，分别对应的是**获取**, **创建**, **更新**, **删除**操作
 

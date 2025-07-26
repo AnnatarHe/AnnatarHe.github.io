@@ -16,19 +16,19 @@ draft: false
 
 所以说在浏览器只要引入文件就可以了。如果用ES6 module引入则只能这样
 
-{% highlight js %}
+```js
 require('fetch')
 // 或者
 import 'fetch'
-{% endhighlight %}
+```
 
 有意思的是整个函数并没有直接引用window，而是这样实现
 
-{% highlight js %}
+```js
 (function(self) {
     // 代码...
 })(typeof self !== 'undefined' ? self : this)
-{% endhighlight %}
+```
 
 不传入参数的时候自动是`this`，那么这个this一般都是window。问题在于，这货都自执行了，为什么多此一举？
 
@@ -36,12 +36,12 @@ import 'fetch'
 
 ## 检测
 
-{% highlight js %}
+```js
 'use strict'
 if (self.fetch) {
     return
 }
-{% endhighlight %}
+```
 
 这里首先定义严格模式，然后检测有没有fetch，有的话就什么都不做了。
 
@@ -72,7 +72,7 @@ constructor 接受一个参数，Object或Headers类型。无论哪个类型都�
 
 `forEach`其实还是蛮好玩的。
 
-{% highlight js %}
+```js
 Headers.prototype.forEach = function(callback, thisArg) {
     Object.getOwnPropertyNames(this.map).forEach(function(name) {
         this.map[name].forEach(function(value) {
@@ -80,7 +80,7 @@ Headers.prototype.forEach = function(callback, thisArg) {
         }, this)
     }, this)
 }
-{% endhighlight %}
+```
 
 这里的this有三个，还有个thisArg。可以说还是挺复杂的。经过[查资料](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)得知。原来`Array.prototype.forEach`的第二个参数是指回调函数里的this。其实是绑定了this的
 
@@ -112,13 +112,13 @@ support 还是蛮有意思的。用几个 **in** 来测试兼容性。
 
 到了Body了。回忆下用法。Body是怎么用的呢？
 
-{% highlight js %}
+```js
 const form = document.querySelect('#form')
 fetch('/url', {
     method: 'post',
     body: new FormData(form)
 })
-{% endhighlight %}
+```
 
 那么来看看如何实现的。首先定义一个类变量来表示body是不是被用过了。
 
@@ -145,10 +145,10 @@ fetch('/url', {
 
 这里其实才是整个入口。这里有个棒棒的特性，如果你是重复定义的request，那么它也能解析，什么意思呢
 
-{% highlight js %}
+```js
 let req = fetch('/url')
 fetch(req).then(doSomeThings())
-{% endhighlight %}
+```
 
 就是这样，它可以复用之前的参数。如果是正常的那么就直接贴到url了。这里的`Request.prototype.isPrototypeOf(input)`用得精髓啊！
 
@@ -160,7 +160,7 @@ fetch(req).then(doSomeThings())
 
 又来了几个helpers。显示解析body的函数，前面有过调用。把body解析出来然后附加到FormData上，再返回出去。实现很漂亮！
 
-{% highlight js %}
+```js
 function decode(body) {
     var form = new FormData()
     body.trim().split('&').forEach(function(bytes) {
@@ -173,7 +173,7 @@ function decode(body) {
         })
     return form
 }
-{% endhighlight %}
+```
 
 再看看前面的使用，得知其实text的body也用了formData哦～
 
@@ -204,9 +204,9 @@ function decode(body) {
 
 最后还特别友情地加了一行
 
-{% highlight js %}
+```js
 self.fetch.polyfill = true
-{% endhighlight %}
+```
 
 告诉大家可以检测一下
 

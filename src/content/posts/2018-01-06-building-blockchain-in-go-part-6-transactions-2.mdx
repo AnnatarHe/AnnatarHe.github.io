@@ -30,7 +30,7 @@ draft: false
 
 实现奖励机制就是很简单地更新 **send** 命令：
 
-{% highlight go %}
+```go
 func (cli *CLI) send(from, to string, amount int) {
     ...
     bc := NewBlockchain()
@@ -44,7 +44,7 @@ func (cli *CLI) send(from, to string, amount int) {
     newBlock := bc.MineBlock(txs)
     fmt.Println("Success!")
 }
-{% endhighlight %}
+```
 
 在我们的实现中，创建交易挖到新区块的人会获得奖励。
 
@@ -63,7 +63,7 @@ func (cli *CLI) send(from, to string, amount int) {
 
 回忆一下之前实现的 **Blockchain.FindUnspentTransactions** 方法:
 
-{% highlight go %}
+```go
 func (bc *Blockchain) FindUnspentTransactions(pubKeyHash []byte) []Transaction {
     ...
     bci := bc.Iterator()
@@ -81,7 +81,7 @@ func (bc *Blockchain) FindUnspentTransactions(pubKeyHash []byte) []Transaction {
     }
     ...
 }
-{% endhighlight %}
+```
 
 这个方法会找到那些未被使用出账的交易。由于交易被存在区块中，所以不得不遍历区块链上的每个区块，来检查每笔交易。到 2017 年 9 月 18 号为止，比特币已经有了 485,860 个区块，整个数据库也会占用 140Gb 以上的硬盘空间。这意味着不得不去运行所有节点去检查交易。此外，检查交易会需要遍历太多的区块。
 
@@ -106,15 +106,15 @@ func (bc *Blockchain) FindUnspentTransactions(pubKeyHash []byte) []Transaction {
 
 那么从现在开始，两个很常用的方法会用到缓存了！开始写代码：
 
-{% highlight go %}
+```go
 type UTXOSet struct {
     Blockchain *Blockchain
 }
-{% endhighlight %}
+```
 
 我们将用单个数据库，不过保存 UTXO 集合到另一个桶(bucket)里。这样的话， **UTXO 集合** 会和 **Blockchain** 相结合。
 
-{% highlight go %}
+```go
 func (u UTXOSet) Reindex() {
     db := u.Blockchain.db
     bucketName := []byte(utxoBucket)
@@ -135,7 +135,7 @@ func (u UTXOSet) Reindex() {
         }
     })
 }
-{% endhighlight %}
+```
 
 这个方法初始化创建了一个 UTXO 集合。首先，如果已经存在了 bucket，就把它删掉。然后获取区块链上的所有未使用输出，最后把出账存到 bucket 里面去。
 
@@ -143,7 +143,7 @@ func (u UTXOSet) Reindex() {
 
 现在，UTXO 集合可以被用来提币了：
 
-{% highlight go %}
+```go
 func (u UTXOSet) FindSpendableOutputs(pubkeyHash []byte, amount int) (int, map[string][]int) {
     unspentOutputs := make(map[string][]int)
     accumulated := 0
@@ -168,11 +168,11 @@ func (u UTXOSet) FindSpendableOutputs(pubkeyHash []byte, amount int) (int, map[s
 
     return accumulated, unspentOutputs
 }
-{% endhighlight %}
+```
 
 或者用来确认余额：
 
-{% highlight go %}
+```go
 func (u UTXOSet) FindUTXO(pubKeyHash []byte) []TXOutput {
     var UTXOs []TXOutput
     db := u.Blockchain.db
@@ -196,13 +196,13 @@ func (u UTXOSet) FindUTXO(pubKeyHash []byte) []TXOutput {
 
     return UTXOs
 }
-{% endhighlight %}
+```
 
 这些是 **Blockchain** 里面相关方法略微调整过的版本。这些 **Blockchain** 方法不再被需要了。
 
 有了 UTXO 集合意味着我们的数据(交易信息)现在被分开存储了：实际交易信息被存在区块链中，未被花费的出账被存在 UTXO 集中。这样的分离需要有很强力的同步机制，因为我们想要 UTXO 集总是最新的，而且总是最近的交易出账。但是我们不希望每一个区块被挖出来都要重新索引一遍数据，因为这会太经常访问区块链，这正是我们要避免的情况。所以，我们需要一个可以更新 UTXO 集合的机制：
 
-{% highlight golang %}
+```golang
 func (u UTXOSet) Update(block *Block) {
     db := u.Blockchain.db
 
@@ -240,13 +240,13 @@ func (u UTXOSet) Update(block *Block) {
         }
     })
 }
-{% endhighlight %}
+```
 
 这个方法看起来很多代码，不过它做事的方式却很直接。当一个新的区块被发掘的，UTXO 集合就应该被更新。更新意味着要移除已花费的出账，从新的已被挖掘到的交易中添加新的出账。如果一笔交易的出账被删掉了，再没有出账了，它也会被移除。很简单。
 
 现在来在需要 UTXO 集合的地方用上吧：
 
-{% highlight golang %}
+```golang
 func (cli *CLI) createBlockchain(address string) {
     ...
     bc := CreateBlockchain(address)
@@ -256,23 +256,23 @@ func (cli *CLI) createBlockchain(address string) {
     UTXOSet.Reindex()
     ...
 }
-{% endhighlight %}
+```
 
 一条新的区块链被创建的时候，才需要重新索引。现在，这里是唯一一个会用到 **Reindex** 的地方，虽然看起来是多余的。在区块链开始的时候，这里只有一个区块，也只有一笔交易， 可以用**Update** 替换掉它。不过我们将来可能会需要这个重新索引的机制。
 
-{% highlight golang %}
+```golang
 func (cli *CLI) send(from, to string, amount int) {
     ...
     newBlock := bc.MineBlock(txs)
     UTXOSet.Update(newBlock)
 }
-{% endhighlight %}
+```
 
 UTXO 集合会在一个新的区块被发掘后得到更新。
 
 来确认一下有没有正常工作：
 
-{% highlight text %}
+```text
 $ blockchain_go createblockchain -address 1JnMDSqVoHi4TEFXNw5wJ8skPsPf4LHkQ1
 00000086a725e18ed7e9e06f1051651a4fc46a315a9d298e59e57aeacbe0bf73
 
@@ -296,7 +296,7 @@ Balance of '1XWu6nitBWe6J6v6MXmd5rhdP7dZsExbx': 6
 
 $ blockchain_go getbalance -address 12ncZhA5mFTTnTmHq1aTPYBri4jAK8TacL
 Balance of '13UASQpCR8Nr41PojH8Bz4K6cmTCqweskL': 4
-{% endhighlight %}
+```
 
 棒棒的！**1JnMDSqVoHi4TEFXNw5wJ8skPsPf4LHkQ1** 这个地址接收到了三次奖励：
 
@@ -328,7 +328,7 @@ Merkle 树的优点就在于一个节点可以验证某笔交易中的成员而�
 
 好了，写点儿代码：
 
-{% highlight golang %}
+```golang
 type MerkleTree struct {
     RootNode *MerkleNode
 }
@@ -338,13 +338,13 @@ type MerkleNode struct {
     Right *MerkleNode
     Data  []byte
 }
-{% endhighlight %}
+```
 
 先从数据结构开始。每个 **MerkleNode** 都有数据，也链接到他们的分支，**MerkleTree** 世界上就是链接到下个节点的根节点。它们又链接到更远的节点。
 
 我们首先来创建一个新的节点吧：
 
-{% highlight golang %}
+```golang
 func NewMerkleNode(left, right *MerkleNode, data []byte) *MerkleNode {
     mNode := MerkleNode{}
 
@@ -362,11 +362,11 @@ func NewMerkleNode(left, right *MerkleNode, data []byte) *MerkleNode {
 
     return &mNode
 }
-{% endhighlight %}
+```
 
 每个节点都包含一些数据。当一个节点为叶节点时，数据就被从外部传入(我们的场景中是一笔被序列化的交易)。当一个节点是被链接到其他节点的时候，它会从叶节点中拿数据，连接它们，然后哈希。
 
-{% highlight golang %}
+```golang
 func NewMerkleTree(data [][]byte) *MerkleTree {
     var nodes []MerkleNode
 
@@ -394,13 +394,13 @@ func NewMerkleTree(data [][]byte) *MerkleTree {
 
     return &mTree
 }
-{% endhighlight %}
+```
 
 当一个树被创建出，第一件事就是保证叶节点必须为偶数个。随后，**data**(被序列化的交易数组)被转化到树的叶节点中，这棵树也会从这些叶节点中成长。
 
 现在，改一下 **Block.HashTransactions**，它被用到了工作量证明系统中来保证交易哈希的一致：
 
-{% highlight golang %}
+```golang
 func (b *Block) HashTransactions() []byte {
     var transactions [][]byte
 
@@ -411,7 +411,7 @@ func (b *Block) HashTransactions() []byte {
 
     return mTree.RootNode.Data
 }
-{% endhighlight %}
+```
 
 首先，交易被序列化了(用 **encoding/gob**)，然后它们被用来构建一个 Merkle 树。树的根节点将会被用作区块交易的独特 ID。
 
@@ -421,9 +421,9 @@ func (b *Block) HashTransactions() []byte {
 
 你记得吗，在比特币种有一种脚本(*Script*)编程语言，它被用来锁定交易出账：交易入账提供数据去锁定出账。这个语言非常简单，语言的代码也就仅仅是数据和操作符的排列而已。看下这个例子：
 
-{% highlight text %}
+```text
 5 2 OP_ADD 7 OP_EQUAL
-{% endhighlight %}
+```
 
 **5**, **2**, 和 **7** 都是数据. **OP_ADD** 和 **OP_EQUAL** 是操作符。*Script* 的代码是从左至右执行的：数据的每一块都被塞进栈里然后下个操作会会被栈顶的元素调用。*Script*的栈只是一个简单的 FILO(先入后出)内存存储：栈中的第一个进去的元素会被最后一个拿走，之后进来的每个元素都是放到前一个的上面。
 
@@ -440,9 +440,9 @@ func (b *Block) HashTransactions() []byte {
 
 现在来看一眼比特币中执行支付的脚本：
 
-{% highlight text %}
+```text
 <signature> <pubKey> OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
-{% endhighlight %}
+```
 
 这个脚本被称作*付款给公钥哈希(Pay to Public Key Hash)*(P2PKH)，这是比特币中最常用的脚本。它就是字面上的给公钥哈希付款的意思，它会用一个确定的公钥锁币。这是 **比特币支付的核心**：无账户，两者之间无资金交互；只有脚本去确认提供的数字签名和公钥是正确的。
 

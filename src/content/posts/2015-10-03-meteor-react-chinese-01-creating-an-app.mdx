@@ -43,16 +43,16 @@ draft: false
 所以，请使用`Mac`或者`Linux`做开发。
 
 安装很简单，只需要打开`Terminal`输入：
-{% highlight console %}
+```console
 curl https://install.meteor.com/ | sh
-{% endhighlight %}
+```
 
 等进度条走完就行了。
 
 安装完成了还可以确认一下：
-{% highlight console %}
+```console
 meteor --version
-{% endhighlight %}
+```
 只要输出不是`commend not found`就证明安装成功
 
 ---
@@ -63,23 +63,23 @@ meteor --version
 在这个教程中，我们去做一个管理**待做事宜**的简单应用，并可以和其他人合作完成某项任务
 
 要建立应用，要打开终端，并输入
-{% highlight console %}
+```console
 meteor create simple-todos-react
-{% endhighlight %}
+```
 
 这个命令将会建立一个叫做`simple-todos-react`的文件夹，并包含`meteor`应用所需要的所有文件
-{% highlight console %}
+```console
 simple-todos-react.js     # 一个在客户端和服务端都会被加载的主要js文件
 simple-todos-react.html   # 一个主要的定义视图的HTML文件
 simple-todos-react.css    # 一个定义应用样式的样式表文件
 .meteor                   # Meteor 内部文件
-{% endhighlight %}
+```
 
 运行你新建的应用：
-{% highlight console %}
+```console
 cd simple-todos-react
 meteor
-{% endhighlight %}
+```
 
 打开你的浏览器，并进入`http://localhost:3000`去看看应用的运行情况
 

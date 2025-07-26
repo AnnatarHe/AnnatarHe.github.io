@@ -11,12 +11,12 @@ draft: false
 
 首先要起一个项目，推荐用vue-cli安装
 
-{% highlight console %}
+```console
 $ npm install -g vue-cli
 $ vue init webpack demo
 $ cd demo
 $ npm install
-{% endhighlight %}
+```
 
 `demo`是这个示例项目的名字
 
@@ -68,10 +68,10 @@ vue-router做前端路由管理，一个中大型项目必须要做路由管理�
 
 vuex做数据管理，类似于flux的存在，没有vuex，中大型应用中的状态会把开发者搞死，绝对。
 
-{% highlight console %}
+```console
 $ npm install --save vue-router vuex
 $ npm install --save-dev stylus-loader babel-runtime
-{% endhighlight %}
+```
 
 好了，到这里，依赖也加好了。剩下的就是写代码了？
 
@@ -83,7 +83,7 @@ vue-router用起来非常的简单
 
 入口文件(`src/main.js`)：
 
-{% highlight js %}
+```js
 'use strict'
 import Vue from 'vue' // 引入vue
 import Router from 'vue-router' // 引入vue-router
@@ -96,12 +96,11 @@ const router = new Router() // 创建路由
 routerMap(router) // 路由表引入
 
 router.start(App, '#root') // 开启应用
-
-{% endhighlight %}
+```
 
 看到缺了一个`./router.js`文件，来，创建。
 
-{% highlight js %}
+```js
 // src/router.js
 'use strict'
 
@@ -120,8 +119,7 @@ export default function (router) {
         }
     })
 }
-
-{% endhighlight %}
+```
 
 好了，路由创建成功了，顺便还搞了个按需加载。
 
@@ -129,18 +127,18 @@ export default function (router) {
 
 很简单的，就像这样就可以了。
 
-{% highlight html %}
+```html
 <!-- src/components/contents/hello.vue -->
 <a class="link" v-link="{name: 'hi'}">跳转到hi</a>
-{% endhighlight %}
+```
 
 还有，告诉应用哪里需要路由转换
-{% highlight html %}
+```html
 <!-- src/App.vue -->
 <div class="container">
     <router-view></router-view>
 </div>
-{% endhighlight %}
+```
 
 ## vuex 简明API
 
@@ -158,12 +156,12 @@ export default function (router) {
 
 这一块还是看源码比较容易懂。
 
-{% highlight js %}
+```js
 // src/vuex/mutation-types.js
 export const SET_HEADER_TITLE = 'SET_HEADER_TITLE'
-{% endhighlight %}
+```
 
-{% highlight js %}
+```js
 // src/vuex/store.js
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -182,9 +180,9 @@ export default new Vuex.Store({
     strict: debug,
     moddlewares: debug ? [createLogger()] : []
 })
-{% endhighlight %}
+```
 
-{% highlight js %}
+```js
 // src/vuex/actions.js
 import {
     SET_HEADER_TITLE
@@ -195,9 +193,9 @@ export const setTitle = makeAction(SET_HEADER_TITLE)
 function makeAction (type) {
     return ({ dispatch }, ...args) => dispatch(type, ...args)
 }
-{% endhighlight %}
+```
 
-{% highlight js %}
+```js
 // src/vuex/modules/headers.js
 import {
     SET_HEADER_TITLE
@@ -217,13 +215,13 @@ export default {
     state,
     mutations
 }
-{% endhighlight %}
+```
 
 我再说两个，一个挂载store，一个获取数据，触发操作。
 
 ### 挂载store
 
-{% highlight js %}
+```js
 // src/App.vue
 import store from './vuex/store'
 import HeaderComponent from './components/header'
@@ -235,11 +233,11 @@ export default {
         FooterComponent
     }
 }
-{% endhighlight %}
+```
 
 ## 获取数据及操作
 
-{% highlight js %}
+```js
 // src/components/header.vue
 // 从vuex拿数据，然后渲染到页面上
 // 如果需要修改可以调用setTitle
@@ -254,21 +252,21 @@ export default {
         }
     }
 }
-{% endhighlight %}
+```
 
 ## fetch
 
 单页应用少不了服务端交互，别老用ajax了，换[fetch](https://github.com/matthew-andrews/isomorphic-fetch)吧，少年！
 
-{% highlight console %}
+```console
 $ npm install --save isomorphic-fetch es6-promise
-{% endhighlight %}
+```
 
-{% highlight js %}
+```js
 // src/vuex/actions.js
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
-{% endhighlight %}
+```
 
 我在示例代码中并没有写。
 

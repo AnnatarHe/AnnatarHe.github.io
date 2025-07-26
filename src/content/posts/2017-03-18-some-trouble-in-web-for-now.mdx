@@ -12,7 +12,7 @@ draft: false
 
 表现上是：safari 和 chrome 两者的结果返回是不一致的。
 
-{% highlight js %}
+```js
 // 在chrome中：
 [1, 10, 100].sort(x => 10 - x)
 // <- [10, 100, 1]
@@ -20,7 +20,7 @@ draft: false
 // 在safari中：
 [1, 10, 100].sort(x => 10 - x)
 // <- [100, 1, 10]
-{% endhighlight %}
+```
 
 规避这个坑有两种解决方案：
 
@@ -28,7 +28,7 @@ draft: false
 
 2. 将对比中间值插入到需要对比的`Array<Object>`中。对比参数中拿到两个值，这样相比较。
 
-{% highlight js %}
+```js
 [{a: 1}, {a: 10}, {a: 100}].map(i => {
     i._tmp = 10
     return i
@@ -37,7 +37,7 @@ draft: false
     delete i._tmp
     return i
 })
-{% endhighlight %}
+```
 
 ## table in iOS
 
@@ -45,10 +45,10 @@ ios里面的tbody有个属性，如果不检查会导致在iOS上显示出多余
 
 iOS中的样式是这样的：
 
-{% highlight css %}
+```css
 -webkit-border-horizontal-spacing: 2px;
 -webkit-border-vertical-spacing: 2px;
-{% endhighlight %}
+```
 
 解决方案是重置这两个属性
 
@@ -74,13 +74,13 @@ fetch里这个`credentials`字段有三个参数，分别是：忽略，同源�
 
 这个方案的问题在于兼容性，因为是一个私有属性，其实实际看来还好。
 
-{% highlight css %}
+```css
 -webkit-line-clamp: 3; // 这个表示行数
 overflow: hidden;
 flex-direction: column;
 -webkit-box-orient: vertical;
 display: -webkit-box;
-{% endhighlight %}
+```
 
 ## Thanks
 

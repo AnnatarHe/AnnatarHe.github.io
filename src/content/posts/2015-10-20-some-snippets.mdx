@@ -12,10 +12,10 @@ draft: false
 ## JavaScript
 
 ### react-native
-{% highlight console %}
+```console
 # Windows
 node node_modules/react-native/packager/packager.js --nonPersistent
-{% endhighlight %}
+```
 
 
 ## PHP
@@ -23,13 +23,13 @@ node node_modules/react-native/packager/packager.js --nonPersistent
 ### tinker
 
 创建账户
-{% highlight console %}
+```console
 App\User::create(['name'=> 'Annatar', 'email' => '123@123.com', 'password'=>password_hash('123123', PASSWORD_BCRYPT)]);
-{% endhighlight %}
+```
 
 ### 验证码
 
-{% highlight php %}
+```php
 <?php
   $fontsize = 6;
   $width = 100;
@@ -65,44 +65,42 @@ App\User::create(['name'=> 'Annatar', 'email' => '123@123.com', 'password'=>pass
   imagepng($image);
   imagedestroy($image);
 ?>
-{% endhighlight %}
+```
 
 ## CSS
 
 ### 背景色渐变
 
-{% highlight css %}
+```css
 div {
   background: linear-gradient(135deg, red, blue);
 }
-{% endhighlight %}
+```
 
 ## Back-end
 
 ### Vagrant
-{% highlight console %}
+```console
 $ vagrant box add mybox /path/to/mybox.box
-{% endhighlight %}
+```
 
 
 ### Bash
-{% highlight bash %}
+```bash
 #!/usr/bin/bash
 apt-get update && apt-get upgrade
 apt-get install nginx php5 php5-fpm mysql-server mysql-client git redis-server mongodb php5-cli php5-dev php5-gd php5-cgi php5-xdebug
-
-
-{% endhighlight %}
+```
 
 ### Git
-{% highlight console %}
+```console
 git remote add origin git@github.com:AnnatarHe/foo.git
 git push -u origin master
-{% endhighlight %}
+```
 
 
 ### PHP Configure
 
-{% highlight console %}
+```console
 ./configure --enable-debug --with-mysql --with-gd --with-curl --prefix=/opt/php5 --enable-fpm --enable-cgi --with-openssl --enable-mbstring --with-mcrypt --with-pdo-mysql --with-mysql-sock=/var/run/mysqld/mysqld.sock
-{% endhighlight %}
+```

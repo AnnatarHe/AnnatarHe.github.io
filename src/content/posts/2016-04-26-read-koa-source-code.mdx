@@ -13,7 +13,7 @@ draft: false
 
 之前的node官网在首页写出了一段非常简单的构建http服务的代码。
 
-{% highlight js %}
+```js
 import http from 'http'
 
 const server = http.createServer((req, res) => {
@@ -21,7 +21,7 @@ const server = http.createServer((req, res) => {
 })
 
 server.listen(3000, () => console.log('server is running'))
-{% endhighlight %}
+```
 
 用ES2015稍微修改了一下。
 
@@ -45,7 +45,7 @@ koa的源码非常的少。只有四个文件，总共加一起去掉注释大�
 
 先看看koa的用法
 
-{% highlight js %}
+```js
 import koa from 'koa'
 
 const app = new koa()
@@ -55,7 +55,7 @@ app.use(ctx => {
 })
 
 app.listen(3000, () => console.log('koa server is running'))
-{% endhighlight %}
+```
 
 根据用法一步步了解node server。
 
@@ -81,13 +81,13 @@ ok, 到了koa比较核心的地方了。
 
 这里我一开始想到的方法特别粗暴。
 
-{% highlight js %}
+```js
 let middlewares = []
 
 for(let func of middlewares) {
     func(context)
 }
-{% endhighlight %}
+```
 
 这样写确实是可以用，然而问题在于异步。
 

@@ -24,9 +24,9 @@ draft: false
 
 当然，https跑起来了要告诉搜索引擎的。只需要在head里加入这样的一句。
 
-{% highlight html %}
+```html
 <link rel="canonical" href="{ { site.url } }{ { page.url } }" />
-{% endhighlight %}
+```
 
 注意两个花括号之间没有空格。
 
@@ -36,13 +36,13 @@ draft: false
 
 很抱歉，因为是静态站点，服务端不归我们管，只能通过js的方式来达到效果。
 
-{% highlight js %}
+```js
 (function() {
     if ( window.location.protocol.indexOf('s') < 0 ) {
         window.location.protocol = 'https'
     }
 })()
-{% endhighlight %}
+```
 
 你可以打开devTools来看，我开了sourcemaps的，会看到我就是这么做的。
 

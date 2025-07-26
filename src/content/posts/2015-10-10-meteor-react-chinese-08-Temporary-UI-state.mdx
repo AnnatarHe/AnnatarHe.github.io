@@ -11,7 +11,7 @@ draft: false
 
 首先，我们需要在我们的`App`组件中，添加’确认选框‘
 
-{% highlight html %}
+```html
 <!-- 在App.jsx 文件中 -->
 <header>
   <h1>Todo List</h1>
@@ -30,11 +30,11 @@ draft: false
   <form className="new-task" onSubmit={this.handleSubmit} >
     <input
       type="text"
-{% endhighlight %}
+```
 
 你可以看到要在`this.state.hideCompleted`上的读取属性。React组件有一个名叫`state`（状态）的特殊变量(field)。你可以在`state`中存储运算后的组件数据，我们需要在组件中去定义一个叫做`getInitialState`的方法来初始化这个变量
 
-{% highlight js %}
+```js
 // 在App.jsx文件中
 // 这个mixin将会使得getMeteorData方法正常执行
 mixins: [ReactMeteorData],
@@ -50,11 +50,11 @@ getInitialState() {
 // 从Tasks集合中读取数据并传送到this.data.tasks中
 getMeteorData() {
   return {
-{% endhighlight %}
+```
 
 你可以在事件监听中通过从一个叫做`this.setState`的方法来更新`this.state`。`this.setState`将会异步地更新状态属性，然后让组件重新渲染。
 
-{% highlight js %}
+```js
 // 在App.jsx文件中
 
   React.findDOMNode(this.refs.textInput).value = "";
@@ -71,11 +71,11 @@ toggleHideCompleted() {
 render() {
   return (
     <div className="container">
-{% endhighlight %}
+```
 
 现在我们得更新`getMeteorData`方法。使其可以在`this.state.hideCompleted`为`true`时，过滤我们已完成的任务。
 
-{% highlight js %}
+```js
 // 在App.jsx文件中 
 
 // 从Tasks集合中读取数据并传给this.data.tasks
@@ -97,7 +97,7 @@ getMeteorData() {
 },
 
 renderTasks() {
-{% endhighlight %}
+```
 
 现在，如果你确认了任务已完成，任务列表中将会只显示那些没有被完成的任务。
 
@@ -105,15 +105,15 @@ renderTasks() {
 
 我们已经编写了语句来过滤已完成的任务，我们也可以使用相同的语句去展示没有被确认完成的任务的数量。要完成这个特性，我们要从`getMeteorData`的方法中获取总数，然后再`render`方法中添加一行。因为我们已经有数据在客户端的MiniMongo里了，所以添加额外的**总数**并不会向服务器再次申请数据。
 
-{% highlight js %}
+```js
 // 在App.jsx文件的getMeteorData的return改成这样
 return {
       tasks: Tasks.find(query, {sort: {createdAt: -1}}).fetch(),
       incompleteCount: Tasks.find({checked: {$ne: true}}).count()
     };
-{% endhighlight %}
+```
 
-{% highlight js %}
+```js
 // 在App.jsx的render方法的return 附近，添加这么一句
 return (
   <div className="container">
@@ -125,4 +125,4 @@ return (
 
       <label className="hide-completed">
         <input
-{% endhighlight %}
+```

@@ -34,15 +34,15 @@ draft: false
 
 推荐用 docker 装的，但是如果不用的话命令大概是这样的：
 
-{% highlight bash %}
+```bash
 apt-get install python-pip
 pip install shadowsocks
 
 sudo ssserver --config ~/ssconfig.json -d start
-{% endhighlight %}
+```
 
 至于配置文件如下所示：
-{% highlight json %}
+```json
 {
     "server":"your.server.ip",
     "server_port":8388,
@@ -53,15 +53,15 @@ sudo ssserver --config ~/ssconfig.json -d start
     "method":"aes-256-cfb",
     "fast_open": false
 }
-{% endhighlight %}
+```
 
 ## 客户端
 
 客户端是在国内的服务器上，我是用的 docker 装的。
 
-{% highlight bash %}
+```bash
 docker run -d -p 1080:1080 zhenkyle/docker-sslocal -b 0.0.0.0 -s $SHADOWSOCKS_SERVER_IP -p 8388 -l 1080 -k $SSPASSWORD
-{% endhighlight %}
+```
 
 之后自然是顺利启动
 
@@ -69,13 +69,13 @@ docker run -d -p 1080:1080 zhenkyle/docker-sslocal -b 0.0.0.0 -s $SHADOWSOCKS_SE
 
 由于 iPhone 不支持 socks5 协议，所以还是需要转发到 http 流量上。需要借助一个叫做 [polipo](https://github.com/jech/polipo)的工具
 
-{% highlight bash %}
+```bash
 sudo apt install polipo
-{% endhighlight %}
+```
 
 之后修改 `/etc/polipo/config` 的配置文件：
 
-{% highlight yaml %}
+```yaml
 proxyAddress = "0.0.0.0"
 socksParentProxy = "127.0.0.1:1080"
 socksProxyType = socks5
@@ -84,13 +84,13 @@ objectHighMark = 16384
 serverMaxSlots = 64
 serverSlots = 16
 serverSlots1 = 32
-{% endhighlight %}
+```
 
 然后启动即可：
 
-{% highlight bash %}
+```bash
 /etc/init.d/polipo restart
-{% endhighlight %}
+```
 
 ## PAC 文件
 
@@ -118,10 +118,10 @@ serverSlots1 = 32
 
 命令行需要设置环境变量。重新加载后才能用。
 
-{% highlight bash %}
+```bash
 set -x http_proxy http://server.com:12345
 set -x https_proxy $http_proxy
-{% endhighlight %}
+```
 
 我这是 fish shell 的语法，其他的 shell 需要改写一下。
 

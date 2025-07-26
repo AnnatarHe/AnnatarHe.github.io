@@ -13,7 +13,7 @@ draft: false
 我非常喜欢Vue的组件的编写方式。用`*.vue`的组件编写实在是符合正常人的思考方式。相比之下React的写法就不够人性化了。
 
 React 写法：
-{% highlight js %}
+```js
 import React from 'react'
 
 class Foo extends React.Component {
@@ -24,10 +24,10 @@ class Foo extends React.Component {
     }
 }
 export default Foo
-{% endhighlight %}
+```
 
 Vue 写法：
-{% highlight html %}
+```html
 <template>
     <h1 v-text="msg"></h1>
 </template>
@@ -44,7 +44,7 @@ export default {
 h1
     background-color #333
 </style>
-{% endhighlight %}
+```
 
 可以看出对于开发来说，Vue要舒服很多。样式可以直接写在模板文件中。每个组件写起来也都是相互独立的。非常的舒服。
 

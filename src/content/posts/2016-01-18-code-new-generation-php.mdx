@@ -25,7 +25,7 @@ ps: 如果你在2017年以后看到这篇文章，那么这就应该属于标配
 
 在自己的PHP项目中新建一个文件叫`composer.json`。
 
-{% highlight json %}
+```json
 {
     "autoload": {
         "psr-4": {
@@ -33,23 +33,23 @@ ps: 如果你在2017年以后看到这篇文章，那么这就应该属于标配
         }
     }
 }
-{% endhighlight %}
+```
 
 然后运行`composer install`, 或者`composer auto-dump`
 
 然后编写`index.php`
 
-{% highlight php %}
+```php
 <?php 
 // index.php
 require 'vendor/autoload.php';
 (new Acme\Bootstrap)->start();
  ?>
-{% endhighlight %}
+```
 
 其中`Acme`是随便的名字，作为命名空间使用。比如这样的文件
 
-{% highlight php %}
+```php
 <?php 
 // src/bootstrap.php
 namespace Acme;
@@ -59,7 +59,7 @@ class Bootstrap {
     }
 }
  ?>
-{% endhighlight %}
+```
 
 这个时候运行`php index.php`看起来是不是吊吊的？
 
@@ -73,7 +73,7 @@ PHP发布到了版本7之后性能得到极大的提升。可以说是免费无�
 
 其实php7.0就已经支持强类型了。拥抱改变吧
 
-{% highlight php %}
+```php
 <?php 
 class Foo {
     public function add(int $x, int $y): int {
@@ -83,7 +83,7 @@ class Foo {
 
 echo (new Foo)->add(1,2);
  ?>
-{% endhighlight %}
+```
 
 其实还有一种严格模式，更js的开启方法差不多。。。不多说了，查手册吧。
 
@@ -104,11 +104,11 @@ PDO大家都蛮熟的了，我就不写了。
 
 通过名字差不多都能看出意思了。`过滤变量`，具体用法
 
-{% highlight php %}
+```php
 <?php 
 $search_url = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_ENCODED);
  ?>
-{% endhighlight %}
+```
 
 当然，它还有系列用法。去看看文档吧
 
@@ -120,9 +120,9 @@ $search_url = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_ENCODED);
 
 自从5.3以后，php支持了命令行的server搭建。
 
-{% highlight console %}
+```console
 php -S localhost:8000 -t /path/to/dir/
-{% endhighlight %}
+```
 
 S 大概是`server`的简称。
 

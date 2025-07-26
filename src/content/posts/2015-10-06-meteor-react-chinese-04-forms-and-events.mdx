@@ -11,7 +11,7 @@ draft: false
 
 首先，在App.jsx文件中`App`组件上添加表单吧。
 
-{% highlight html %}
+```html
 <div className="container">
   <header>
     <h1>Todo List</h1>
@@ -26,7 +26,7 @@ draft: false
   </header>
 
   <ul>
-{% endhighlight %}
+```
 
 > 提示：你也可以在你的JSX代码中添加注释，用`{/*...*/}`包裹注释内容
 
@@ -35,7 +35,7 @@ draft: false
 `input`元素有一个`ref`属性，这个属性将会让我们可以更加简单的使用这个元素，过一会儿就知道了
 
 现在来在`App.jsx`文件中的`App`组建上添加`handleSubmit`方法吧。
-{% highlight js %}
+```js
     });
   },
 
@@ -59,7 +59,7 @@ draft: false
   render() {
     return (
       <div className="container">
-{% endhighlight %}
+```
 
 现在你的应用有了新的输入框。现在添加任务只需要在输入框内写一点东西，然后按下`Enter`键就可以了。如果你再开一个新的浏览器窗口并再一次打开这个应用，你将看到任务列表自动的在两个客户端上进行同步
 
@@ -83,13 +83,13 @@ draft: false
 
 我们所要做的就是在`find`方法中添加排序选项。它位于`App`组件的`getMeteorData`方法中。
 
-{% highlight js %}
+```js
   getMeteorData() {
     return {
       tasks: Tasks.find({}, {sort: {createdAt: -1}}).fetch()
     }
   },
-{% endhighlight %}
+```
 
 现在返回到浏览器确认它是不是正常运行了。任何你所添加的新的任务将会出现在列表的顶部，不再是底部了。
 

@@ -25,7 +25,7 @@ Relay Modern: 更简单，更快速，更具拓展性
 
 在我们创建 Relay 的时候，我们意识到这些概念可以被抽象并定义为强大的形式化单位：托管视图逻辑和每个组件的数据依赖的容器。这里是一个 Relay Modern 容器的例子，它渲染用户的名字和照片而且相应地声明了数据依赖：
 
-{% highlight js %}
+```js
 const UserProfile = Relay.createFragmentContainer(
   // View A React component (functional or class)
   props => {
@@ -49,7 +49,7 @@ const UserProfile = Relay.createFragmentContainer(
     
 // Use as a normal React component:
 <UserProfile data={...} />
-{% endhighlight %}
+```
 
 Relay 容器(containers) 无缝集成了 React 和 GraphQL： 正常的 React 组件按照开发者所期望的那样组合在一起，而 GraphQL 片段(fragments)通过标准的 GraphQL 语法组合在一起。 自从介绍了 Relay 的数据和视图托管以后， 我们在 Facebook 的每个使用 GraphQL 的地方都申请使用这种方式，我们也建议 GraphQL 社区将这种托管作为最佳实践
 

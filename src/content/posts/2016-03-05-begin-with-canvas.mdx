@@ -18,7 +18,7 @@ draft: false
 ## Line
 
 基于状态绘制图形， 所以下面的代码写出来是看不到效果的
-{% highlight js %}
+```js
 let canvas = document.querySelector('#canvas')
 canvas.width = 800
 canvas.height = 800
@@ -35,29 +35,29 @@ context.lineCap = 'butt' // 可以取值： round, square
 
 // 线条接口处
 context.lineJoin = 'miter' // miter 尖角, bevel 衔接, round, 圆角
-{% endhighlight %}
+```
 
 ## Styles
 
 执行
-{% highlight js %}
+```js
 context.lineWidth = 15 // 线条宽度
 context.strokeStyle = 'rgba(255, 255, 255, .5)'// 线条颜色
 context.fillStyle = 'teal' // 填充颜色
 
 context.fill() // 填充图形
 context.stroke() // 画出边框, 或线条
-{% endhighlight %}
+```
 
 ## Rect
 
 会直接画出来
 
-{% highlight js %}
+```js
 context.rect(x, y, width, height) // 绘制矩形
 context.fillRect(x, y, width, height) // 填充矩形
 context.strokeRect(x, y, width, height) // 画有边框矩形
-{% endhighlight %}
+```
 
 ## Transform
 
@@ -71,7 +71,7 @@ context.strokeRect(x, y, width, height) // 画有边框矩形
 
 `transform`需要有一点儿《线性代数》的知识...(一个生无可恋的表情)
 
-{% highlight js %}
+```js
 context.translate(x, y) // 坐标点修改至x, y
 context.rotate(deg) // 旋转角度
 context.scale(x, y) // 缩放
@@ -89,13 +89,13 @@ context.scale(x, y) // 缩放
  **/
 context.transform(a, b, c, d, e, f)
 context.setTransform(a, b, c, d, e, f) // 忘掉之前所有的transform，只使用自己的transform
-{% endhighlight %}
+```
 
 ## Drwa a Star
 
 一定要看课程[画一个五角星](http://www.imooc.com/video/3488)
 
-{% highlight js %}
+```js
 /**
  * @param cxt canvas 绘图上下文环境
  * @param r 内圈半径
@@ -118,11 +118,11 @@ function drawStar( cxt, r, R, x, y, rotation) {
     context.stroke()
 }
 // context.lineWidth = 10
-{% endhighlight %}
+```
 
 ## 渐变
 
-{% highlight js %}
+```js
 // 线性渐变
 // 从哪儿开始，到哪儿结束
 let grd = context.createLinearGradient(0, 0, 800, 800)
@@ -137,11 +137,11 @@ grd.addColorStop(1.0, '#000')
 // 渲染
 context.fillStyle = grd
 context.fillRect(0, 0, 800, 800)
-{% endhighlight %}
+```
 
 ## images
 
-{% highlight js %}
+```js
 const img = new Image()
 img.src = 'foo.jpg'
 img.onload = () => {
@@ -150,15 +150,14 @@ img.onload = () => {
     context.fillStyle = pattern
     context.fillRect(0, 0, 800, 800)
 }
-{% endhighlight %}
+```
 
 ## Arc
 
 
-{% highlight js %}
+```js
 context.arc(centerX, centerY, radius, startingAngle, endingAngle, anticlockwise = false)
-
-{% endhighlight %}
+```
 
 
 ## References

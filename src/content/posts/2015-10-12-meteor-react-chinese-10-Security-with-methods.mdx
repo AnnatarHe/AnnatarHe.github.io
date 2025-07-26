@@ -14,9 +14,9 @@ draft: false
 
 每一个新创建的Meteor项目都被默认的添加了`insecure`包。这个包允许我们从客户端中编辑数据库。在做产品原型的时候这个包非常的有用，但是现在我们得关掉这个备胎。要移除这个包，我们得去应用目录下执行
 
-{% highlight console %}
+```console
 meteor remove insecure
-{% endhighlight %}
+```
 
 如果在移除这个包之后你试着去使用这款应用，你将会看到输入框或者是按钮都不能用了，这是因为所有的客户端数据库的权限被取消了，现在我们需要在我们的应用中通过使用一些方法来重写一些部分
 
@@ -24,7 +24,7 @@ meteor remove insecure
 
 首先我们需要定义一些方法，我们需要一个方法，这个方法为我们定义了每个数据库想在客户端执行的所有操作。这些方法应该用代码定义，可以同时在客户端和服务端执行 -- 我们会晚点儿在标题为“乐观的界面”的章节中继续讨论
 
-{% highlight js %}
+```js
 // simple-todos-react.jsx文件
 
     React.render(<App />, document.getElementById("render-target"));
@@ -56,11 +56,11 @@ Meteor.methods({
   }
 });
 // 添加结束
-{% endhighlight %}
+```
 
 现在我们定义了我们的一些方法。我们需要去更新一些地方。我会要用刚刚定义好的方法去操作数据库，而不是默认的。
 
-{% highlight js %}
+```js
 // App.jsx文件中
 
 // 通过React的ref属性来找到文本的字段
@@ -72,9 +72,9 @@ Meteor.call("addTask", text);
 
 // Clear form
 React.findDOMNode(this.refs.textInput).value = "";
-{% endhighlight %}
+```
 
-{% highlight js %}
+```js
 // Tasks.jsx文件中
  
 toggleChecked() {
@@ -90,7 +90,7 @@ deleteThisTask() {
 },
 
 render() {
-{% endhighlight %}
+```
 
 现在，我们的输入和按钮又能用了，我们从这些工作中收获了什么呢？
 

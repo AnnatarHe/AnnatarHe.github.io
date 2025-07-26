@@ -29,26 +29,26 @@ draft: false
 
 ### 添加新用户
 
-{% highlight console %}
+```console
 # useradd -aG sudo USERNAME
-{% endhighlight %}
+```
 
 ### 更新
 
-{% highlight console %}
+```console
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt-get install gcc g++ vim autoconf curl build-essential libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev ...
-{% endhighlight %}
+```
 
 ### oh-my-zsh
 
 我之前写过一篇关于oh-my-zsh的文章，我只能说这个东西超棒，我是离不开了
-{% highlight console %}
+```console
 $ sudo apt-get install zsh
 $ chsh -s $(which zsh)
 $ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-{% endhighlight %}
+```
 
 好了，这个时候注销，重新登陆账户就好了
 
@@ -56,55 +56,55 @@ $ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools
 
 这里主要是配置文件
 
-{% highlight console %}
+```console
 $ cd
 $ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 $ wget https://raw.githubusercontent.com/AnnatarHe/vimConfigure/Linux/.vimrc
 $ vim
-{% endhighlight %}
+```
 
 然后是安装vim插件`:BundleInstall`
 
 ### ssh
 
 配置ssh
-{% highlight console %}
+```console
 $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 # 狂按三次enter就好了
 cat .ssh/id_rsa.pub
-{% endhighlight %}
+```
 然后贴到github的配置文件中
-{% highlight console %}
+```console
 $ ssh -T git@github.com
-{% endhighlight %}
+```
 
 ## Git
 
 配置git哎：
 
-{% highlight console %}
+```console
 $ git config --global core.editor vim
 $ git config --global user.email 'hele@iamhele.com'
 $ git config --global user.name 'AnnatarHe'
-{% endhighlight %}
+```
 
 ## Nginx
 
 我对于Nginx的要求不高，甚至没有也没关系。但是还是要装的是吧？
 
-{% highlight console %}
+```console
 $ sudo apt-get install nginx
-{% endhighlight %}
+```
 
 当然，你如果要求比较高，也想参考一下我的编译的话，可以[点击这里]({% post_url 2015-12-10-speed-up-my-website-and-safety-in-server %})
 
 ## MySQL
 
 我是用apt-get安装的，但是最近出了5.7版本，性能好像是好到爆，还有原生json支持。过几天编译安装一遍好了
-{% highlight console %}
+```console
 $ sudo apt-get install mysql-server mysql-client
 # 之后输入数据库root用户的密码，并重复之
-{% endhighlight %}
+```
 
 ## php
 
@@ -116,18 +116,18 @@ $ sudo apt-get install mysql-server mysql-client
 
 首先去[php官网](http://php.net/get/php-5.6.15.tar.gz/from/a/mirror)下载到最新的稳定版(php7等稳定版再用)
 
-{% highlight console %}
+```console
 $ cd /path/to/php.tar.gz
 $ tar -zxvf php.tar.gz
-{% endhighlight %}
+```
 
 这一步很重要，非常的重要
 
-{% highlight console %}
+```console
 $ ./configure --enable-debug --with-mysql --with-gd --with-curl --prefix=/opt/php5 --enable-fpm --enable-cgi --with-openssl --enable-mbstring --with-mcrypt --with-pdo-mysql --with-mysql-sock=/var/run/mysqld/mysqld.sock
 $ make -j 4
 $ sudo make install
-{% endhighlight %}
+```
 配置跟了很多的参数，意思分别是：
 
 * 开启调试
@@ -146,7 +146,7 @@ $ sudo make install
 然后是，四核编译，安装。
 
 之后还得写php-fpm的脚本，还有php.ini的加入。
-{% highlight bash %}
+```bash
 #! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          php5-fpm
@@ -248,22 +248,22 @@ case "$1" in
                 exit 1
         ;;
 esac
-{% endhighlight %}
+```
 
 等切换到Ubuntu系统在来补上
 
 还有composer包的支持：
-{% highlight console %}
+```console
 $ curl -sS https://getcomposer.org/installer | php
 $ sudo mv composer.phar /usr/local/bin/composer
 $ composer # 测试用的，看看能不能用
-{% endhighlight %}
+```
 
 改成国内的镜像：
-{% highlight console %}
+```console
 $ composer config -g repositories.packagist composer http://packagist.phpcomposer.com
 $ composer global require "phpunit/phpunit=5.0.*" # 安装phpunit
-{% endhighlight %}
+```
 
 
 ## Node
@@ -274,30 +274,30 @@ $ composer global require "phpunit/phpunit=5.0.*" # 安装phpunit
 
 所以我用了[nvm](https://github.com/creationix/nvm)来对node进行版本控制
 
-{% highlight console %}
+```console
 $ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
 $ cd
 $ vim .zshrc # 也可能是.bashrc
-{% endhighlight %}
+```
 
 添加一行：
-{% highlight bash %}
+```bash
 souce ~/.nvm/nvm.sh
-{% endhighlight %}
+```
 
 然后退出来
-{% highlight console %}
+```console
 $ cd
 $ source .zshrc # 或者.bashrc
 $ nvm install 4.2.1
 $ nvm alias default 4.2.1
-{% endhighlight %}
+```
 
 然后我还是要带上淘宝的npm镜像的
-{% highlight console %}
+```console
 $ npm install -g cnpm --registry=https://registry.npm.taobao.org
 $ cnpm install -g gulp react-native # 我个人需要的包
-{% endhighlight %}
+```
 
 ## Ruby
 
@@ -309,27 +309,27 @@ ruby版本更新没有node那么疯狂，但也是很快的，而且Rails是从�
 
 我被[happypeter](https://github.com/happypeter)安利了[rbenv](https://github.com/sstephenson/rbenv)，一直在用，挺好的
 
-{% highlight console %}
+```console
 $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 $ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
 $ echo 'eval "$(rbenv init -)"' >> ~/.zshrc
 $ git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 $ echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.zshrc
 $ exec $SHELL
-{% endhighlight %}
+```
 
 下面开始ruby环节：
 
-{% highlight console %}
+```console
 $ rbenv install 2.2.3
 $ rbenv global 2.2.3
-{% endhighlight %}
+```
 
 国内镜像以及其他的东西：
-{% highlight console %}
+```console
 $ gem sources --add https://ruby.taobao.org/ --remove https://rubygems.org/
 $ gem install bundler jekyll
-{% endhighlight %}
+```
 
 ## Java
 
@@ -339,24 +339,24 @@ $ gem install bundler jekyll
 
 不装java怎么用`phpstorm`，`webstorm`这些东西？
 
-{% highlight console %}
+```console
 $ cd /opt
 $ sudo wget http://download.oracle.com/otn-pub/java/jdk/8u65-b17/jdk-8u65-linux-x64.tar.gz
 $ sudo tar -zxvf jdk-8u65-linux-x64.tar.gz
 $ cd /your/java/path
-{% endhighlight %}
+```
 
 然后回桌面。
-{% highlight console %}
+```console
 $ vim .zshrc
-{% endhighlight %}
+```
 
 把下面的代码贴进去，注意改路径啊。
-{% highlight console %}
+```console
 JAVA_HOME=/opt/java/jdk1.8.0_60
 PATH=$JAVA_HOME/bin:$PATH
 CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-{% endhighlight %}
+```
 
 
 ## Then

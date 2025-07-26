@@ -37,7 +37,7 @@ draft: false
 
 所以，Nginx配置变成了这样：
 
-{% highlight console %}
+```console
 server {
       listen 80;
       server_name dev.domain.com;
@@ -57,7 +57,7 @@ server {
           include        fastcgi_params;
       }
     }
-{% endhighlight %}
+```
 
 `add_header`那四行使得跨域成功了。
 
@@ -83,18 +83,18 @@ server {
 
 Fetch是新的API，用来发送请求的。当新版xhr用就好了，不过有着比xhr更方便的接口什么的
 
-{% highlight js %}
+```js
 fetch('/path/to/resouce')
     .then( res => res.json())
     .then( data => console.log(data))
     .catch( err => console.log(err))
-{% endhighlight %}
+```
 
 至于怎么用xhr实现网上有太多的教程了。
 
 问题来了，post怎么发？
 
-{% highlight js %}
+```js
 let fd = new FormData();
 fd.append('foo', document.querySelector('#foo').value)
 fd.append('file', document.querySelector('#fileElement').files[0])
@@ -105,7 +105,7 @@ fetch('/path/to/post', {
 }).then( res => res.json())
 .then( res => console.log(res))
 .catch(err => console.log(err))
-{% endhighlight %}
+```
 
 至于FormData下一段再说，反正fetch的body数据都得是FormData的，我测试过的。
 

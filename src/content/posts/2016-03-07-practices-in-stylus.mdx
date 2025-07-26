@@ -18,7 +18,7 @@ draft: false
 
 比如这样
 
-{% highlight console %}
+```console
 |--src
     |--styles
         |--index.styl
@@ -37,7 +37,7 @@ draft: false
             |--header.styl
             |--footer.styl
             |--others.styl
-{% endhighlight %}
+```
 
 这样，这个项目的样式文件按照功能分开了。只需要在引入一个`index.styl`编译出来就可以了。
 
@@ -69,13 +69,13 @@ draft: false
 
 上面说了，这个文件主要是引入其他的文件。而引入顺序是非常重要的。
 
-{% highlight stylus %}
+```stylus
 @require './normalize'
 @require './global'
 // 引入其他全局文件
 
 // 然后引入 components/ 下的样式
-{% endhighlight %}
+```
 
 我想都明白
 
@@ -83,7 +83,7 @@ draft: false
 
 这里主要写一些辅助的函数，类什么的。比如总结出的**clear fixed**什么的。还有媒体查询。我一般写flex的helper函数
 
-{% highlight stylus %}
+```stylus
 @import './variable'
 
 flex-design()
@@ -92,7 +92,7 @@ flex-design()
 flex-center()
     justify-content center
     align-items center
-{% endhighlight %}
+```
 
 只要需要的时候引入一下就可以用了。特别好用。常用函数都可以总结一下放在这里
 
@@ -136,7 +136,7 @@ Flex其实兼容性还是可以的。Android 4.4就全都支持了(逃...)。PC�
 
 带来的好处是易于维护，易于理解，易于协作
 
-{% highlight stylus %}
+```stylus
 @import './variable'
 
 .alert
@@ -148,7 +148,7 @@ Flex其实兼容性还是可以的。Android 4.4就全都支持了(逃...)。PC�
     &--info
         background-color $alert-info-bg-color
         color $alert-info-font-color
-{% endhighlight %}
+```
 
 是不是很清晰。
 

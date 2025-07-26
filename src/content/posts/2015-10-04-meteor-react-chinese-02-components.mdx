@@ -10,16 +10,16 @@ draft: false
 在开始编写React视图库之前，要先添加`react`包，这个包囊括了你在`Meteor`应用中开始运行`React`所需要所有东西。这个React库自己可以自动将`jsx`文件编译，并且通过`ReactMeteorData`的mixin加载数据。我们将会在接下来的步骤中看到如何使用所有的这些东西。
 
 打开一个新的终端，在你运行`Meteor`程序相同的文件夹下运行这样一条命令：
-{% highlight console %}
+```console
 meteor add react
-{% endhighlight %}
+```
 
 #### 替换启动代码
 
 为了启动，我们来替换掉默认的启动应用的代码，接下来我们会讨论这是什么意思
 
 首先，替换掉最开始的名为`simple-todos-react.html`的HTML文件内容。
-{% highlight html %}
+```html
 <head>
   <title>Todo List</title>
 </head>
@@ -27,12 +27,12 @@ meteor add react
 <body>
   <div id="render-target"></div>
 </body>
-{% endhighlight %}
+```
 
 然后, 删除`simple-todos-react.js`并建立三个新的文件
 
 新建 `simple-todos-react.jsx`文件写入这些内容
-{% highlight js %}
+```js
 if (Meteor.isClient) {
   // 下面的代码最会在客户端运行
  
@@ -41,9 +41,9 @@ if (Meteor.isClient) {
     React.render(<App />, document.getElementById("render-target"));
   });
 }
-{% endhighlight %}
+```
 新建`App.jsx`文件，并写入以下内容：
-{% highlight js %}
+```js
 // 不要在App前面添加 var
 App = React.createClass({
   getTasks() {
@@ -74,10 +74,10 @@ App = React.createClass({
     );
   }
 });
-{% endhighlight %}
+```
 
 新建`Task.jsx`文件，并写入
-{% highlight js %}
+```js
 // Task 组件 - 表示单个的待做事宜
 Task = React.createClass({
   propTypes: {
@@ -91,7 +91,7 @@ Task = React.createClass({
     );
   }
 });
-{% endhighlight %}
+```
 
 我们刚刚在应用中添加的三个事情分别是以下的意思：
 
@@ -136,13 +136,13 @@ Task = React.createClass({
 如果你现在还没有尝试过下一代JavaScript特性，一些代码片段可能看起来有点怪异。这是因为`.jsx`文件会随着`react`包被编译，同时包含一些通用的ES2015特性，即下一代JavaScript。这些特性包含了以下的：
 
 1. 箭头函数:
-{% highlight js %}
+```js
 (arg) => {return result;}
-{% endhighlight %}
+```
 2. 方法名简化：
-{% highlight js %}
+```js
 render() {...}
-{% endhighlight %}
+```
 3. 使用`const`和`let`替换`var`
 
 你可以阅读[ecmascript README](https://github.com/meteor/meteor/blob/master/packages/ecmascript/README.md)来了解Meteor所支持的特性。想要更多关于 ECMAScript 2015 的知识可以看看下面的几个文章：
@@ -158,7 +158,7 @@ render() {...}
 
 因为本教程专注于HTML和JavaScript，所以你可以拷贝下面的代码到`simple-todos.css`文件中。这是你直到本教程结束都会用到的所有CSS代码。这个应用没有这些CSS也能运行，但是你添加了这些CSS会更好看一点。
 
-{% highlight css %}
+```css
 /* CSS 声明在这里 */
 body {
   font-family: sans-serif;
@@ -285,7 +285,7 @@ header .hide-completed {
     padding-bottom: 5px;
   }
 }
-{% endhighlight %}
+```
 
 现在，你已经添加了这些CSS，这款应用应该看起来会更好一点了。切换到你的浏览器看看新的样式并确认其有没有加载成功吧~
 

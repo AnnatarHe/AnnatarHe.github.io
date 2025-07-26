@@ -33,7 +33,7 @@ draft: false
 我个人做兼容性最多做到`IE10`，坚决不往底下做兼容。
 
 第一，写法操蛋。
-{% highlight css %}
+```css
 /* 正常浏览器 */
 .foo {
 	opacity: .5;
@@ -42,7 +42,7 @@ draft: false
 .foo {
   filter: alpha(opacity=50);
 }
-{% endhighlight %}
+```
 IE的非主流语法我是不想写。
 
 第二，请勿进入。兼容性问题可以屏蔽一部分非理智用户。
@@ -62,22 +62,22 @@ IE的非主流语法我是不想写。
 ## The new API
 
 我知道肯定有很多人在用着
-{% highlight js %}
+```js
 var foo = document.getElementById('bar');
-{% endhighlight %}
+```
 我也知道并不是不会新API的写法，也是考虑兼容性的问题。
 
 但是我不考虑，所以我一直用新的API
-{% highlight js %}
+```js
 const foo = document.querySelector('[data-id=baz]');
-{% endhighlight %}
+```
 
 熟悉 `jQuery` 的同学应该很熟悉这样的语法：
-{% highlight js %}
+```js
 $('.foo').on('click', function(){});
-{% endhighlight %}
+```
 在`IE9`以上的有了这种写法：
-{% highlight js %}
+```js
 const foo = document.querySelector('div');
 foo.addEventListener('click', function(e) {
 	console.log(e);
@@ -87,7 +87,7 @@ foo.addEventListener('click', function(e) {
 foo.addEventListener('click', e => {
 	console.log(e);
 });
-{% endhighlight %}
+```
 既然提供了新的接口，那么必定是有提升的，好吧，其实不新了，都快十年了
 
 ## ES6
@@ -99,7 +99,7 @@ foo.addEventListener('click', e => {
 后来写起来就停不下来了。再也不想回到 `ES5` 了
 
 原来的`class` 要用原型链，继承也是，而且写法也比较复杂：
-{% highlight js %}
+```js
 // ES5
 function Foo () {
 	// 这里是构造函数
@@ -119,9 +119,9 @@ class Foo {
 	}
 }
 }
-{% endhighlight %}
+```
 很明显看得出，`ES6`的语法更像其他的OOP语言了，比如`PHP`就是这么写的
-{% highlight php %}
+```php
 <?php 
 class Foo {
 	public function __construct() {
@@ -132,7 +132,7 @@ class Foo {
 	}
 }
  ?>
-{% endhighlight %}
+```
 是不是很像，这样就为其他语言转入`js` 提供了更加友好的转入方式，以及更低的学习成本。
 
 当然，我喜欢`ES6` 是因为写法上的优雅，简洁，有力以及 `拥抱改变` 
@@ -140,13 +140,13 @@ class Foo {
 `ES6`的匿名函数表达式使用了箭头(`=>`)
 
 例如：
-{% highlight js %}
+```js
 const sum = (arg1, arg2) => arg1 + arg2;
-{% endhighlight %}
+```
 这样的写法使得匿名函数更具有表现力，看起来更加的优雅，舒适。
 
 当然，还有另一个功能，原来写`Ajax`请求的时候需要调用当前对象的其他方法处理`result`，这个时候`this`指针指向的是`Ajax`的处理。就像这样：
-{% highlight js %}
+```js
 // 这里的函数定义就不写了
 Foo.prototype.ajax = function() {
 	$.get('http://google.com', function(res) {
@@ -155,11 +155,11 @@ Foo.prototype.ajax = function() {
 		//由于上面的原因，所以需要调用bind来绑定当前对象
 	}.bind(this));
 }
-{% endhighlight %}
+```
 这样的写法让我来说就是。。。非常的不好看，牵扯了太多的坑。
 
 然后`ES6`的写法是这样的：
-{% highlight js %}
+```js
 class Foo {
 	ajax() {
 		$.get('http://google.com', (res) => {
@@ -168,7 +168,7 @@ class Foo {
 		});
 	}
 }
-{% endhighlight %}
+```
 
 是不是更加的简单优雅？
 

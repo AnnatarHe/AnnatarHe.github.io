@@ -31,7 +31,7 @@ draft: false
 
 核心代码是`search.js`，打开dev tools看看。
 
-{% highlight js %}
+```js
 function handleSearcher() {
     new Promise((resolve, reject) => {
         let searchVal = searchText.value.toLowerCase().trim()
@@ -60,19 +60,19 @@ function handleSearcher() {
         resultDom.innerHTML = domStr
     })
 }
-{% endhighlight %}
+```
 
 其实很简单，通过Promise分成了三块。
 
 ### 搜索
 
-{% highlight js %}
+```js
 let searchVal = searchText.value.toLowerCase().trim()
 let res = posts.filter((item) => {
     return (item.title.toLowerCase().indexOf(searchVal) > 0) || (item.url.toLowerCase().indexOf(searchVal) > 0)
 })
 resolve(res)
-{% endhighlight %}
+```
 
 首先对输入数据处理一下，小写，去空格。
 

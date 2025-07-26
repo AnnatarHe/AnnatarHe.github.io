@@ -15,16 +15,16 @@ Meteor带来了一套账户系统然后顺便还带了用户界面来让你可�
 
 
 为了开启这套账户系统和UI界面，我们需要去添加相关的包。在你的应用目录中，执行下面的命令：
-{% highlight console %}
+```console
 meteor add accounts-ui accounts-password
-{% endhighlight %}
+```
 
 ### 用React来包装一个Blaze组件
 
 为了从`accounts-ui`这个包中使用Blaze UI组件，我们需要用React的组件来把他包装一下。
 来创建一个叫`AccountsUIWrapper`的新组件吧。
 
-{% highlight js %}
+```js
 // 新文件 AccountsUIWrapper
 
 AccountsUIWrapper = React.createClass({
@@ -42,10 +42,10 @@ AccountsUIWrapper = React.createClass({
     return <span ref="container" />;
   }
 });
-{% endhighlight %}
+```
 
 我们只需要在App组件中定义一下就可以包含这个组件了：
-{% highlight html %}
+```html
   Hide Completed Tasks
 </label>
 
@@ -56,11 +56,11 @@ AccountsUIWrapper = React.createClass({
 <form className="new-task" onSubmit={this.handleSubmit} >
   <input
     type="text"
-{% endhighlight %}
+```
 
 然后，添加下面的代码来进行账户界面的设定。使用`username`，而不是`email`
 
-{% highlight js %}
+```js
 // 在 simple-todos-react.jsx 文件
 
 if (Meteor.isClient) {
@@ -73,7 +73,7 @@ if (Meteor.isClient) {
 	// 加入结束
 
   Meteor.startup(function () {
-{% endhighlight %}
+```
 
 ### 添加用户关联功能
 
@@ -90,8 +90,7 @@ if (Meteor.isClient) {
 
 首先，在`handleSubmit`的事件监听上添加一些代码来保存相应的字段
 
-{% highlight js %}
-
+```js
 Tasks.insert({
   text: text,
   createdAt: new Date(),            // 当前时间
@@ -100,10 +99,10 @@ Tasks.insert({
   username: Meteor.user().username  // 已登陆用户的用户名
   // 添加结束
 });
-{% endhighlight %}
+```
 
 修改`getMeteorData`中的`return`语句来获取当前登录用户的个人信息
-{% highlight js %}
+```js
 // App.jsx
     return {
       tasks: Tasks.find(query, {sort: {createdAt: -1}}).fetch(),
@@ -113,12 +112,12 @@ Tasks.insert({
       // 添加结束
     };
   },
-{% endhighlight %}
+```
 
 
 然后，在`render`方法上，添加判断语句使之只在用户登录后才会显示。
 
-{% highlight js %}
+```js
 // 在App.jsx文件中
   <AccountsUIWrapper />
 
@@ -135,10 +134,10 @@ Tasks.insert({
 </header>
 
 <ul>
-{% endhighlight %}
+```
 
 最后，添加语句，使之可以在每个文本之前显示用户名
-{% highlight js %}
+```js
           checked={this.props.task.checked}
           onClick={this.toggleChecked} />
  
@@ -151,7 +150,7 @@ Tasks.insert({
       </li>
     );
   }
-{% endhighlight %}
+```
 
 在你的浏览器中，添加一些任务，然后你会看到你的用户名出现了。那些这一步骤之前的老任务并不会有附上名字。尽管删掉就是了
 

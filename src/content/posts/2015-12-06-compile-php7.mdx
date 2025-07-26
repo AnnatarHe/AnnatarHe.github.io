@@ -11,62 +11,62 @@ draft: false
 
 ## Download
 
-{% highlight console %}
+```console
 $ wget http://cn2.php.net/get/php-7.0.0.tar.gz/from/this/mirror
 $ mv mirror php7.tar.gz
-{% endhighlight %}
+```
 
-{% highlight console %}
+```console
 $ tar -zxvf php7.tar.gz
 $ cd php7
-{% endhighlight %}
+```
 
 ## libxml
 
-{% highlight console %}
+```console
 $ sudo apt-get install libxml2-dev
-{% endhighlight %}
+```
 
 ## OpenSSL
 
-{% highlight console %}
+```console
 $ sudo apt-get install libcurl4-openssl-dev
-{% endhighlight %}
+```
 
 ## mcrypt
 
-{% highlight console %}
+```console
 $ sudo apt-get install curl libmcrypt-dev
-{% endhighlight %}
+```
 
 ## GD
 
 configure: error: png.h not found.
 
-{% highlight console %}
+```console
 $ sudo apt-get install libpng12-dev
-{% endhighlight %}
+```
 
 ## configure
 
-{% highlight console %}
+```console
 $ ./configure --enable-debug --with-mysql --with-gd --with-curl --enable-zip --prefix=/opt/php7 --enable-fpm --enable-cgi --with-openssl --enable-mbstring --with-mcrypt --with-pdo-mysql --with-mysql-sock=/var/run/mysqld/mysqld.sock
 $ make -j 4
 $ sudo make install
-{% endhighlight %}
+```
 
 ## PATH
 
-{% highlight console %}
+```console
 $ cd ~
 $ vim .zshrc # 或者其他的.bashrc什么的
-{% endhighlight %}
+```
 
 加入以下内容在最后一行:
 
-{% highlight bash %}
+```bash
 $PATH=$PATH:/opt/php7/bin;
-{% endhighlight %}
+```
 
 ## php-fpm
 
@@ -76,47 +76,47 @@ $PATH=$PATH:/opt/php7/bin;
 
 给两个文件改名
 
-{% highlight console %}
+```console
 $ suo cp /opt/php7/etc/php-fpm.conf.default /opt/php7/etc/php-fpm.conf
 $ suo cp /opt/php7/etc/php-fpm.d/www.conf.default /opt/php7/etc/php-fpm.d/www.conf
-{% endhighlight %}
+```
 
 然后调整里面的东西
 
 先给个pid取消注释
 
-{% highlight console %}
+```console
 $ sudo vim /opt/php7/etc/php7-fpm.conf
-{% endhighlight %}
+```
 
-{% highlight console %}
+```console
 [...]
 pid = run/php-fpm.pid
 [...]
-{% endhighlight %}
+```
 
 改一下用户组和用户
 
-{% highlight console %}
+```console
 $ sudo vim /opt/php7/etc/php7-fpm.d/www.conf
-{% endhighlight %}
+```
 
 
-{% highlight console %}
+```console
 user = YourUsername
 group = YourGroup
-{% endhighlight %}
+```
 
 
 然后创建文件：
 
-{% highlight console %}
+```console
 $ sudo vim /etc/init.d/php7-fpm
-{% endhighlight %}
+```
 
 写入以下内容，注意一些文件名
 
-{% highlight bash %}
+```bash
 #! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          php7-fpm
@@ -218,18 +218,18 @@ case "$1" in
                 exit 1
         ;;
 esac
-{% endhighlight %}
+```
 
 赋权：
 
-{% highlight console %}
+```console
 $ sudo chmod 755 /etc/init.d/php7-fpm
 $ sudo vim /lib/systemd/system/php7-fpm.service
-{% endhighlight %}
+```
 
 然后写入下面的内容：
 
-{% highlight console %}
+```console
 [Unit]
 Description=The PHP 7 FastCGI Process Manager
 After=network.target
@@ -242,69 +242,69 @@ ExecReload=/bin/kill -USR2 $MAINPID
 
 [Install]
 WantedBy=multi-user.target
-{% endhighlight %}
+```
 
 ## Run
 
 试试看行不行：
 
-{% highlight console %}
+```console
 $ php -v
 $ sudo /etc/init.d/php-fpm start
-{% endhighlight %}
+```
 
 没有出错就对了，出错了请在下面留言，我看看怎么回事。
 
 好了，到这里其实已经没有问题了。但是剩下的Nginx也得稍微调整一下
 
-{% highlight console %}
+```console
 $ sudo vim /etc/nginx/site-available/default
-{% endhighlight %}
+```
 
 改成这样
 
-{% highlight console %}
+```console
 fastcgi_pass 127.0.0.1:9000
-{% endhighlight %}
+```
 
 重启服务，走起！
 
-{% highlight console %}
+```console
 $ sudo service nginx restart
 $ sudo service php7-fpm restart
-{% endhighlight %}
+```
 
 ## Swoole
 
 按照他们的[指导做就行了](https://github.com/swoole/swoole-src)
 
-{% highlight console %}
+```console
 $ git clone https://github.com/swoole/swoole-src.git
 $ cd swoole-src
 $ phpize
 $ ./configure
 $ make && sudo make install
-{% endhighlight %}
+```
 
 在php.ini里面写上扩展
 
-{% highlight console %}
+```console
 $ sudo vim /opt/php7/lib/php.ini
-{% endhighlight %}
+```
 
 随便找个地方，不过我还是建议放到extension那边，大概第900行左右
 
-{% highlight console %}
+```console
 extension=swoole.so
-{% endhighlight %}
+```
 
 ## checkout it
 
 试试看swoole有没有安装好
 
-{% highlight console %}
+```console
 $ php -m | grep swoole
-{% endhighlight %}
+```
 
 有输出就是没问题，没输出就是有问题。
 
