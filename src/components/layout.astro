@@ -1,0 +1,12 @@
+---
+import Header from "./header.astro";
+import Footer from "./footer.astro";
+---
+
+<div class="flex flex-col h-full">
+  <Header />
+  <main class="p-4">
+    <slot />
+  </main>
+  <Footer />
+</div>
