@@ -1,0 +1,17 @@
+---
+type Props = {
+  tags: string[];
+};
+
+const { tags } = Astro.props;
+---
+
+<div class="flex flex-wrap">
+  {
+    tags.map((x) => (
+      <div class="px-2 py-0.5 rounded-2xl duration-75 hover:bg-primary/10 transition-all cursor-pointer active:scale-95">
+        <span class="select-none">{x}</span>
+      </div>
+    ))
+  }
+</div>
