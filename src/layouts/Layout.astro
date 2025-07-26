@@ -6,6 +6,8 @@ export interface Props {
   type?: string;
 }
 
+import '../styles/global.css';
+
 const { title, description = "AnnatarHe's personal blog", image, type = "website" } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -20,32 +22,32 @@ const socialImageURL = new URL(image || '/og-image.png', Astro.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
-    
+
     <!-- Primary Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={type} />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL} />
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
-    
+
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="AnnatarHe's Blog" href="/rss.xml" />
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,53 +59,54 @@ const socialImageURL = new URL(image || '/og-image.png', Astro.url).href;
 </html>
 
 <style is:global>
+  @reference '../styles/global.css';
   :root {
     --color-primary: oklch(71.33% 0.112 194.94);
   }
-  
+
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background: #1a1a1a;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: var(--color-primary);
     border-radius: 4px;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: #2eb8b8;
   }
-  
+
   /* Markdown content styling */
   .prose {
     @apply text-white;
   }
-  
+
   .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
     @apply text-white;
   }
-  
+
   .prose a {
     @apply text-primary hover:text-white transition-colors;
   }
-  
+
   .prose code {
     @apply bg-gray-800 text-primary px-1 py-0.5 rounded text-sm;
   }
-  
+
   .prose pre {
     @apply bg-gray-900 border border-gray-700 rounded-lg;
   }
-  
+
   .prose blockquote {
     @apply border-l-4 border-primary bg-gray-900 pl-4 py-2 my-4;
   }
-  
+
   .prose img {
     @apply rounded-lg;
   }
