@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import PageLayout from '../../components/PageLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import A from '../../components/markdown/A.astro';
 import Heading1 from '../../components/markdown/Heading1.astro';
 import Heading2 from '../../components/markdown/Heading2.astro';
@@ -23,9 +24,10 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'posts'>;
 
 const post = Astro.props;
-const { Content } = await post.render();
+const { Content, remarkPluginFrontmatter } = await post.render();
 
 const postDate = post.data.date || new Date(post.slug.slice(0, 10));
+const readingTime = remarkPluginFrontmatter?.minutesRead || '5 min read';
 ---
 
 <Layout
@@ -34,30 +36,46 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
   type="article"
 >
   <PageLayout>
-    <article class="max-w-4xl mx-auto px-4 py-16">
+    <article class="max-w-2xl mx-auto px-4 py-16">
+      <!-- Back navigation -->
+      <nav class="mb-8">
+        <a
+          href="/posts"
+          class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-teal-400 transition-colors"
+        >
+          <ArrowLeft size={16} />
+          <span>All posts</span>
+        </a>
+      </nav>
+
       <!-- Post Header -->
-      <header class="mb-12 text-center">
-        <h1 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-teal-400 to-white bg-clip-text text-transparent">
+      <header class="mb-12">
+        <h1 class="text-3xl md:text-4xl font-light leading-tight mb-6 text-white">
           {post.data.title}
         </h1>
 
-        <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 text-gray-400">
-          <time class="flex items-center">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-            </svg>
-            {postDate.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          </time>
+        <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+          <div class="flex items-center gap-1.5">
+            <Calendar size={14} />
+            <time>
+              {postDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })}
+            </time>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <Clock size={14} />
+            <span>{readingTime}</span>
+          </div>
 
           {post.data.tags && (
-            <div class="flex flex-wrap gap-2 justify-center">
+            <div class="flex flex-wrap gap-2">
               {post.data.tags.split(' ').filter(tag => tag.trim()).map((tag) => (
-                <span class="text-xs bg-gray-800 text-gray-300 px-3 py-1 rounded-full hover:bg-teal-400 hover:text-black transition-colors">
-                  {tag.trim()}
+                <span class="text-gray-500">
+                  #{tag.trim()}
                 </span>
               ))}
             </div>
@@ -66,7 +84,7 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
       </header>
 
       <!-- Post Content -->
-      <div class="prose prose-lg prose-invert max-w-none">
+      <div class="prose prose-lg max-w-none">
         <Content components={{
           a: A,
           h1: Heading1,
@@ -81,80 +99,71 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
       </div>
 
       <!-- Post Footer -->
-      <footer class="mt-16 pt-8 border-t border-gray-800">
-        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <a
-            href="/posts"
-            class="inline-flex items-center text-teal-400 hover:text-white transition-colors"
-          >
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
-            </svg>
-            Back to all posts
-          </a>
-        </div>
-      </footer>
     </article>
   </PageLayout>
 </Layout>
 
 <style>
   @reference '../../styles/global.css';
+  
+  /* Base prose styles */
   .prose {
-    @apply text-gray-100 leading-loose;
+    @apply text-gray-200 leading-relaxed;
+    font-size: 1.125rem;
+    line-height: 1.75;
     text-rendering: optimizeLegibility;
-    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Heading styles handled by components */
-
-  /* Paragraph styles handled by P component */
-
-  /* Link styles handled by A component */
-
+  /* Typography */
   .prose strong {
-    @apply font-bold text-white;
+    @apply font-semibold text-white;
   }
 
   .prose em {
-    @apply italic text-gray-200;
+    @apply italic;
   }
 
+  /* Code */
   .prose code {
-    @apply bg-gray-800/50 text-teal-400 px-2 py-0.5 rounded text-sm font-mono border border-gray-700/50;
+    @apply bg-gray-900 text-teal-400 px-1.5 py-0.5 rounded text-[0.875em] font-mono;
   }
 
   .prose pre {
-    @apply bg-gray-900/50 border border-gray-700 rounded-lg p-4 overflow-x-auto my-6 backdrop-blur-sm;
+    @apply bg-gray-900 rounded-lg p-4 overflow-x-auto my-8 text-sm;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 
   .prose pre code {
-    @apply bg-transparent p-0 text-gray-100 border-0;
+    @apply bg-transparent p-0 text-gray-100;
   }
 
+  /* Blockquote */
   .prose blockquote {
-    @apply border-l-4 border-teal-400 bg-gray-900/50 pl-6 pr-4 py-4 my-6 italic text-gray-200 backdrop-blur-sm;
+    @apply border-l-2 border-gray-700 pl-6 my-8 text-gray-300 italic;
   }
 
   .prose blockquote p:last-child {
     @apply mb-0;
   }
 
+  /* Lists */
   .prose ul,
   .prose ol {
-    @apply mb-6 pl-6 space-y-2;
+    @apply my-6 pl-6 space-y-2;
   }
 
   .prose ul {
-    @apply list-disc;
+    @apply list-disc marker:text-gray-600;
   }
 
   .prose ol {
-    @apply list-decimal;
+    @apply list-decimal marker:text-gray-600;
   }
 
   .prose li {
-    @apply mb-2 pl-2;
+    @apply pl-2;
   }
 
   .prose li > p {
@@ -166,8 +175,9 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
     @apply mt-2 mb-2;
   }
 
+  /* Images */
   .prose img {
-    @apply rounded-lg shadow-2xl mx-auto my-8 max-w-full h-auto;
+    @apply rounded-lg my-8 max-w-full h-auto mx-auto;
   }
 
   .prose figure {
@@ -175,34 +185,30 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
   }
 
   .prose figcaption {
-    @apply text-center text-sm text-gray-400 mt-2;
+    @apply text-center text-sm text-gray-500 mt-3;
   }
 
+  /* Tables */
   .prose table {
-    @apply border-collapse w-full my-6 overflow-x-auto block;
-  }
-
-  .prose table-wrapper {
-    @apply overflow-x-auto;
+    @apply w-full my-8 text-sm;
   }
 
   .prose th,
   .prose td {
-    @apply border border-gray-700 px-4 py-2 text-left;
+    @apply border border-gray-800 px-3 py-2 text-left;
   }
 
   .prose th {
-    @apply bg-gray-800/50 font-semibold text-white;
+    @apply bg-gray-900 font-medium text-gray-300;
   }
 
-  .prose tr:nth-child(even) {
+  .prose tr:hover {
     @apply bg-gray-900/30;
   }
 
-  /* HR styles handled by Hr component */
-
+  /* Other elements */
   .prose iframe {
-    @apply rounded-lg my-6 w-full;
+    @apply rounded-lg my-8 w-full aspect-video;
   }
 
   .prose video {
@@ -210,36 +216,38 @@ const postDate = post.data.date || new Date(post.slug.slice(0, 10));
   }
 
   .prose kbd {
-    @apply bg-gray-800 border border-gray-700 rounded px-2 py-1 text-sm font-mono text-gray-200;
+    @apply bg-gray-900 border border-gray-800 rounded px-1.5 py-0.5 text-sm font-mono text-gray-300;
   }
 
   .prose mark {
-    @apply bg-teal-400/20 text-white px-1 rounded;
+    @apply bg-teal-400/20 text-teal-300 px-1 rounded;
   }
 
   .prose del {
-    @apply line-through text-gray-500;
+    @apply line-through text-gray-600;
   }
 
   .prose details {
-    @apply my-4 p-4 bg-gray-900/50 rounded-lg border border-gray-700;
+    @apply my-6 p-4 bg-gray-900/50 rounded-lg;
   }
 
   .prose summary {
-    @apply cursor-pointer font-semibold text-white hover:text-teal-400 transition-colors;
+    @apply cursor-pointer font-medium text-gray-200 hover:text-teal-400 transition-colors;
   }
 
   .prose details[open] summary {
-    @apply mb-2;
+    @apply mb-3;
   }
 
+  /* Mobile adjustments */
   @media (max-width: 640px) {
     .prose {
-      @apply text-base;
+      font-size: 1rem;
+      line-height: 1.7;
     }
 
     .prose pre {
-      @apply p-3 text-sm;
+      @apply p-3 text-xs;
     }
   }
 </style>

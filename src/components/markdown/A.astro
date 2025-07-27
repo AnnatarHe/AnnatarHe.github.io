@@ -10,15 +10,10 @@ const isExternalLink = href?.startsWith("http");
 ---
 
 <a
-  class="transition-all active:scale-95 duration-75 p-1 rounded-lg leading-none hover:bg-teal-400/30 no-underline inline-block relative mr-4"
+  class="text-teal-400 hover:text-teal-300 underline underline-offset-2 decoration-teal-400/50 hover:decoration-teal-300 transition-colors"
   href={href}
-  target="_blank"
-  rel="noopener noreferrer"
+  target={isExternalLink ? "_blank" : undefined}
+  rel={isExternalLink ? "noopener noreferrer" : undefined}
 >
   <slot />
-  {
-    isExternalLink && (
-      <IconExternalLink className="scale-50 -translate-y-2 -translate-x-1 -mr-2 absolute top-0 -right-4" />
-    )
-  }
 </a>
