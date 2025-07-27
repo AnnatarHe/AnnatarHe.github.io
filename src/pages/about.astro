@@ -6,73 +6,64 @@ import { Github, Mail, Globe } from 'lucide-react';
 
 <Layout title="About - AnnatarHe's Blog" description="Learn more about AnnatarHe">
   <PageLayout>
-    <div class="max-w-4xl mx-auto px-4 py-16">
+    <div class="max-w-2xl mx-auto px-4 py-16">
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold mb-6 bg-gradient-to-r from-teal-400 to-white bg-clip-text text-transparent">
-          About Me
+        <img 
+          src="https://github.com/AnnatarHe.png" 
+          alt="AnnatarHe" 
+          class="w-24 h-24 rounded-full mx-auto mb-6 border-2 border-teal-400"
+        />
+        <h1 class="text-3xl font-light mb-4 text-white">
+          About
         </h1>
-        <p class="text-xl text-gray-300">
-          Software Engineer, Blogger, and Technology Enthusiast
-        </p>
       </div>
 
       <div class="prose prose-lg prose-invert max-w-none">
-        <div class="text-center mb-8">
-          <img 
-            src="https://github.com/AnnatarHe.png" 
-            alt="AnnatarHe" 
-            class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-teal-400"
-          />
+        <p class="text-gray-300 leading-relaxed mb-8 text-center">
+          I'm a software engineer passionate about building elegant solutions with modern web technologies. 
+          I work with React, Go, Node.js, and explore blockchain, infrastructure, and state management systems.
+        </p>
+
+        <h2 class="text-xl font-semibold mb-4 text-white">Projects</h2>
+        
+        <div class="space-y-3 mb-8">
+          <div>
+            <a href="https://github.com/PromptPal/PromptPal" class="text-teal-400 hover:text-white transition-colors font-medium" target="_blank" rel="noopener noreferrer">
+              PromptPal
+            </a>
+            <span class="text-gray-400 text-sm"> — Prompt Manager for developers</span>
+          </div>
+          
+          <div>
+            <a href="https://clippingkk.annatarhe.com" class="text-teal-400 hover:text-white transition-colors font-medium" target="_blank" rel="noopener noreferrer">
+              ClippingKK
+            </a>
+            <span class="text-gray-400 text-sm"> — Kindle clipping management</span>
+          </div>
+          
+          <div>
+            <a href="https://asynctalk.com" class="text-teal-400 hover:text-white transition-colors font-medium" target="_blank" rel="noopener noreferrer">
+              AsyncTalk
+            </a>
+            <span class="text-gray-400 text-sm"> — Web development podcast</span>
+          </div>
+          
+          <div>
+            <a href="https://shelltime.xyz" class="text-teal-400 hover:text-white transition-colors font-medium" target="_blank" rel="noopener noreferrer">
+              ShellTime
+            </a>
+            <span class="text-gray-400 text-sm"> — Command history tracking</span>
+          </div>
         </div>
-
-        <p class="text-lg leading-relaxed mb-6">
-          Hi there! I'm AnnatarHe, a passionate software engineer and technology enthusiast. 
-          I love exploring new technologies, building meaningful projects, and sharing my knowledge through writing.
-        </p>
-
-        <h2 class="text-2xl font-bold mb-4 text-white">What I Do</h2>
         
-        <p class="mb-4">
-          I primarily work with modern web technologies, focusing on creating elegant and efficient solutions. 
-          My interests span across various domains including:
-        </p>
-        
-        <ul class="list-disc pl-6 mb-6 space-y-2">
-          <li>Frontend Development (React, Vue, Astro)</li>
-          <li>Backend Development (Node.js, Go, Python)</li>
-          <li>State Management (XState, Redux)</li>
-          <li>DevOps and Infrastructure</li>
-          <li>Blockchain and Cryptocurrency</li>
-          <li>Reading and Literature</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mb-4 text-white">Projects</h2>
-        
-        <p class="mb-4">
-          I maintain several open-source projects and personal tools:
-        </p>
-        
-        <ul class="list-disc pl-6 mb-6 space-y-2">
-          <li><strong>ClippingKK</strong> - A book clipping and reading management platform</li>
-          <li><strong>ShellTime.xyz</strong> - Command line tracking service</li>
-          <li><strong>Various blog posts</strong> - Technical articles and personal reflections</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mb-4 text-white">Contact</h2>
-        
-        <p class="mb-4">
-          Feel free to reach out if you want to discuss technology, collaborate on projects, 
-          or just have a friendly chat:
-        </p>
-        
-        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+        <div class="flex justify-center gap-6 text-sm">
           <a 
             href="https://github.com/AnnatarHe" 
             target="_blank" 
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            class="flex items-center gap-1.5 text-gray-400 hover:text-teal-400 transition-colors"
           >
-            <Github size={20} />
+            <Github size={16} />
             <span>GitHub</span>
           </a>
           
@@ -80,33 +71,20 @@ import { Github, Mail, Globe } from 'lucide-react';
             href="https://i.annatarhe.com/"
             target="_blank" 
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            class="flex items-center gap-1.5 text-gray-400 hover:text-teal-400 transition-colors"
           >
-            <Globe size={20} />
+            <Globe size={16} />
             <span>Website</span>
           </a>
           
           <a 
             href="mailto:annatar.he@gmail.com"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            class="flex items-center gap-1.5 text-gray-400 hover:text-teal-400 transition-colors"
           >
-            <Mail size={20} />
+            <Mail size={16} />
             <span>Email</span>
           </a>
         </div>
-
-        <h2 class="text-2xl font-bold mb-4 text-white mt-8">This Blog</h2>
-        
-        <p class="mb-4">
-          This blog is built with <a href="https://astro.build" class="text-teal-400 hover:text-white">Astro</a> 
-          and styled with <a href="https://tailwindcss.com" class="text-teal-400 hover:text-white">Tailwind CSS</a>. 
-          It's deployed on GitHub Pages and the source code is available on GitHub.
-        </p>
-        
-        <p>
-          I write about technology, programming experiences, book reviews, and personal reflections. 
-          The content is a mix of technical articles and more personal posts about life and learning.
-        </p>
       </div>
     </div>
   </PageLayout>

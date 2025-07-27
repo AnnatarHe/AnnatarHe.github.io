@@ -1,64 +1,67 @@
 ---
+import { Menu, X } from 'lucide-react';
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 backdrop-blur-md bg-black/80 border-b border-gray-800">
-  <nav class="max-w-6xl mx-auto px-4 py-4">
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm">
+  <nav class="max-w-2xl mx-auto px-4 py-6">
     <div class="flex items-center justify-between">
-      <div class="flex items-center space-x-8">
-        <a href="/" class="text-xl font-bold text-white hover:text-teal-400 transition-colors">
-          AnnatarHe
-        </a>
-        <div class="hidden md:flex space-x-6">
-          <a 
-            href="/" 
-            class={`text-gray-300 hover:text-white transition-colors ${currentPath === '/' ? 'text-teal-400' : ''}`}
-          >
-            Home
-          </a>
-          <a 
-            href="/posts" 
-            class={`text-gray-300 hover:text-white transition-colors ${currentPath.startsWith('/posts') ? 'text-teal-400' : ''}`}
-          >
-            Posts
-          </a>
-          <a 
-            href="/about" 
-            class={`text-gray-300 hover:text-white transition-colors ${currentPath === '/about' ? 'text-teal-400' : ''}`}
-          >
-            About
-          </a>
-        </div>
-      </div>
+      <a href="/" class="text-lg font-light text-white hover:text-teal-400 transition-colors">
+        AnnatarHe
+      </a>
       
-      <!-- Search button -->
-      <button 
-        id="search-button"
-        class="p-2 text-gray-300 hover:text-white transition-colors"
-        aria-label="Search"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-      </button>
+      <div class="hidden md:flex items-center gap-8 text-sm">
+        <a 
+          href="/" 
+          class={`text-gray-400 hover:text-teal-400 transition-colors ${currentPath === '/' ? 'text-teal-400' : ''}`}
+        >
+          Home
+        </a>
+        <a 
+          href="/posts" 
+          class={`text-gray-400 hover:text-teal-400 transition-colors ${currentPath.startsWith('/posts') ? 'text-teal-400' : ''}`}
+        >
+          Posts
+        </a>
+        <a 
+          href="/about" 
+          class={`text-gray-400 hover:text-teal-400 transition-colors ${currentPath === '/about' ? 'text-teal-400' : ''}`}
+        >
+          About
+        </a>
+      </div>
       
       <!-- Mobile menu button -->
       <button 
         id="mobile-menu-button"
-        class="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
+        class="md:hidden text-gray-400 hover:text-teal-400 transition-colors"
         aria-label="Toggle menu"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+        <Menu size={20} id="menu-icon" />
+        <X size={20} id="close-icon" class="hidden" />
       </button>
     </div>
     
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="md:hidden hidden mt-4 space-y-2">
-      <a href="/" class="block py-2 text-gray-300 hover:text-white transition-colors">Home</a>
-      <a href="/posts" class="block py-2 text-gray-300 hover:text-white transition-colors">Posts</a>
-      <a href="/about" class="block py-2 text-gray-300 hover:text-white transition-colors">About</a>
+    <div id="mobile-menu" class="md:hidden hidden mt-6 space-y-4 text-sm">
+      <a 
+        href="/" 
+        class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath === '/' ? 'text-teal-400' : ''}`}
+      >
+        Home
+      </a>
+      <a 
+        href="/posts" 
+        class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath.startsWith('/posts') ? 'text-teal-400' : ''}`}
+      >
+        Posts
+      </a>
+      <a 
+        href="/about" 
+        class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath === '/about' ? 'text-teal-400' : ''}`}
+      >
+        About
+      </a>
     </div>
   </nav>
 </header>
@@ -67,15 +70,20 @@ const currentPath = Astro.url.pathname;
   // Mobile menu toggle
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
   
   mobileMenuButton?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
-  });
-  
-  // Search functionality placeholder
-  const searchButton = document.getElementById('search-button');
-  searchButton?.addEventListener('click', () => {
-    // TODO: Implement search modal
-    console.log('Search clicked');
+    const isOpen = !mobileMenu?.classList.contains('hidden');
+    
+    if (isOpen) {
+      mobileMenu?.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    } else {
+      mobileMenu?.classList.remove('hidden');
+      menuIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+    }
   });
 </script>
