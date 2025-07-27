@@ -3,55 +3,57 @@ import { Github, Mail, Rss, Globe } from 'lucide-react';
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-gray-900 border-t border-gray-800 mt-16">
-  <div class="max-w-6xl mx-auto px-4 py-8">
-    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-      <div class="text-gray-400 text-sm">
-        © {currentYear} AnnatarHe. All rights reserved.
-      </div>
-      
-      <div class="flex space-x-6">
+<footer class="mt-32 pb-16">
+  <div class="max-w-2xl mx-auto px-4">
+    <div class="border-t border-gray-900 pt-8 space-y-8">
+      <!-- Social Links -->
+      <div class="flex justify-center gap-8">
         <a 
           href="https://github.com/AnnatarHe" 
           target="_blank" 
           rel="noopener noreferrer"
-          class="text-gray-400 hover:text-teal-400 transition-colors"
+          class="text-gray-500 hover:text-teal-400 transition-colors"
           aria-label="GitHub"
         >
-          <Github size={20} />
+          <Github size={18} />
         </a>
         
         <a 
           href="https://i.annatarhe.com/"
           target="_blank" 
           rel="noopener noreferrer"
-          class="text-gray-400 hover:text-teal-400 transition-colors"
+          class="text-gray-500 hover:text-teal-400 transition-colors"
           aria-label="Personal Website"
         >
-          <Globe size={20} />
+          <Globe size={18} />
         </a>
         
         <a 
           href="mailto:annatar.he@gmail.com"
-          class="text-gray-400 hover:text-teal-400 transition-colors"
+          class="text-gray-500 hover:text-teal-400 transition-colors"
           aria-label="Email"
         >
-          <Mail size={20} />
+          <Mail size={18} />
         </a>
         
         <a 
           href="/rss.xml"
-          class="text-gray-400 hover:text-teal-400 transition-colors"
+          class="text-gray-500 hover:text-teal-400 transition-colors"
           aria-label="RSS Feed"
         >
-          <Rss size={20} />
+          <Rss size={18} />
         </a>
       </div>
-    </div>
-    
-    <div class="mt-4 pt-4 border-t border-gray-800 text-center text-gray-500 text-xs">
-      Built with <a href="https://astro.build" class="text-teal-400 hover:text-white transition-colors">Astro</a> 
-      · Deployed on <a href="https://pages.github.com" class="text-teal-400 hover:text-white transition-colors">GitHub Pages</a>
+      
+      <!-- Copyright and Credits -->
+      <div class="text-center space-y-2">
+        <p class="text-gray-500 text-sm">
+          © {currentYear} AnnatarHe
+        </p>
+        <p class="text-gray-600 text-xs">
+          Built with integrity
+        </p>
+      </div>
     </div>
   </div>
 </footer>
