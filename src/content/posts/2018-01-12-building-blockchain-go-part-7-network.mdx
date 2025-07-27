@@ -87,7 +87,7 @@ SPV 是简单支付验证。这种节点并不保存区块链的全量副本，�
 
 节点通过消息的方式进行通讯。当一个新的节点运行了，它会从 DNS种子中获得一些节点，然后发送给它们 **版本(version)** 信息，它在我们的实现中看起来像是这样：
 
-```golang
+```go
 type version struct {
     Version    int
     BestHeight int
@@ -101,7 +101,7 @@ type version struct {
 
 为了接收消息，我们需要一个服务器：
 
-```golang
+```go
 var nodeAddress string
 var knownNodes = []string{"localhost:3000"}
 
@@ -126,7 +126,7 @@ func StartServer(nodeID, minerAddress string) {
 
 首先，我们写死了中心节点的地址：每个节点都必须知道从哪里初始化连接。**minerAddress**参数指定接收挖坑奖励的地址。这一块：
 
-```golang
+```go
 if nodeAddress != knownNodes[0] {
     sendVersion(knownNodes[0], bc)
 }
@@ -134,7 +134,7 @@ if nodeAddress != knownNodes[0] {
 
 它的意思是如果当前节点并非中心节点，它必须发送 **version** 信息给中心节点去找寻确认区块链是否已经失效。
 
-```golang
+```go
 func sendVersion(addr string, bc *Blockchain) {
     bestHeight := bc.GetBestHeight()
     payload := gobEncode(version{nodeVersion, bestHeight, nodeAddress})
@@ -147,7 +147,7 @@ func sendVersion(addr string, bc *Blockchain) {
 
 我们的消息，在底层，是字节序列。头 12 个字节表明了命令名(我们的场景下是 "version")，之后的字节会包含 **gob** 编码过的消息结构。**commandToBytes** 看起来像是这样：
 
-```golang
+```go
 func commandToBytes(command string) []byte {
     var bytes [commandLength]byte
 
@@ -161,7 +161,7 @@ func commandToBytes(command string) []byte {
 
 它创建了一个 12 字节的 buffer 然后用命令名填满，剩余字节是空的。这是一个对立的函数：
 
-```golang
+```go
 func bytesToCommand(bytes []byte) string {
     var command []byte
 
@@ -177,7 +177,7 @@ func bytesToCommand(bytes []byte) string {
 
 当一个节点收到了一条命令，它会执行 **bytesToCommand** 去解析命令名然后用正确地句柄执行命令体：
 
-```golang
+```go
 func handleConnection(conn net.Conn, bc *Blockchain) {
     request, err := ioutil.ReadAll(conn)
     command := bytesToCommand(request[:commandLength])
@@ -197,7 +197,7 @@ func handleConnection(conn net.Conn, bc *Blockchain) {
 
 好了，这是 **version**命令处理函数，看起来大概是这样：
 
-```golang
+```go
 func handleVersion(request []byte, bc *Blockchain) {
     var buff bytes.Buffer
     var payload verzion
@@ -227,7 +227,7 @@ func handleVersion(request []byte, bc *Blockchain) {
 
 ### getblocks
 
-```golang
+```go
 type getblocks struct {
     AddrFrom string
 }
@@ -237,7 +237,7 @@ type getblocks struct {
 
 处理命令很简单：
 
-```golang
+```go
 func handleGetBlocks(request []byte, bc *Blockchain) {
     ...
     blocks := bc.GetBlockHashes()
@@ -249,7 +249,7 @@ func handleGetBlocks(request []byte, bc *Blockchain) {
 
 ### inv
 
-```golang
+```go
 type inv struct {
     AddrFrom string
     Type     string
@@ -261,7 +261,7 @@ type inv struct {
 
 处理 **inv** 比较困难：
 
-```golang
+```go
 func handleInv(request []byte, bc *Blockchain) {
     ...
     fmt.Printf("Recevied inventory with %d %s\n", len(payload.Items), payload.Type)
@@ -297,7 +297,7 @@ func handleInv(request []byte, bc *Blockchain) {
 
 ### getdata
 
-```golang
+```go
 type getdata struct {
     AddrFrom string
     Type     string
@@ -307,7 +307,7 @@ type getdata struct {
 
 **getdata** 是一个队确定的区块或交易的请求，而且它可以包含且只能包含一个 区块/交易 的 ID。
 
-```golang
+```go
 func handleGetData(request []byte, bc *Blockchain) {
     ...
     if payload.Type == "block" {
@@ -329,7 +329,7 @@ func handleGetData(request []byte, bc *Blockchain) {
 
 ### block 和 tx
 
-```golang
+```go
 type block struct {
     AddrFrom string
     Block    []byte
@@ -345,7 +345,7 @@ type tx struct {
 
 处理 **block** 消息很简单：
 
-```golang
+```go
 func handleBlock(request []byte, bc *Blockchain) {
     ...
 
@@ -377,7 +377,7 @@ func handleBlock(request []byte, bc *Blockchain) {
 
 处理 **tx** 消息是比较难的部分：
 
-```golang
+```go
 func handleTx(request []byte, bc *Blockchain) {
     ...
     txData := payload.Transaction
@@ -437,7 +437,7 @@ func handleTx(request []byte, bc *Blockchain) {
 
 第一件要做的事情就是往内存池中塞入一条新的交易(再次声明，在被放入到内存池之前，交易必须要先被验证)，下一块：
 
-```golang
+```go
 if nodeAddress == knownNodes[0] {
     for _, node := range knownNodes {
         if node != nodeAddress && node != payload.AddFrom {
@@ -451,13 +451,13 @@ if nodeAddress == knownNodes[0] {
 
 第二大块只是针对矿工节点。让我们分解成小块吧：
 
-```golang
+```go
 if len(mempool) >= 2 && len(miningAddress) > 0 {
 ```
 
 **miningAddress** 是矿工节点唯一的数据集。当当前(矿工)节点的内存池中有两个或者更多交易的时候，挖坑开始。
 
-```golang
+```go
 for id := range mempool {
     tx := mempool[id]
     if bc.VerifyTransaction(&tx) {
@@ -473,7 +473,7 @@ if len(txs) == 0 {
 
 首先，内存池中的所有交易会被验证，非法交易会被忽略掉，如果没有合法交易，挖坑会被中止。
 
-```golang
+```go
 cbTx := NewCoinbaseTX(miningAddress, "")
 txs = append(txs, cbTx)
 
@@ -488,7 +488,7 @@ fmt.Println("New block is mined!")
 
 > TODO: 再次声明，UTXOSet.Update 应该替换掉 UTXOSet.Reindex
 
-```golang
+```go
 for _, tx := range txs {
     txID := hex.EncodeToString(tx.ID)
     delete(mempool, txID)
@@ -653,12 +653,12 @@ P.S. 你可以实现 **addr** 消息来开始优化这个网络，就像是比�
 2. [比特币协议文档](https://en.bitcoin.it/wiki/Protocol_documentation)
 3. [比特币网络](https://en.bitcoin.it/wiki/Network)
 
-* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-* [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
-* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
-* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
-* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
-* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
-* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
+* [基本原型](/posts/building-blockchain-in-go-part-1-basic-prototype)
+* [工作量证明](/posts/building-blockchain-in-go-part-2-proof-of-work)
+* [持久化与命令行](/posts/building-blockchain-in-go-part-3-persistence-and-cli)
+* [交易 1](/posts/build-blockchain-in-go-part-4-transactions-1)
+* [地址](/posts/building-blockchain-in-go-part-5-addresses)
+* [交易 2](/posts/building-blockchain-in-go-part-6-transactions-2)
+* [网络](/posts/building-blockchain-go-part-7-network)
 
 > 非常感谢 **Ivan Kuznetsov** 的文章，感谢 [buctwbzs](https://github.com/buctwbzs) 的校对和 [小洁](https://weibo.com/u/2808613111)的辅助翻译

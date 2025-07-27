@@ -9,7 +9,7 @@ draft: false
 
 ## 介绍
 
-在 [上篇文章]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %}) 中, 我们构建了一个很简单的数据结构，这个结构就是区块链数据库的本质。而且我们赋予了它们类似于链式操作中添加数据块的能力：每个区块和前一个区块相链接。不过哦，我们的区块链实现有一个很大的瑕疵：添加一个区块太简单了，成本太低了。区块链和比特币的其中一个重要基石则是添加新的区块非常困难。今天，我们来修复这个瑕疵。
+在 [上篇文章](/posts/building-blockchain-in-go-part-1-basic-prototype) 中, 我们构建了一个很简单的数据结构，这个结构就是区块链数据库的本质。而且我们赋予了它们类似于链式操作中添加数据块的能力：每个区块和前一个区块相链接。不过哦，我们的区块链实现有一个很大的瑕疵：添加一个区块太简单了，成本太低了。区块链和比特币的其中一个重要基石则是添加新的区块非常困难。今天，我们来修复这个瑕疵。
 
 ## 工作量证明
 
@@ -60,7 +60,7 @@ Hashing 是一个针对特定数据计算哈希的过程。一个哈希是数据
 
 好了，学术部分说完了，来开始写代码吧！首先，我们定义一个挖坑困难度：
 
-```golang
+```go
 const targetBits = 24
 ```
 
@@ -68,7 +68,7 @@ const targetBits = 24
 
 24 是一个隔断值，我们的目标是在内存中找到一个少于 256 比特的目标值，而且我们想要使它有足够的不同，还不能太大。因为差别越大，越难找到合适的 hash 值
 
-```golang
+```go
 type ProofOfWork struct {
     block  *Block
     target *big.Int
@@ -106,7 +106,7 @@ func NewProofOfWork(b *Block) *ProofOfWork {
 
 现在，我们需要数据区计算 hash，先准备一下：
 
-```golang
+```go
 func (pow *ProofOfWork) prepareData(nonce int) []byte {
     data := bytes.Join(
         [][]byte{
@@ -127,7 +127,7 @@ func (pow *ProofOfWork) prepareData(nonce int) []byte {
 
 好了，所有的准备工作都做完了，我们来实现 PoW 的核心算法吧：
 
-```golang
+```go
 func (pow *ProofOfWork) Run() (int, []byte) {
     var hashInt big.Int
     var hash [32]byte
@@ -163,7 +163,7 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 
 就像我们之前所解释的那样简单。现在我们可以删掉 **Block** 里的 **SetHash** 函数了，然后顺便改造一下 **NewBlock** 函数：
 
-```golang
+```go
 func NewBlock(data string, prevBlockHash []byte) *Block {
     block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}, 0}
     pow := NewProofOfWork(block)
@@ -178,7 +178,7 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 
 这里你可以看到 **nonce** 被存在 **Block**属性中。这是很有必要的，因为需要 **nonce** 去验证证据。现在 **Block** 看起来像是这样：
 
-```golang
+```go
 type Block struct {
     Timestamp     int64
     Data          []byte
@@ -217,7 +217,7 @@ Hash: 000000b33185e927c9a989cc7d5aaaed739c56dad9fd9361dea558b9bfaf5fbe
 
 这里还有一件事要去做。我们得让验证工作量变得可行。
 
-```golang
+```go
 func (pow *ProofOfWork) Validate() bool {
     var hashInt big.Int
 
@@ -235,7 +235,7 @@ func (pow *ProofOfWork) Validate() bool {
 
 来再确认一下都没问题了：
 
-```golang
+```go
 func main() {
     ...
 
@@ -273,11 +273,11 @@ PoW: true
 
 我们的区块链离真实的架构更近了一步：现在添加区块需要困难的工作了，这就让挖坑成为了可能。但仍旧缺少一些至关重要的功能：区块链数据库并未持久化，也没有钱包，地址，交易，也没有一致化机制。所有的这些我们都要在未来的文章中实现，现在，祝挖矿快乐~
 
-* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-* [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
-* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
-* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
-* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
-* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
-* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
+* [基本原型](/posts/building-blockchain-in-go-part-1-basic-prototype)
+* [工作量证明](/posts/building-blockchain-in-go-part-2-proof-of-work)
+* [持久化与命令行](/posts/building-blockchain-in-go-part-3-persistence-and-cli)
+* [交易 1](/posts/build-blockchain-in-go-part-4-transactions-1)
+* [地址](/posts/building-blockchain-in-go-part-5-addresses)
+* [交易 2](/posts/building-blockchain-in-go-part-6-transactions-2)
+* [网络](/posts/building-blockchain-go-part-7-network)
 

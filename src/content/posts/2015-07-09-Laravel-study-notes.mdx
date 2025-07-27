@@ -7,7 +7,7 @@ draft: false
 
 ## Hello
 
-最近看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。   
+最近看了[Laracasts](http://laracasts)的`Laravel5`教程视频，感慨很多啊。凭着我半吊子英语都觉得`Laravel`绝对有向`Rails`看齐的能力。
 
 今天开始做一些小的笔记。
 
@@ -51,7 +51,7 @@ composer require doctrine/dbal
 5.1版本带来了很有用的新方法：
 `database/factories/ModelFactory.php`写入：
 ```php
-<?php 
+<?php
 $factory->define(App\User::class,function ($faker){
 	return [
 		'name'           => $faker->name,
@@ -87,8 +87,8 @@ $ php artisan db:seed
 ```
 好了，去数据库查看数据吧！
 
-> 当然还有简便的方法，这样的假数据我们只会在测试的时候使用，所以没必要非得在文件里面写入，那么这个简单的方法比较合适   
->> $ php artisan tinker   
+> 当然还有简便的方法，这样的假数据我们只会在测试的时候使用，所以没必要非得在文件里面写入，那么这个简单的方法比较合适
+>> $ php artisan tinker
 >> factory('App\User')->create();
 
 然后创建`Model`
@@ -114,14 +114,14 @@ class Article extends Model{
 
 使一个页面局部总是接受数据
 
-这个翻译不知道合不合适，原话是*When You Want a View Partial to Always Recive Data*   
+这个翻译不知道合不合适，原话是*When You Want a View Partial to Always Recive Data*
 好吧，不纠结翻译了。如果是你你怎么做？
-之前我在用`ThinkPHP`的时候技术太差呗，就是一个页面一个页面的写，写重复的内容 
+之前我在用`ThinkPHP`的时候技术太差呗，就是一个页面一个页面的写，写重复的内容
 
-> 发出申请   
-> 接收数据   
-> 渲染页面   
-> repeat \* n      
+> 发出申请
+> 接收数据
+> 渲染页面
+> repeat \* n
 
 这里完全没有黑`ThinkPHP`的意思，当初我用它还是很幸福的，把我从手写的困境中拯救了出来.
 
@@ -201,10 +201,10 @@ elixir(function(mix){
 ```
 好了，那么都是什么意思呢？`mix`是mixin的意思哦，第二行首先是把[Sass](http://sass-lang.com)编译成`css`，[CoffeeScript](http://coffee-script.org)编译成`Javascript`，是吧^_^
 
-然后是混合选定的css文件，怎么选呢？**min.style**的三个参数分别是**被混合的文件名**，**混合后的生成地址**，**被混合文件的所在目录**   
+然后是混合选定的css文件，怎么选呢？**min.style**的三个参数分别是**被混合的文件名**，**混合后的生成地址**，**被混合文件的所在目录**
 那么同理，`mix.scripts`也是混合喽~
 
-> Ok,there we go!   
+> Ok,there we go!
 
 那么，如何运行这个命令？好办：
 ```bash
@@ -230,11 +230,11 @@ mix.version('public/css/final.css');
 
 ## Session
 
-可以用`Redis`来替代。可以参考我的另一篇[Redis笔记]({% post_url 2015-07-25-Redis-notes %})
+可以用`Redis`来替代。可以参考我的另一篇[Redis笔记](/2015-07-25-Redis-notes)
 
 设置：
 ```php
-<?php 
+<?php
 \Session::flash('key','value');
 //或者：
 \Session::put('key','value');
@@ -245,7 +245,7 @@ session()->flash('key','value');
 ```
 ## 使用(视图模板)
 ```php
-<?php 
+<?php
 @if (Session::has('key'))
 	{ { Session::get('key') } }
 @endif
@@ -253,7 +253,7 @@ session()->flash('key','value');
 ```
 加入了`Flash`的package之后更是可以这样使用：
 ```php
-<?php 
+<?php
 flash('Hello World');
 flash()->success('success infomation');
 flash()->overlay('infomation', 'title');
@@ -270,7 +270,7 @@ flash()->overlay('infomation', 'title');
 ## Form
 首先要安装下面的`Form`的package。然后来创作表单吧！
 ```php
-<?php 
+<?php
 {!! Form::open()  !!}
 	<div class="form-group">
 		{!! Form::label('title','Title') !!}
@@ -297,7 +297,7 @@ flash()->overlay('infomation', 'title');
 ## Upload
 
 ```php
-<?php 
+<?php
 public function addPhoto(Request $request) {
 	$file = $request->file('file');
 	$name = time() . $file->getClientOriginalName();
@@ -325,10 +325,10 @@ public function addPhoto(Request $request) {
 $ composer require illuminate/html
 ```
 
-* **illuminate/html**   
+* **illuminate/html**
 在`config/app.php`下注册：
 ```php
-<?php 
+<?php
 //'providers'=>里面加入
 'Illuminate\Html\HtmlServiceProvider'
 //'Alias'加入：
@@ -337,9 +337,9 @@ $ composer require illuminate/html
 ?>
 ```
 
-* **laracasts/flash**   
+* **laracasts/flash**
 ```php
-<?php 
+<?php
 //'providers'=>里面加入
 'Laracasts\Flash\FlashServiceProvider'
 //'Alias'加入：

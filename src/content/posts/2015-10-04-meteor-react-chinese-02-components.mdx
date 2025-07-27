@@ -23,7 +23,7 @@ meteor add react
 <head>
   <title>Todo List</title>
 </head>
- 
+
 <body>
   <div id="render-target"></div>
 </body>
@@ -35,7 +35,7 @@ meteor add react
 ```js
 if (Meteor.isClient) {
   // 下面的代码最会在客户端运行
- 
+
   Meteor.startup(function () {
     // 在页面加载完成之后，使用 Meteor.startup 来渲染 React 组件
     React.render(<App />, document.getElementById("render-target"));
@@ -53,20 +53,20 @@ App = React.createClass({
       { _id: 3, text: "This is task 3" }
     ];
   },
- 
+
   renderTasks() {
     return this.getTasks().map((task) => {
       return <Task key={task._id} task={task} />;
     });
   },
- 
+
   render() {
     return (
       <div className="container">
         <header>
           <h1>Todo List</h1>
         </header>
- 
+
         <ul>
           {this.renderTasks()}
         </ul>
@@ -117,7 +117,7 @@ Task = React.createClass({
 
 #### HTML文件中定义静态内容
 
-`Meteor`将你的应用中的HTML文件切分并识别三个最高等级的标签：**<head>**, **<body>**,还有**\<template\>**
+`Meteor`将你的应用中的HTML文件切分并识别三个最高等级的标签：**\<head\>**, **\<body\>**,还有**\<template\>**
 
 每个在 \<head\>标签中的标签被添加到已被发送的HTML文件的`head`部分，\<body\>标签中的所有标签同样是被添加到已被发送的HTML的`body`部分，就像正常的html文件一样
 

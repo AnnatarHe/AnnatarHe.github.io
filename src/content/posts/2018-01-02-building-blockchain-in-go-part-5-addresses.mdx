@@ -9,7 +9,7 @@ draft: false
 
 ## 介绍
 
-在 [上篇文章]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %}) 中，我们已经着手实现了交易信息。你也已经了解到了交易的中立性：比特币没有用户账户，私人数据(像是名字，护照或者身份证号)也并非必需的，更不会保存。但仍要有一些东西可以用来识别是你，作为交易的出账(就像出账的时候，币的拥有者被锁定在了上面)。这就是为什么会需要比特币的地址。到现在为止，我们用了用户随意定制的字符串作为地址，那么是时候去实现一个真正的地址了，就像他们在比特币上做的那样。
+在 [上篇文章](/posts/build-blockchain-in-go-part-4-transactions-1) 中，我们已经着手实现了交易信息。你也已经了解到了交易的中立性：比特币没有用户账户，私人数据(像是名字，护照或者身份证号)也并非必需的，更不会保存。但仍要有一些东西可以用来识别是你，作为交易的出账(就像出账的时候，币的拥有者被锁定在了上面)。这就是为什么会需要比特币的地址。到现在为止，我们用了用户随意定制的字符串作为地址，那么是时候去实现一个真正的地址了，就像他们在比特币上做的那样。
 
 > 这个部分的介绍有重大的代码变化，所以没必要全都解释清楚，请参考 [这个页面](https://github.com/Jeiwan/blockchain_go/compare/part_4...part_5#files_bucket) 了解自上篇文章以来的变化
 
@@ -111,7 +111,7 @@ Version  Public key hash                           Checksum
 
 我们从 **Wallet** 结构开始：
 
-```golang
+```go
 type Wallet struct {
     PrivateKey ecdsa.PrivateKey
     PublicKey  []byte
@@ -141,7 +141,7 @@ func newKeyPair() (ecdsa.PrivateKey, []byte) {
 
 现在，我们来生成一个地址：
 
-```golang
+```go
 func (w Wallet) GetAddress() []byte {
     pubKeyHash := HashPubKey(w.PublicKey)
 
@@ -186,7 +186,7 @@ func checksum(payload []byte) []byte {
 
 现在你得用地址改一下入账出账：
 
-```golang
+```go
 type TXInput struct {
     Txid      []byte
     Vout      int
@@ -282,7 +282,7 @@ Nice！来实现一下交易签名吧。
 
 好吧，看起来蛮复杂的，开始写点儿代码好了。我们会从 **Sign** 方法开始：
 
-```golang
+```go
 func (tx *Transaction) Sign(privKey ecdsa.PrivateKey, prevTXs map[string]Transaction) {
     if tx.IsCoinbase() {
         return
@@ -309,7 +309,7 @@ func (tx *Transaction) Sign(privKey ecdsa.PrivateKey, prevTXs map[string]Transac
 
 来一步步看这段代码吧：
 
-```golang
+```go
 if tx.IsCoinbase() {
     return
 }
@@ -317,13 +317,13 @@ if tx.IsCoinbase() {
 
 币基交易不会被签名，因为它并没有真正的入账。
 
-```golang
+```go
 txCopy := tx.TrimmedCopy()
 ```
 
 一个精简的版本会被签名，并不是整个交易：
 
-```golang
+```go
 func (tx *Transaction) TrimmedCopy() Transaction {
     var inputs []TXInput
     var outputs []TXOutput
@@ -346,7 +346,7 @@ func (tx *Transaction) TrimmedCopy() Transaction {
 
 下一步，我们队这个精简版的入账进行遍历:
 
-```golang
+```go
 for inID, vin := range txCopy.Vin {
     prevTx := prevTXs[hex.EncodeToString(vin.Txid)]
     txCopy.Vin[inID].Signature = nil
@@ -355,7 +355,7 @@ for inID, vin := range txCopy.Vin {
 
 在每个入账中，**Signature** 被设为 **nil**(只是再检查一次)，**PubKey** 被设为被引用的出账的 **PubKeyHash**。在这个时候，除了现有交易外，其他所有交易都是空的。它们的 **Signature** 和 **PubKey** 字段都被设成了 nil。这样，入账就分别被签名了，尽管对于我们的应用来说是没必要的，但比特币允许交易包含不同地址的入账。
 
-```golang
+```go
     txCopy.ID = txCopy.Hash()
     txCopy.Vin[inID].PubKey = nil
 ```
@@ -364,7 +364,7 @@ for inID, vin := range txCopy.Vin {
 
 现在，中间这块长这样：
 
-```golang
+```go
     r, s, err := ecdsa.Sign(rand.Reader, &privKey, txCopy.ID)
     signature := append(r.Bytes(), s.Bytes()...)
 
@@ -375,7 +375,7 @@ for inID, vin := range txCopy.Vin {
 
 现在，这是验证函数：
 
-```golang
+```go
 func (tx *Transaction) Verify(prevTXs map[string]Transaction) bool {
     txCopy := tx.TrimmedCopy()
     curve := elliptic.P256()
@@ -411,19 +411,19 @@ func (tx *Transaction) Verify(prevTXs map[string]Transaction) bool {
 
 这个方法相当直接。首先，我们需要相同的简易版交易信息：
 
-```golang
+```go
 txCopy := tx.TrimmedCopy()
 ```
 
 现在我们需要和产生秘钥对一样的曲线：
 
-```golang
+```go
 curve := elliptic.P256()
 ```
 
 现在要来确认一下每个入账都会被签名：
 
-```golang
+```go
 for inID, vin := range tx.Vin {
     prevTx := prevTXs[hex.EncodeToString(vin.Txid)]
     txCopy.Vin[inID].Signature = nil
@@ -434,7 +434,7 @@ for inID, vin := range tx.Vin {
 
 这一块和**Sign** 方法中的一样，因为在验证过程中，我们需要签名的相同的数据。
 
-```golang
+```go
     r := big.Int{}
     s := big.Int{}
     sigLen := len(vin.Signature)
@@ -450,7 +450,7 @@ for inID, vin := range tx.Vin {
 
 这里，我们把存在 **TXInput.Signature** 和 **TXInput.PubKey** 里的值拿出来，由于签名就是数字对，而公钥是一对坐标。我们之前为了存储就把它们连在了一块，现在要用 **crypto/ecdsa** 方法去取出来。
 
-```golang
+```go
     rawPubKey := ecdsa.PublicKey{curve, &x, &y}
     if ecdsa.Verify(&rawPubKey, txCopy.ID, &r, &s) == false {
         return false
@@ -464,7 +464,7 @@ return true
 
 现在我们得要一个可以获取上笔交易的方法。由于需要和区块链交互，所以把这个方法挂在 **Blockchain** 上：
 
-```golang
+```go
 func (bc *Blockchain) FindTransaction(ID []byte) (Transaction, error) {
     bci := bc.Iterator()
 
@@ -512,7 +512,7 @@ func (bc *Blockchain) VerifyTransaction(tx *Transaction) bool {
 
 现在，我们得真的签名并验证交易，在 **NewUTXOTransaction** 中去做：
 
-```golang
+```go
 func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transaction {
     ...
 
@@ -526,7 +526,7 @@ func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transactio
 
 在交易被放到区块前验证：
 
-```golang
+```go
 func (bc *Blockchain) MineBlock(transactions []*Transaction) {
     var lastHash []byte
 
@@ -569,7 +569,7 @@ Balance of '1NE86r4Esjf53EL7fR86CsfTZpNN42Sfab': 6
 
 现在试一下把 **NewUTXOTransaction** 里的 **bc.SignTransaction(&tx, wallet.PrivateKey)** 注释掉，以此来保证未被签名的交易无法被挖矿。
 
-```golang
+```go
 func NewUTXOTransaction(from, to string, amount int, bc *Blockchain) *Transaction {
    ...
     tx := Transaction{nil, inputs, outputs}
@@ -603,11 +603,11 @@ $ blockchain_go send -from 1AmVdDvvQ977oVCpUqz7zAPUEiXKrX5avR -to 1NE86r4Esjf53E
 9. [Base58](https://en.bitcoin.it/wiki/Base58Check_encoding)
 10. [椭圆曲线加密简单入门](http://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/)
 
-* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-* [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
-* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
-* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
-* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
-* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
-* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
+* [基本原型](/posts/building-blockchain-in-go-part-1-basic-prototype)
+* [工作量证明](/posts/building-blockchain-in-go-part-2-proof-of-work)
+* [持久化与命令行](/posts/building-blockchain-in-go-part-3-persistence-and-cli)
+* [交易 1](/posts/build-blockchain-in-go-part-4-transactions-1)
+* [地址](/posts/building-blockchain-in-go-part-5-addresses)
+* [交易 2](/posts/building-blockchain-in-go-part-6-transactions-2)
+* [网络](/posts/building-blockchain-go-part-7-network)
 

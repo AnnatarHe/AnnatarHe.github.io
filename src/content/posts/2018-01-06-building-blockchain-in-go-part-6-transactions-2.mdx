@@ -13,11 +13,11 @@ draft: false
 
 之前的文章：
 
-1. [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-2. [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
-3. [数据持久化和命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli%})
-4. [交易1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1%})
-5. [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
+1. [基本原型](/posts/building-blockchain-in-go-part-1-basic-prototype)
+2. [工作量证明](/posts/building-blockchain-in-go-part-2-proof-of-work)
+3. [数据持久化和命令行](/posts/building-blockchain-in-go-part-3-persistence-and-cli)
+4. [交易1](/posts/build-blockchain-in-go-part-4-transactions-1)
+5. [地址](/posts/building-blockchain-in-go-part-5-addresses)
 
 
 > 这个部分的介绍有重大的代码变化，所以没必要全都解释清楚，请参考 [这个页面](https://github.com/Jeiwan/blockchain_go/compare/part_5...part_6#files_bucket) 了解自上篇文章以来的变化
@@ -202,7 +202,7 @@ func (u UTXOSet) FindUTXO(pubKeyHash []byte) []TXOutput {
 
 有了 UTXO 集合意味着我们的数据(交易信息)现在被分开存储了：实际交易信息被存在区块链中，未被花费的出账被存在 UTXO 集中。这样的分离需要有很强力的同步机制，因为我们想要 UTXO 集总是最新的，而且总是最近的交易出账。但是我们不希望每一个区块被挖出来都要重新索引一遍数据，因为这会太经常访问区块链，这正是我们要避免的情况。所以，我们需要一个可以更新 UTXO 集合的机制：
 
-```golang
+```go
 func (u UTXOSet) Update(block *Block) {
     db := u.Blockchain.db
 
@@ -246,7 +246,7 @@ func (u UTXOSet) Update(block *Block) {
 
 现在来在需要 UTXO 集合的地方用上吧：
 
-```golang
+```go
 func (cli *CLI) createBlockchain(address string) {
     ...
     bc := CreateBlockchain(address)
@@ -260,7 +260,7 @@ func (cli *CLI) createBlockchain(address string) {
 
 一条新的区块链被创建的时候，才需要重新索引。现在，这里是唯一一个会用到 **Reindex** 的地方，虽然看起来是多余的。在区块链开始的时候，这里只有一个区块，也只有一笔交易， 可以用**Update** 替换掉它。不过我们将来可能会需要这个重新索引的机制。
 
-```golang
+```go
 func (cli *CLI) send(from, to string, amount int) {
     ...
     newBlock := bc.MineBlock(txs)
@@ -328,7 +328,7 @@ Merkle 树的优点就在于一个节点可以验证某笔交易中的成员而�
 
 好了，写点儿代码：
 
-```golang
+```go
 type MerkleTree struct {
     RootNode *MerkleNode
 }
@@ -344,7 +344,7 @@ type MerkleNode struct {
 
 我们首先来创建一个新的节点吧：
 
-```golang
+```go
 func NewMerkleNode(left, right *MerkleNode, data []byte) *MerkleNode {
     mNode := MerkleNode{}
 
@@ -366,7 +366,7 @@ func NewMerkleNode(left, right *MerkleNode, data []byte) *MerkleNode {
 
 每个节点都包含一些数据。当一个节点为叶节点时，数据就被从外部传入(我们的场景中是一笔被序列化的交易)。当一个节点是被链接到其他节点的时候，它会从叶节点中拿数据，连接它们，然后哈希。
 
-```golang
+```go
 func NewMerkleTree(data [][]byte) *MerkleTree {
     var nodes []MerkleNode
 
@@ -400,7 +400,7 @@ func NewMerkleTree(data [][]byte) *MerkleTree {
 
 现在，改一下 **Block.HashTransactions**，它被用到了工作量证明系统中来保证交易哈希的一致：
 
-```golang
+```go
 func (b *Block) HashTransactions() []byte {
     var transactions [][]byte
 
@@ -503,11 +503,11 @@ func (b *Block) HashTransactions() []byte {
 7. [比特币与智能合约](https://medium.com/@maraoz/smart-contracts-and-bitcoin-a5d61011d9b1)
 8. [为何每个比特币用户都应该理解"SPV安全"](https://medium.com/@jonaldfyookball/why-every-bitcoin-user-should-understand-spv-security-520d1d45e0b9)
 
-* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-* [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
-* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
-* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
-* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
-* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
-* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
+* [基本原型](/posts/building-blockchain-in-go-part-1-basic-prototype)
+* [工作量证明](/posts/building-blockchain-in-go-part-2-proof-of-work)
+* [持久化与命令行](/posts/building-blockchain-in-go-part-3-persistence-and-cli)
+* [交易 1](/posts/build-blockchain-in-go-part-4-transactions-1)
+* [地址](/posts/building-blockchain-in-go-part-5-addresses)
+* [交易 2](/posts/building-blockchain-in-go-part-6-transactions-2)
+* [网络](/posts/building-blockchain-go-part-7-network)
 

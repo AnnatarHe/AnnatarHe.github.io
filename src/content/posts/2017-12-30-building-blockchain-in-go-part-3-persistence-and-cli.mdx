@@ -9,7 +9,7 @@ draft: false
 
 ## 简介
 
-[到现在为止]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})，我们已经搞了一个带有工作量证明的区块链，它使得挖矿成为可能。我们的实现已经离一个功能全面的区块链更近了一步，但仍然缺少一些重要的功能。今天我们会开始吧区块链存在一个数据库里，然后做一个简单的命令行接口投操作区块链。本质上，区块链是一个分布式的数据库。我们先省略“分布式”这个部分，集中处理“数据库”这部分。
+[到现在为止](/posts/building-blockchain-in-go-part-2-proof-of-work)，我们已经搞了一个带有工作量证明的区块链，它使得挖矿成为可能。我们的实现已经离一个功能全面的区块链更近了一步，但仍然缺少一些重要的功能。今天我们会开始吧区块链存在一个数据库里，然后做一个简单的命令行接口投操作区块链。本质上，区块链是一个分布式的数据库。我们先省略“分布式”这个部分，集中处理“数据库”这部分。
 
 ## 数据库选择
 
@@ -78,7 +78,7 @@ BoltDB 还有一个重要的特性就是它没有数据结构：键和值都是�
 
 现在来给 **Block** 实现一个 **Serialize** 方法吧(为了简略，错误处理就省略了):
 
-```golang
+```go
 func (b *Block) Serialize() []byte {
     var result bytes.Buffer
     encoder := gob.NewEncoder(&result)
@@ -93,7 +93,7 @@ func (b *Block) Serialize() []byte {
 
 然后，我们需要反序列化的方法，它要接受一个字节数组作为入账，并且返回一个区块。这不会是一个方法看，而是一个独立函数：
 
-```golang
+```go
 func DeserializeBlock(d []byte) *Block {
     var block Block
 
@@ -117,7 +117,7 @@ func DeserializeBlock(d []byte) *Block {
 
 代码上像是这样：
 
-```golang
+```go
 func NewBlockchain() *Blockchain {
     var tip []byte
     db, err := bolt.Open(dbFile, 0600, nil)
@@ -146,13 +146,13 @@ func NewBlockchain() *Blockchain {
 
 我们来一块块地看。
 
-```golang
+```go
 db, err := bolt.Open(dbFile, 0600, nil)
 ```
 
 这是打开 BoltDB 文件的标准方式。注意，如果不存在文件，它并不会返回错误。
 
-```golang
+```go
 err = db.Update(func(tx *bolt.Tx) error {
 ...
 })
@@ -160,7 +160,7 @@ err = db.Update(func(tx *bolt.Tx) error {
 
 在 BoltDB 中，是在事务(transaction)中操作数据库的。这里又两种事务类型：只读和读写。这里，我们开一个读写事务(**db.Update(...)**)，因为我们期望把创始区块放到数据库里。
 
-```golang
+```go
 b := tx.Bucket([]byte(blocksBucket))
 
 if b == nil {
@@ -178,13 +178,13 @@ if b == nil {
 
 而且，注意一下创建 **Blockchain** 的新方法：
 
-```golang
+```go
 bc := Blockchain{tip, db}
 ```
 
 我们再不存储所有的区块到数据库里了，取而代之的是只有链顶端被保存。同时我们也留下了数据库资源，因为我们只想打开它一次，并在程序运行的时候都持有着。这样，**Blockchain** 数据结构就成了这样：
 
-```golang
+```go
 type Blockchain struct {
     tip []byte
     db  *bolt.DB
@@ -193,7 +193,7 @@ type Blockchain struct {
 
 我们下一个要更新的是 **AddBlock** 方法：现在添加一个区块到链上不再是一个像是在数组里添加一个元素那么简单的事情了。现在，我们得把区块存到数据库里：
 
-```golang
+```go
 func (bc *Blockchain) AddBlock(data string) {
     var lastHash []byte
 
@@ -219,7 +219,7 @@ func (bc *Blockchain) AddBlock(data string) {
 
 再来一块一块地看：
 
-```golang
+```go
 err := bc.db.View(func(tx *bolt.Tx) error {
     b := tx.Bucket([]byte(blocksBucket))
     lastHash = b.Get([]byte("l"))
@@ -230,7 +230,7 @@ err := bc.db.View(func(tx *bolt.Tx) error {
 
 这是 BlotDB 事务的另一个类型(只读)。这里，我们需要获取从数据库里获取最后一个区块 hash，然后用它挖掘下一个新的区块 hash。
 
-```golang
+```go
 newBlock := NewBlock(data, lastHash)
 b := tx.Bucket([]byte(blocksBucket))
 err := b.Put(newBlock.Hash, newBlock.Serialize())
@@ -248,7 +248,7 @@ bc.tip = newBlock.Hash
 
 BoltDB 允许我们迭代出桶里的所有键，不过这些键都是被存储在字节排序过的列表里的，我们期望的是可以按照在区块链中的顺序打印出区块。同时我们也不想要把区块链上所有的区块都加载到数组里(我们的区块链数据库可能会非常的大。。。好吧，假装它很大好了)，我们要一个个读。为了完成这个目标，我们要去做区块链的迭代。
 
-```golang
+```go
 type BlockchainIterator struct {
     currentHash []byte
     db          *bolt.DB
@@ -257,7 +257,7 @@ type BlockchainIterator struct {
 
 一个迭代器可以在我们想要遍历区块链上的数据的时候被创建，而且它可以存储当前迭代的区块哈希和一个数据库链接资源。一个迭代器逻辑上市依附于区块链的(这是个存有数据库链接资源的 **Blockchain** 实例)，所以了，我们在 **Blockchain** 里创建方法:
 
-```golang
+```go
 func (bc *Blockchain) Iterator() *BlockchainIterator {
     bci := &BlockchainIterator{bc.tip, bc.db}
 
@@ -269,7 +269,7 @@ func (bc *Blockchain) Iterator() *BlockchainIterator {
 
 **BlockchainIterator** 将只会做一件事情：它会返回区块链中的下一个区块。
 
-```golang
+```go
 func (i *BlockchainIterator) Next() *Block {
     var block *Block
 
@@ -300,7 +300,7 @@ blockchain_go printchain
 
 所有的命令行依赖的操作都会被在 **CLI** 结构中进行：
 
-```golang
+```go
 type CLI struct {
     bc *Blockchain
 }
@@ -308,7 +308,7 @@ type CLI struct {
 
 这个"入口"就是 **Run** 函数：
 
-```golang
+```go
 func (cli *CLI) Run() {
     cli.validateArgs()
 
@@ -343,7 +343,7 @@ func (cli *CLI) Run() {
 
 我们使用标准的 [flag](https://golang.org/pkg/flag/) 包来解析命令行参数。
 
-```golang
+```go
 addBlockCmd := flag.NewFlagSet("addblock", flag.ExitOnError)
 printChainCmd := flag.NewFlagSet("printchain", flag.ExitOnError)
 addBlockData := addBlockCmd.String("data", "", "Block data")
@@ -351,7 +351,7 @@ addBlockData := addBlockCmd.String("data", "", "Block data")
 
 首先，我们创建了两个子命令，**addblock** 和 **printchain**，随后我们添加了 **-data**前缀的数据。 **printchain** 并不会有任何标识。
 
-```golang
+```go
 switch os.Args[1] {
 case "addblock":
     err := addBlockCmd.Parse(os.Args[2:])
@@ -365,7 +365,7 @@ default:
 
 下一步我们要确认一下用户提供的命令并解析出对应的 **标识** 子命令。
 
-```golang
+```go
 if addBlockCmd.Parsed() {
     if *addBlockData == "" {
         addBlockCmd.Usage()
@@ -381,7 +381,7 @@ if printChainCmd.Parsed() {
 
 下一步我们要确认解析出了哪个子命令，并且运行对应的方法。
 
-```golang
+```go
 func (cli *CLI) addBlock(data string) {
     cli.bc.AddBlock(data)
     fmt.Println("Success!")
@@ -411,7 +411,7 @@ func (cli *CLI) printChain() {
 
 那么，不要忘了要把 **main** 函数里对应的地方改掉：
 
-```golang
+```go
 func main() {
     bc := NewBlockchain()
     defer bc.db.Close()
@@ -471,11 +471,11 @@ PoW: true
 
 下一步我们会实现地址，钱包，(可能还有)交易。来继续吧！
 
-* [基本原型]({% post_url 2017-12-29-building-blockchain-in-go-part-1-basic-prototype %})
-* [工作量证明]({% post_url 2017-12-30-building-blockchain-in-go-part-2-proof-of-work %})
-* [持久化与命令行]({% post_url 2017-12-30-building-blockchain-in-go-part-3-persistence-and-cli %})
-* [交易 1]({% post_url 2018-01-01-build-blockchain-in-go-part-4-transactions-1 %})
-* [地址]({% post_url 2018-01-02-building-blockchain-in-go-part-5-addresses %})
-* [交易 2]({% post_url 2018-01-06-building-blockchain-in-go-part-6-transactions-2 %})
-* [网络]({% post_url 2018-01-12-building-blockchain-go-part-7-network %})
+* [基本原型](/posts/building-blockchain-in-go-part-1-basic-prototype)
+* [工作量证明](/posts/building-blockchain-in-go-part-2-proof-of-work)
+* [持久化与命令行](/posts/building-blockchain-in-go-part-3-persistence-and-cli)
+* [交易 1](/posts/build-blockchain-in-go-part-4-transactions-1)
+* [地址](/posts/building-blockchain-in-go-part-5-addresses)
+* [交易 2](/posts/building-blockchain-in-go-part-6-transactions-2)
+* [网络](/posts/building-blockchain-go-part-7-network)
 
