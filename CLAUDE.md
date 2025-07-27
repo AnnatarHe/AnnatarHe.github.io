@@ -4,22 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
+### Package Manager
+This project uses **pnpm** as the package manager. Use pnpm for all dependency management.
+
 ### Astro Build & Serve
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Local development server
-npm run dev
+pnpm run dev
 
 # Build for production
-npm run build
+pnpm run build
 
 # Preview production build
-npm run preview
+pnpm run preview
 
 # Type checking
-npm run astro check
+pnpm run astro check
 ```
 
 ### Legacy Jekyll Commands (Deprecated)
@@ -42,11 +45,13 @@ This is an **Astro-based personal blog** with modern web technologies and static
 - **src/components/**: Reusable components (Header.astro, Footer.astro, PageLayout.astro)
 
 ### Technology Stack
-- **Framework**: Astro 4.15+ (Static Site Generator)
-- **Styling**: Tailwind CSS 3.4+ with custom theme
+- **Framework**: Astro 5.12+ (Static Site Generator)
+- **Styling**: Tailwind CSS 4.1+ with Vite plugin and custom theme
 - **Content**: MDX with frontmatter-based metadata
 - **UI Components**: Astro components with React integration
+- **Icons**: Lucide React for consistent iconography
 - **TypeScript**: Full TypeScript support
+- **Font**: Lato as default font family
 
 ### Build Pipeline
 1. **Astro**: Handles static site generation, content collections, and page routing
@@ -57,18 +62,21 @@ This is an **Astro-based personal blog** with modern web technologies and static
 
 ### Key Features
 - **Dark Theme**: Teal accent color (#2eb8b8) with dark background
-- **Responsive Design**: Mobile-first with sticky navigation
+- **Minimalist Design**: Clean, centered layout focusing on content
+- **Responsive Design**: Mobile-first with elegant typography
 - **Content Collections**: Type-safe blog post management
 - **GitHub Pages**: Automated deployment via GitHub Actions
 - **SEO Optimized**: Meta tags, OpenGraph, Twitter cards, sitemap
 - **Performance**: Static generation with minimal JavaScript
+- **Contact Info**: Email (annatar.he@gmail.com) and personal website (https://i.annatarhe.com/)
 
 ### Configuration Files
 - **astro.config.mjs**: Astro configuration with integrations
-- **tailwind.config.mjs**: Tailwind CSS customization
+- **src/styles/global.css**: Tailwind CSS v4 configuration with custom font families
 - **tsconfig.json**: TypeScript configuration
 - **src/content/config.ts**: Content collections schema
 - **.github/workflows/deploy.yml**: GitHub Pages deployment
+- **package.json**: Dependencies including lucide-react for icons
 
 ### Deployment
 - **Platform**: GitHub Pages with GitHub Actions
@@ -80,8 +88,32 @@ This is an **Astro-based personal blog** with modern web technologies and static
 - **From**: Jekyll-based blog with Ruby/Stylus build system
 - **To**: Astro-based blog with modern JavaScript ecosystem
 - **Content**: Jekyll posts converted to MDX with proper frontmatter
-- **UI**: Redesigned to match AsyncTalk website aesthetic
+- **UI**: Minimalist design with focus on readability and personal branding
 - **Performance**: Significantly improved with static generation
+- **Recent Updates**: 
+  - Homepage redesigned with centered, minimalist layout
+  - Added lucide-react icons throughout the site
+  - Updated to Tailwind CSS v4 with Vite plugin
+  - Email updated to annatar.he@gmail.com
+
+## UI Components & Styling
+
+### Font Configuration
+- **Default Font**: Lato (for all English content)
+- **Chinese Font**: LXGW WenKai
+- **Font Families**: Configured in `src/styles/global.css` using Tailwind CSS v4 theme
+
+### Icons
+Using lucide-react for consistent iconography:
+- **Navigation**: GitHub, Globe (Website), Mail, User (About)
+- **Content**: FileText (Recent Writings), ArrowRight (View all posts)
+- **Footer**: GitHub, Globe, Mail, Rss
+
+### Color Scheme
+- **Background**: Pure black (#000000)
+- **Text**: White with gray variations
+- **Accent**: Teal (#2eb8b8 / teal-400)
+- **Hover Effects**: Smooth transitions to teal accent
 
 ## Content Management
 
