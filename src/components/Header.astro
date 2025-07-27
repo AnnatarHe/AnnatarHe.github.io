@@ -37,53 +37,107 @@ const currentPath = Astro.url.pathname;
         class="md:hidden text-gray-400 hover:text-teal-400 transition-colors"
         aria-label="Toggle menu"
       >
-        <Menu size={20} id="menu-icon" />
-        <X size={20} id="close-icon" class="hidden" />
+        <span id="menu-icon">
+          <Menu size={20} />
+        </span>
+        <span id="close-icon" class="hidden">
+          <X size={20} />
+        </span>
       </button>
     </div>
     
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="md:hidden hidden mt-6 space-y-4 text-sm">
-      <a 
-        href="/" 
-        class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath === '/' ? 'text-teal-400' : ''}`}
-      >
-        Home
-      </a>
-      <a 
-        href="/posts" 
-        class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath.startsWith('/posts') ? 'text-teal-400' : ''}`}
-      >
-        Posts
-      </a>
-      <a 
-        href="/about" 
-        class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath === '/about' ? 'text-teal-400' : ''}`}
-      >
-        About
-      </a>
+    <div id="mobile-menu" class="md:hidden overflow-hidden transition-all duration-300 ease-out max-h-0 opacity-0">
+      <div class="pt-6 space-y-4 text-sm">
+        <a 
+          href="/" 
+          class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath === '/' ? 'text-teal-400' : ''}`}
+        >
+          Home
+        </a>
+        <a 
+          href="/posts" 
+          class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath.startsWith('/posts') ? 'text-teal-400' : ''}`}
+        >
+          Posts
+        </a>
+        <a 
+          href="/about" 
+          class={`block text-gray-400 hover:text-teal-400 transition-colors ${currentPath === '/about' ? 'text-teal-400' : ''}`}
+        >
+          About
+        </a>
+      </div>
     </div>
   </nav>
 </header>
 
-<script>
-  // Mobile menu toggle
-  const mobileMenuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = document.getElementById('menu-icon');
-  const closeIcon = document.getElementById('close-icon');
+<style>
+  #mobile-menu.menu-open {
+    max-height: 200px;
+    opacity: 1;
+  }
   
-  mobileMenuButton?.addEventListener('click', () => {
-    const isOpen = !mobileMenu?.classList.contains('hidden');
+  /* Icon rotation animation */
+  #menu-icon, #close-icon {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }
+  
+  #menu-icon.rotate-out {
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+  
+  #close-icon.rotate-in {
+    transform: rotate(90deg);
+  }
+</style>
+
+<script>
+  // Mobile menu toggle with animations
+  const mobileMenuButton = document.getElementById('mobile-menu-button') as HTMLButtonElement | null;
+  const mobileMenu = document.getElementById('mobile-menu') as HTMLDivElement | null;
+  const menuIcon = document.getElementById('menu-icon') as HTMLSpanElement | null;
+  const closeIcon = document.getElementById('close-icon') as HTMLSpanElement | null;
+  
+  if (mobileMenuButton && mobileMenu && menuIcon && closeIcon) {
+    let isOpen = false;
     
-    if (isOpen) {
-      mobileMenu?.classList.add('hidden');
-      menuIcon?.classList.remove('hidden');
-      closeIcon?.classList.add('hidden');
-    } else {
-      mobileMenu?.classList.remove('hidden');
-      menuIcon?.classList.add('hidden');
-      closeIcon?.classList.remove('hidden');
-    }
-  });
+    mobileMenuButton.addEventListener('click', () => {
+      isOpen = !isOpen;
+      
+      if (isOpen) {
+        // Open menu
+        mobileMenu.classList.add('menu-open');
+        menuIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        
+        // Animate icons
+        menuIcon.classList.add('rotate-out');
+        closeIcon.classList.add('rotate-in');
+        setTimeout(() => {
+          closeIcon.classList.remove('rotate-in');
+        }, 10);
+      } else {
+        // Close menu
+        mobileMenu.classList.remove('menu-open');
+        
+        // Animate icons
+        closeIcon.classList.add('rotate-in');
+        setTimeout(() => {
+          menuIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+          menuIcon.classList.remove('rotate-out');
+        }, 300);
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (isOpen && !mobileMenuButton.contains(target) && !mobileMenu.contains(target)) {
+        mobileMenuButton.click();
+      }
+    });
+  }
 </script>
