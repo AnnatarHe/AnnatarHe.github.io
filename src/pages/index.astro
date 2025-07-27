@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageLayout from '../components/PageLayout.astro';
 import { getCollection } from 'astro:content';
+import { Github, Mail, Globe, User, ArrowRight, FileText } from 'lucide-react';
 
 // Get the latest 3 posts for the homepage
 const allPosts = await getCollection('posts');
@@ -47,29 +48,42 @@ const recentPosts = allPosts
               href="https://github.com/AnnatarHe" 
               target="_blank" 
               rel="noopener noreferrer"
-              class="text-gray-400 hover:text-teal-400 transition-colors"
+              class="flex items-center gap-1.5 text-gray-400 hover:text-teal-400 transition-colors"
             >
-              GitHub
+              <Github size={16} />
+              <span>GitHub</span>
+            </a>
+            <a 
+              href="https://i.annatarhe.com/"
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 text-gray-400 hover:text-teal-400 transition-colors"
+            >
+              <Globe size={16} />
+              <span>Website</span>
             </a>
             <a 
               href="mailto:annatar.he@gmail.com"
-              class="text-gray-400 hover:text-teal-400 transition-colors"
+              class="flex items-center gap-1.5 text-gray-400 hover:text-teal-400 transition-colors"
             >
-              Email
+              <Mail size={16} />
+              <span>Email</span>
             </a>
             <a 
               href="/about"
-              class="text-gray-400 hover:text-teal-400 transition-colors"
+              class="flex items-center gap-1.5 text-gray-400 hover:text-teal-400 transition-colors"
             >
-              About
+              <User size={16} />
+              <span>About</span>
             </a>
           </div>
         </section>
 
         <!-- Recent posts -->
         <section class="space-y-6">
-          <h2 class="text-center text-sm uppercase tracking-wider text-gray-500">
-            Recent Writings
+          <h2 class="text-center text-sm uppercase tracking-wider text-gray-500 flex items-center justify-center gap-2">
+            <FileText size={16} />
+            <span>Recent Writings</span>
           </h2>
           
           <div class="space-y-6">
@@ -99,9 +113,10 @@ const recentPosts = allPosts
           <div class="text-center pt-4">
             <a 
               href="/posts" 
-              class="text-sm text-gray-400 hover:text-teal-400 transition-colors"
+              class="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-teal-400 transition-colors"
             >
-              View all posts →
+              <span>View all posts</span>
+              <ArrowRight size={14} />
             </a>
           </div>
         </section>
