@@ -6,3 +6,4 @@ LongPathTool_v2.20.exe
 .yarn-error.log
 .jekyll-metadata
 .astro
+dist/

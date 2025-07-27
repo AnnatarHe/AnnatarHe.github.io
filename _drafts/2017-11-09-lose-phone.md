@@ -26,33 +26,33 @@ tags: life
 
 第二天来了有意思的事情。小偷伪装成苹果官方发了一条短信。语气略像。甚至我一个程序员同事都认为是真的。
 
-![shadow-socks-use-arch]({{ site.cdn }}/fake-icloud.jpg)
+![shadow-socks-use-arch](/fake-icloud.jpg)
 
 出了这个网站我就觉得有意思了。 登进去一看，哟，跟 icloud 一摸一样啊。然后尝试一下有没有 SQL 注入的机会。试了一下，果然能进入第二步骤，第二步让填写解锁密码和生日。
 
-然后想了好久有没有机会提权什么的。然而书到用时方恨少(要是 PHP 写的可能还能发挥一下)。 哎。 
+然后想了好久有没有机会提权什么的。然而书到用时方恨少(要是 PHP 写的可能还能发挥一下)。 哎。
 
 我这么专业的程序员到这里就结束了？当然不能，不过这一段深挖放在下一节。
 
-![shadow-socks-use-arch]({{ site.cdn }}/fake-dfu.jpg)
+![shadow-socks-use-arch](/fake-dfu.jpg)
 
 中途姐姐还收到了一个电话，刚接上就说“打错了”。应该是看一下能不能接到短信。
 
 之后小偷继续不死心，假装找到了手机。这个时候语气加重，还带上了感叹号，是不是很有意思。
 
-![shadow-socks-use-arch]({{ site.cdn }}/fake-found.jpg)
+![shadow-socks-use-arch](/fake-found.jpg)
 
-![shadow-socks-use-arch]({{ site.cdn }}/fake-found-2.jpg)
+![shadow-socks-use-arch](/fake-found-2.jpg)
 
 之后小偷终于是恼羞成怒，做出了最没脑子的事情，用自己的手机给姐姐发了一条短信。
 
-![shadow-socks-use-arch]({{ site.cdn }}/wow.jpg)
+![shadow-socks-use-arch](/wow.jpg)
 
 拿到手机号开动脑筋，先查了一下归属地，郑州。那么居住在郑州，而又使用郑州手机号，就有理由断定这个手机号跟了他应该挺久的了。
 
 随后查一下微信，果然搜到了。
 
-![shadow-socks-use-arch]({{ site.cdn }}/thief.jpg)
+![shadow-socks-use-arch](/thief.jpg)
 
 加上中途通过 find my iPhone 找到的地址，大致可以得出家庭住址，籍贯。我觉得这么多的信息量足够抓到人了。
 
@@ -74,7 +74,7 @@ tags: life
 
 所以我开始查 whois，果不其然找到了这条信息。
 
-![shadow-socks-use-arch]({{ site.cdn }}/domain-info.png)
+![shadow-socks-use-arch](/domain-info.png)
 
 广东的徐月用着一个青岛的手机号。看名字似乎是个女性，不过在码农的圈子里女性比例非常低，所以可能是个虚假的身份。即便是虚假身份，也有可能能找到这个人，挖出一些东西出来。其实我觉得最可能的是，这个人用她家人的名义来注册的这个域名。
 
