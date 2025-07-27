@@ -51,9 +51,9 @@ const socialImageURL = new URL(image || '/og-image.png', Astro.url).href;
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=LXGWWenKai:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=LXGWWenKai:wght@400;700&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-black text-white min-h-screen font-['system-ui']">
+  <body class="bg-black text-white min-h-screen" style="font-family: var(--font-family-lato)">
     <slot />
   </body>
 </html>

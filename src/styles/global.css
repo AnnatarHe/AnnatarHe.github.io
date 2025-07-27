@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme {
+  --font-family-lato: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-chinese: 'LXGW WenKai', 'Microsoft YaHei', '微软雅黑', sans-serif;
+}

@@ -3,106 +3,109 @@ import Layout from '../layouts/Layout.astro';
 import PageLayout from '../components/PageLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Get the latest 5 posts for the homepage
+// Get the latest 3 posts for the homepage
 const allPosts = await getCollection('posts');
-const sortedPosts = allPosts
+const recentPosts = allPosts
   .filter(post => !post.data.draft)
   .sort((a, b) => {
     const dateA = a.data.date || new Date(a.slug.slice(0, 10));
     const dateB = b.data.date || new Date(b.slug.slice(0, 10));
     return dateB.getTime() - dateA.getTime();
   })
-  .slice(0, 5);
+  .slice(0, 3);
 ---
 
-<Layout title="AnnatarHe's Blog" description="Personal blog by AnnatarHe - thoughts on technology, programming, and life">
+<Layout title="AnnatarHe" description="Software engineer, technology enthusiast, and blogger">
   <PageLayout>
-    <!-- Hero Section -->
-    <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-      <!-- Background with blur effect -->
-      <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
-      <div class="absolute inset-0 backdrop-blur-sm"></div>
+    <div class="min-h-screen flex flex-col items-center justify-center px-4">
+      <!-- Main content centered -->
+      <div class="max-w-2xl w-full space-y-12">
+        <!-- About section -->
+        <section class="text-center space-y-6">
+          <img 
+            src="https://github.com/AnnatarHe.png" 
+            alt="AnnatarHe" 
+            class="w-24 h-24 rounded-full mx-auto border-2 border-teal-400"
+          />
+          
+          <div class="space-y-3">
+            <h1 class="text-3xl md:text-4xl font-light text-white">
+              AnnatarHe
+            </h1>
+            <p class="text-lg text-gray-400">
+              Software Engineer & Technology Enthusiast
+            </p>
+          </div>
+          
+          <p class="text-gray-300 max-w-md mx-auto leading-relaxed">
+            I build elegant solutions with modern web technologies. 
+            Here I write about programming, technology, and personal reflections.
+          </p>
+          
+          <div class="flex justify-center gap-6 text-sm">
+            <a 
+              href="https://github.com/AnnatarHe" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-gray-400 hover:text-teal-400 transition-colors"
+            >
+              GitHub
+            </a>
+            <a 
+              href="mailto:annatar.he@gmail.com"
+              class="text-gray-400 hover:text-teal-400 transition-colors"
+            >
+              Email
+            </a>
+            <a 
+              href="/about"
+              class="text-gray-400 hover:text-teal-400 transition-colors"
+            >
+              About
+            </a>
+          </div>
+        </section>
 
-      <!-- Content -->
-      <div class="relative z-10 text-center px-4">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-teal-400 to-white bg-clip-text text-transparent animate-fade-in">
-          AnnatarHe's Blog
-        </h1>
-        <p class="text-xl md:text-2xl text-gray-300 mb-8 animate-slide-in font-chinese">
-          技术、思考与生活的记录
-        </p>
-        <div class="space-x-4 animate-move-up">
-          <a
-            href="/posts"
-            class="inline-block bg-teal-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-white transition-colors transform hover:scale-105"
-          >
-            Browse Posts
-          </a>
-          <a
-            href="/about"
-            class="inline-block border border-teal-400 text-teal-400 px-6 py-3 rounded-lg font-semibold hover:bg-teal-400 hover:text-black transition-all transform hover:scale-105"
-          >
-            About Me
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Recent Posts Section -->
-    <section class="max-w-6xl mx-auto px-4 py-16">
-      <h2 class="text-3xl font-bold mb-8 text-center">Recent Posts</h2>
-      <div class="grid gap-6 md:gap-8">
-        {sortedPosts.map((post) => {
-          const postDate = post.data.date || new Date(post.slug.slice(0, 10));
-          return (
-            <article class="group border border-gray-800 rounded-lg p-6 hover:border-teal-400 transition-all hover:shadow-lg hover:shadow-teal-400/20 transform hover:scale-[1.02]">
-              <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                <h3 class="text-xl font-semibold text-white group-hover:text-teal-400 transition-colors mb-2 md:mb-0">
-                  <a href={`/posts/${post.slug}`} class="hover:underline">
-                    {post.data.title}
+        <!-- Recent posts -->
+        <section class="space-y-6">
+          <h2 class="text-center text-sm uppercase tracking-wider text-gray-500">
+            Recent Writings
+          </h2>
+          
+          <div class="space-y-6">
+            {recentPosts.map((post) => {
+              const postDate = post.data.date || new Date(post.slug.slice(0, 10));
+              return (
+                <article class="group">
+                  <a href={`/posts/${post.slug}`} class="block space-y-2">
+                    <div class="flex items-baseline justify-between gap-4">
+                      <h3 class="text-lg text-gray-200 group-hover:text-teal-400 transition-colors">
+                        {post.data.title}
+                      </h3>
+                      <time class="text-sm text-gray-500 shrink-0">
+                        {postDate.toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                      </time>
+                    </div>
                   </a>
-                </h3>
-                <time class="text-gray-400 text-sm">
-                  {postDate.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </time>
-              </div>
-              {post.data.tags && (
-                <div class="flex flex-wrap gap-2 mb-4">
-                  {post.data.tags.split(' ').filter(tag => tag.trim()).map((tag) => (
-                    <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full">
-                      {tag.trim()}
-                    </span>
-                  ))}
-                </div>
-              )}
-              <a
-                href={`/posts/${post.slug}`}
-                class="inline-flex items-center text-teal-400 hover:text-white transition-colors"
-              >
-                Read more
-                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
-              </a>
-            </article>
-          );
-        })}
+                </article>
+              );
+            })}
+          </div>
+          
+          <div class="text-center pt-4">
+            <a 
+              href="/posts" 
+              class="text-sm text-gray-400 hover:text-teal-400 transition-colors"
+            >
+              View all posts →
+            </a>
+          </div>
+        </section>
       </div>
-
-      {sortedPosts.length >= 5 && (
-        <div class="text-center mt-12">
-          <a
-            href="/posts"
-            class="inline-block bg-gray-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors transform hover:scale-105"
-          >
-            View All Posts
-          </a>
-        </div>
-      )}
-    </section>
+    </div>
   </PageLayout>
 </Layout>

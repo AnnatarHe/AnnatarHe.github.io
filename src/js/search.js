@@ -2,7 +2,7 @@
 // This script for search post by json that jekyll generated
 //
 // @Author  AnnatarHe
-// @Email   iamhele1994@gmail.com
+// @Email   annatar.he@gmail.com
 // @License MIT
 
 // get the doms
