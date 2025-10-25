@@ -12,6 +12,7 @@ import Heading5 from '../../components/markdown/Heading5.astro';
 import Heading6 from '../../components/markdown/Heading6.astro';
 import Hr from '../../components/markdown/Hr.astro';
 import P from '../../components/markdown/P.astro';
+import AdSense from '../../components/AdSense.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -97,6 +98,9 @@ const readingTime = remarkPluginFrontmatter?.minutesRead || '5 min read';
           p: P,
         }} />
       </div>
+
+      <!-- Google AdSense -->
+      <AdSense />
 
       <!-- Post Footer -->
     </article>
