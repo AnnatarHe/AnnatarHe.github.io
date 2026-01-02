@@ -7,10 +7,7 @@
       "Bash(rg:*)",
       "Bash(ls:*)",
       "Bash(npx eslint:*)",
-      "Bash(gh pr create:*)",
-      "Bash(pnpm:*)",
-      "Bash(npm:*)",
-      "Bash(git:*)"
+      "Bash(gh pr create:*)"
     ],
     "deny": []
   }
