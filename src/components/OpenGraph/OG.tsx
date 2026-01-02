@@ -1,81 +1,171 @@
-const primaryColor = 'oklch(71.33% 0.112 194.94)'
-const ratio = 1.5
-const logo = 'https://ik.imagekit.io/annatarhe/asynctalk-logo.png?updatedAt=1716360363124'
+const TEAL_COLOR = '#2eb8b8';
 
-const titleFontSize = 3 * ratio
-const descriptionFontSize = 1.6 * ratio
-const logoSize = 146 * ratio
-export default function OG({
-  title = "AsyncTalk - 和我们一起，将 Web 开发带向下一个高度",
-  ep,
-  sp
-}: {
-  title: string,
-  ep?: number
-  sp?: number
-  heroImageURL?: string
+interface OGProps {
+  title: string;
+  date?: Date;
+  tags?: string[];
 }
-) {
+
+export default function OG({ title, date, tags = [] }: OGProps) {
+  // Truncate title if too long (max ~80 chars for readability)
+  const displayTitle = title.length > 80
+    ? title.slice(0, 77) + '...'
+    : title;
+
+  // Limit to 3 tags and truncate long tag names
+  const displayTags = tags.slice(0, 3).map(tag =>
+    tag.length > 15 ? tag.slice(0, 12) + '...' : tag
+  );
+
+  const formattedDate = date
+    ? date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    : null;
+
+  // Adjust font size based on title length
+  const titleFontSize = displayTitle.length > 50 ? 48 : 56;
+
   return (
     <div
       style={{
         display: 'flex',
-        width: "100%",
-        height: "100%",
-        backgroundColor: "black",
+        width: '100%',
+        height: '100%',
+        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1f1f 100%)',
+        position: 'relative',
       }}
     >
+      {/* Subtle gradient overlay for depth */}
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: 'center',
-          width: "100%",
-          height: "100%",
-          padding: '0 1rem',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          alignItems: "center",
-          position: "relative",
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'radial-gradient(ellipse at top right, rgba(46, 184, 184, 0.15) 0%, transparent 50%)',
+          display: 'flex',
+        }}
+      />
+
+      {/* Content container */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          width: '100%',
+          height: '100%',
+          padding: '60px 80px',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
-        <img
-          src={logo}
-          width={logoSize * 2}
-        />
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <h1
+        {/* Top section: Blog name */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <span
             style={{
-              display: "flex",
-              flexDirection: "column",
-              fontSize: `${titleFontSize}rem`,
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              fontWeight: "bold",
-              maxWidth: "40rem",
-              fontFamily: "LXGWWenKai",
-              wordBreak: "break-word",
-              // color: primaryColor,
-              color: 'white',
-              margin: '1rem 0'
+              fontSize: 24,
+              fontWeight: 700,
+              color: TEAL_COLOR,
+              fontFamily: 'Lato',
             }}
           >
-            {title}
+            AnnatarHe's Blog
+          </span>
+        </div>
+
+        {/* Middle section: Title */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            justifyContent: 'center',
+          }}
+        >
+          <h1
+            style={{
+              fontSize: titleFontSize,
+              fontWeight: 700,
+              color: 'white',
+              lineHeight: 1.2,
+              margin: 0,
+              fontFamily: 'LXGWWenKai',
+              wordBreak: 'break-word',
+            }}
+          >
+            {displayTitle}
           </h1>
-          <p>
-            <span style={{ fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
-              Async Talk (asynctalk.com)
-            </span>
-            <span style={{ margin: '0 0.5rem', fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
-              -
-            </span>
-            <span style={{ fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
-              {ep ? 'Episode' : 'Special'} {ep ?? sp}
-            </span>
-          </p>
+        </div>
+
+        {/* Bottom section: Date and Tags */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+          }}
+        >
+          {/* Date */}
+          <span
+            style={{
+              fontSize: 20,
+              color: '#888888',
+              fontFamily: 'Lato',
+            }}
+          >
+            {formattedDate || ''}
+          </span>
+
+          {/* Tags */}
+          {displayTags.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                gap: 12,
+              }}
+            >
+              {displayTags.map((tag, index) => (
+                <span
+                  key={index}
+                  style={{
+                    fontSize: 16,
+                    color: TEAL_COLOR,
+                    padding: '6px 16px',
+                    border: `1px solid ${TEAL_COLOR}`,
+                    borderRadius: 20,
+                    fontFamily: 'Lato',
+                  }}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Decorative bottom border */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 4,
+          background: `linear-gradient(90deg, ${TEAL_COLOR}, transparent)`,
+          display: 'flex',
+        }}
+      />
     </div>
   );
 }

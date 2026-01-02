@@ -29,11 +29,15 @@ const { Content, remarkPluginFrontmatter } = await post.render();
 
 const postDate = post.data.date || new Date(post.slug.slice(0, 10));
 const readingTime = remarkPluginFrontmatter?.minutesRead || '5 min read';
+
+// Generate OG image URL for this post
+const ogImageUrl = `/posts/${post.slug}-og.png`;
 ---
 
 <Layout
   title={`${post.data.title} - AnnatarHe's Blog`}
   description={`${post.data.title} - A blog post by AnnatarHe`}
+  image={ogImageUrl}
   type="article"
 >
   <PageLayout>
