@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageLayout from '../../components/PageLayout.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import A from '../../components/markdown/A.astro';
 import Heading1 from '../../components/markdown/Heading1.astro';
@@ -21,7 +21,7 @@ export async function getStaticPaths() {
     import.meta.env.PROD ? !post.data.draft : true
   );
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: post,
   }));
 }
@@ -29,13 +29,13 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'posts'>;
 
 const post = Astro.props;
-const { Content, remarkPluginFrontmatter } = await post.render();
+const { Content, remarkPluginFrontmatter } = await render(post);
 
-const postDate = post.data.date || new Date(post.slug.slice(0, 10));
+const postDate = post.data.date || new Date(post.id.slice(0, 10));
 const readingTime = remarkPluginFrontmatter?.minutesRead || '5 min read';
 
 // Generate OG image URL for this post
-const ogImageUrl = `/posts/${post.slug}-og.png`;
+const ogImageUrl = `/posts/${post.id}-og.png`;
 ---
 
 <Layout

@@ -1,9 +1,9 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import type { APIContext } from 'astro';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { loadRenderers } from 'astro:container';
-import { getContainerRenderer as getMDXRenderer } from '@astrojs/mdx';
+import { getContainerRenderer as getMDXRenderer } from '@astrojs/mdx/container-renderer';
 import sanitizeHtml from 'sanitize-html';
 
 export async function GET(context: APIContext) {
@@ -12,8 +12,8 @@ export async function GET(context: APIContext) {
   const publishedPosts = posts
     .filter(post => !post.data.draft)
     .sort((a, b) => {
-      const dateA = a.data.date || new Date(a.slug.slice(0, 10));
-      const dateB = b.data.date || new Date(b.slug.slice(0, 10));
+      const dateA = a.data.date || new Date(a.id.slice(0, 10));
+      const dateB = b.data.date || new Date(b.id.slice(0, 10));
       return dateB.getTime() - dateA.getTime();
     });
 
@@ -23,7 +23,7 @@ export async function GET(context: APIContext) {
 
   const items = await Promise.all(
     publishedPosts.map(async (post) => {
-      const { Content } = await post.render();
+      const { Content } = await render(post);
       const rawHtml = await container.renderToString(Content);
 
       // Sanitize HTML for RSS
@@ -33,8 +33,8 @@ export async function GET(context: APIContext) {
 
       return {
         title: post.data.title,
-        pubDate: post.data.date || new Date(post.slug.slice(0, 10)),
-        link: `/posts/${post.slug}/`,
+        pubDate: post.data.date || new Date(post.id.slice(0, 10)),
+        link: `/posts/${post.id}/`,
         content,
       };
     })
