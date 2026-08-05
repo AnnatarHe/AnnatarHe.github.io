@@ -4,7 +4,10 @@ import OG from '../../components/OpenGraph/OG';
 import { PNG } from '../../components/OpenGraph/createImage';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getCollection('posts');
+  // Match the post route: no draft pages in production, so no draft OG images.
+  const posts = await getCollection('posts', (post) =>
+    import.meta.env.PROD ? !post.data.draft : true
+  );
   return posts.map((post) => {
     // Parse tags from space-separated string
     const tags = post.data.tags?.split(' ').filter((tag: string) => tag.trim()) || [];
