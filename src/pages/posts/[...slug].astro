@@ -15,7 +15,11 @@ import P from '../../components/markdown/P.astro';
 import AdSense from '../../components/AdSense.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
+  // Drafts stay out of production builds entirely — no page, no URL. They are
+  // still rendered by `astro dev` so they can be previewed while being written.
+  const posts = await getCollection('posts', (post) =>
+    import.meta.env.PROD ? !post.data.draft : true
+  );
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
