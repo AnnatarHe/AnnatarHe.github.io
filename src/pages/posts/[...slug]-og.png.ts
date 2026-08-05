@@ -12,10 +12,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // Parse tags from space-separated string
     const tags = post.data.tags?.split(' ').filter((tag: string) => tag.trim()) || [];
     // Get date from frontmatter or parse from slug
-    const date = post.data.date || new Date(post.slug.slice(0, 10));
+    const date = post.data.date || new Date(post.id.slice(0, 10));
 
     return {
-      params: { slug: post.slug },
+      params: { slug: post.id },
       props: {
         title: post.data.title,
         date,

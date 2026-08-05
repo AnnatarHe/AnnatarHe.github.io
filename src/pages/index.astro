@@ -2,15 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 import PageLayout from '../components/PageLayout.astro';
 import { getCollection } from 'astro:content';
-import { Github, Mail, Globe, User, ArrowRight, FileText } from 'lucide-react';
+import { Mail, Globe, User, ArrowRight, FileText } from 'lucide-react';
+import Github from '../components/icons/github.astro';
 
 // Get the latest 3 posts for the homepage
 const allPosts = await getCollection('posts');
 const recentPosts = allPosts
   .filter(post => !post.data.draft)
   .sort((a, b) => {
-    const dateA = a.data.date || new Date(a.slug.slice(0, 10));
-    const dateB = b.data.date || new Date(b.slug.slice(0, 10));
+    const dateA = a.data.date || new Date(a.id.slice(0, 10));
+    const dateB = b.data.date || new Date(b.id.slice(0, 10));
     return dateB.getTime() - dateA.getTime();
   })
   .slice(0, 3);
@@ -88,10 +89,10 @@ const recentPosts = allPosts
           
           <div class="space-y-6">
             {recentPosts.map((post) => {
-              const postDate = post.data.date || new Date(post.slug.slice(0, 10));
+              const postDate = post.data.date || new Date(post.id.slice(0, 10));
               return (
                 <article class="group">
-                  <a href={`/posts/${post.slug}`} class="block space-y-2">
+                  <a href={`/posts/${post.id}`} class="block space-y-2">
                     <div class="flex items-baseline justify-between gap-4">
                       <h3 class="text-lg text-gray-200 group-hover:text-teal-400 transition-colors">
                         {post.data.title}

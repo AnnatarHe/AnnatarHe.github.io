@@ -8,14 +8,14 @@ const allPosts = await getCollection('posts');
 const sortedPosts = allPosts
   .filter(post => !post.data.draft)
   .sort((a, b) => {
-    const dateA = a.data.date || new Date(a.slug.slice(0, 10));
-    const dateB = b.data.date || new Date(b.slug.slice(0, 10));
+    const dateA = a.data.date || new Date(a.id.slice(0, 10));
+    const dateB = b.data.date || new Date(b.id.slice(0, 10));
     return dateB.getTime() - dateA.getTime();
   });
 
 // Group posts by year
 const postsByYear = sortedPosts.reduce((acc, post) => {
-  const year = (post.data.date || new Date(post.slug.slice(0, 10))).getFullYear();
+  const year = (post.data.date || new Date(post.id.slice(0, 10))).getFullYear();
   if (!acc[year]) acc[year] = [];
   acc[year].push(post);
   return acc;
@@ -47,10 +47,10 @@ const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
             
             <div class="space-y-6 ml-6">
               {postsByYear[Number(year)].map((post) => {
-                const postDate = post.data.date || new Date(post.slug.slice(0, 10));
+                const postDate = post.data.date || new Date(post.id.slice(0, 10));
                 return (
                   <article class="group">
-                    <a href={`/posts/${post.slug}`} class="block">
+                    <a href={`/posts/${post.id}`} class="block">
                       <div class="flex items-baseline justify-between gap-4">
                         <h3 class="text-gray-200 group-hover:text-teal-400 transition-colors flex-grow">
                           {post.data.title}
