@@ -10,7 +10,7 @@ const isExternalLink = href?.startsWith("http");
 ---
 
 <a
-  class="text-teal-400 hover:text-teal-300 underline underline-offset-2 decoration-teal-400/50 hover:decoration-teal-300 transition-colors"
+  class="text-teal-400 hover:text-teal-300 underline underline-offset-2 decoration-teal-400/50 hover:decoration-teal-300 transition-colors text-ellipsis overflow-hidden max-w-[calc(100vw-4rem)] block"
   href={href}
   target={isExternalLink ? "_blank" : undefined}
   rel={isExternalLink ? "noopener noreferrer" : undefined}
