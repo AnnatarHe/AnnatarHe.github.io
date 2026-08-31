@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageLayout from '../components/PageLayout.astro';
-import { Mail, Globe } from 'lucide-react';
+import { Mail, Globe, MapPin } from 'lucide-react';
 import Github from '../components/icons/github.astro';
 ---
 
@@ -20,19 +20,35 @@ import Github from '../components/icons/github.astro';
       </div>
 
       <div class="prose prose-lg prose-invert max-w-none">
-        <p class="text-gray-300 leading-relaxed mb-8 text-center">
+        <p class="text-gray-300 leading-relaxed mb-4 text-center">
           I'm a software engineer passionate about building elegant solutions with modern web technologies. 
           I work with React, Go, Node.js, and explore blockchain, infrastructure, and state management systems.
         </p>
+
+        <p class="text-gray-300 leading-relaxed mb-4 text-center">
+          Currently open to AI-related work.
+        </p>
+
+        <div class="flex items-center justify-center gap-1.5 text-sm text-gray-400 mb-8">
+          <MapPin size={16} />
+          <span>Singapore</span>
+        </div>
 
         <h2 class="text-xl font-semibold mb-4 text-white">Projects</h2>
         
         <div class="space-y-3 mb-8">
           <div>
-            <a href="https://github.com/PromptPal/PromptPal" class="text-teal-400 hover:text-white transition-colors font-medium" target="_blank" rel="noopener noreferrer">
-              PromptPal
+            <a href="https://asynctalk.com" class="text-teal-400 hover:text-white transition-colors font-medium" target="_blank" rel="noopener noreferrer">
+              AsyncTalk
             </a>
-            <span class="text-gray-400 text-sm"> — Prompt Manager for developers</span>
+            <span class="text-gray-400 text-sm"> — Web development podcast</span>
+          </div>
+          
+          <div>
+            <a href="https://rawback.app" class="text-teal-400 hover:text-white transition-colors font-medium" target="_blank" rel="noopener noreferrer">
+              Rawback
+            </a>
+            <span class="text-gray-400 text-sm"> — AI-first RAW photo management</span>
           </div>
           
           <div>
@@ -40,13 +56,6 @@ import Github from '../components/icons/github.astro';
               ClippingKK
             </a>
             <span class="text-gray-400 text-sm"> — Kindle clipping management</span>
-          </div>
-          
-          <div>
-            <a href="https://asynctalk.com" class="text-teal-400 hover:text-white transition-colors font-medium" target="_blank" rel="noopener noreferrer">
-              AsyncTalk
-            </a>
-            <span class="text-gray-400 text-sm"> — Web development podcast</span>
           </div>
           
           <div>
