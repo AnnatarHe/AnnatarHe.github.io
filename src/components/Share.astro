@@ -1,0 +1,22 @@
+---
+interface Props {
+  title: string;
+  url: string;
+}
+
+const { title, url } = Astro.props;
+---
+
+<button class="px-4 py-2 text-sm font-medium text-black bg-teal-400 rounded-md hover:bg-teal-300 transition-colors">
+  Share
+</button>
+
+<script define:vars={{ title, url }}>
+  document.querySelector('button')?.addEventListener('click', () => {
+    if (navigator.share) {
+      navigator.share({ title, url }).catch(() => {});
+    } else {
+      navigator.clipboard?.writeText(url);
+    }
+  });
+</script>
